@@ -5,7 +5,7 @@
       "runtime": "vercel-php@0.7.4",
       "memory": 1024,
       "maxDuration": 60,
-      "excludeFiles": "{node_modules/**,wp-content/**,vercel/**,config/**,.env*,docker-compose.yml,setup.sh,vercel.json,.vercelignore}"
+      "excludeFiles": "{node_modules/**,.wp-build/**,wp-content/**,vercel/**,config/**,.env*,docker-compose.yml,setup.sh,vercel.json,.vercelignore}"
     }
   },
   "rewrites": [

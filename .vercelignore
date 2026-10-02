@@ -3,3 +3,4 @@ docker-compose.yml
 setup.sh
 config/
 wordpress/
+.wp-build/

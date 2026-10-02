@@ -9,3 +9,4 @@ vendor/
 .vercel/
 wordpress/
 composer.lock
+.wp-build/

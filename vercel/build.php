@@ -47,30 +47,46 @@ function rcopy( string $src, string $dst ): void {
 	}
 }
 
-echo "[wp-build] Downloading WordPress ({$version}) from {$url}\n";
-// Build-time PHP on Vercel runs without its extension modules (no zip/curl), so use curl + tar.
-$archive = sys_get_temp_dir() . '/wordpress.tar.gz';
-passthru( 'curl -fsSL -o ' . escapeshellarg( $archive ) . ' ' . escapeshellarg( $url ), $code );
-if ( $code !== 0 ) {
-	$data = @file_get_contents( $url );
-	if ( $data === false ) {
-		fail( "download failed: {$url}" );
-	}
-	file_put_contents( $archive, $data );
-}
-if ( filesize( $archive ) < 1000000 ) {
-	fail( "download looks truncated: {$url}" );
+/**
+ * Runs a system command without the PHP runtime's LD_LIBRARY_PATH, whose bundled
+ * libraries (e.g. an older libcurl) break system tools like curl.
+ */
+function system_cmd( string $cmd ): int {
+	passthru( 'env -u LD_LIBRARY_PATH ' . $cmd, $code );
+	return $code;
 }
 
+function download( string $url, string $dest, int $min_bytes = 100000 ): void {
+	$data = @file_get_contents( $url );
+	if ( $data !== false ) {
+		file_put_contents( $dest, $data );
+	} elseif ( system_cmd( 'curl -fsSL -o ' . escapeshellarg( $dest ) . ' ' . escapeshellarg( $url ) ) !== 0 ) {
+		fail( "download failed: {$url}" );
+	}
+	clearstatcache();
+	if ( ! is_file( $dest ) || filesize( $dest ) < $min_bytes ) {
+		fail( "download looks truncated: {$url}" );
+	}
+}
+
+// Scratch space inside the project: /tmp is on another device, so rename() into the project fails.
+$work = $root . '/.wp-build';
+rrmdir( $work );
+mkdir( $work, 0755, true );
+
+echo "[wp-build] Downloading WordPress ({$version}) from {$url}\n";
+// Build-time PHP on Vercel runs without its extension modules (no zip), so extract with tar.
+$archive = $work . '/wordpress.tar.gz';
+download( $url, $archive, 1000000 );
+
 rrmdir( $target );
-$extractDir = sys_get_temp_dir() . '/wp-extract';
-rrmdir( $extractDir );
-mkdir( $extractDir, 0755, true );
-passthru( 'tar -xzf ' . escapeshellarg( $archive ) . ' -C ' . escapeshellarg( $extractDir ), $code );
-if ( $code !== 0 || ! is_file( $extractDir . '/wordpress/wp-settings.php' ) ) {
+if ( system_cmd( 'tar -xzf ' . escapeshellarg( $archive ) . ' -C ' . escapeshellarg( $work ) ) !== 0
+	|| ! is_file( $work . '/wordpress/wp-settings.php' ) ) {
 	fail( 'could not extract WordPress archive' );
 }
-rename( $extractDir . '/wordpress', $target );
+if ( ! rename( $work . '/wordpress', $target ) ) {
+	fail( "could not move WordPress into {$target}" );
+}
 
 // Drop bundled extras to keep the function bundle small.
 foreach ( glob( $target . '/wp-content/themes/*', GLOB_ONLYDIR ) as $dir ) {
@@ -99,11 +115,8 @@ file_put_contents( $target . '/wp-salts.php', $salts );
 if ( ! getenv( 'DB_HOST' ) ) {
 	echo "[wp-build] DB_HOST not set: building demo site on SQLite\n";
 	$plugins = $target . '/wp-content/plugins';
-	$zipFile = sys_get_temp_dir() . '/sqlite-plugin.zip';
-	passthru( 'curl -fsSL -o ' . escapeshellarg( $zipFile ) . ' https://downloads.wordpress.org/plugin/sqlite-database-integration.latest-stable.zip', $code );
-	if ( $code !== 0 ) {
-		fail( 'could not download the SQLite Database Integration plugin' );
-	}
+	$zipFile = $work . '/sqlite-plugin.zip';
+	download( 'https://downloads.wordpress.org/plugin/sqlite-database-integration.latest-stable.zip', $zipFile );
 
 	// Build-time PHP has no extensions loaded; run a child PHP with the runtime's php.ini (zip, pdo_sqlite).
 	$php = escapeshellarg( PHP_BINARY )
@@ -122,4 +135,5 @@ if ( ! getenv( 'DB_HOST' ) ) {
 	}
 }
 
+rrmdir( $work );
 echo "[wp-build] WordPress ready in {$target}\n";
