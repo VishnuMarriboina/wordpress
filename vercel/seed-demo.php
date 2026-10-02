@@ -36,14 +36,17 @@ activate_plugin( 'sqlite-database-integration/load.php' );
 activate_plugin( 'training-core/training-core.php' );
 activate_plugin( 'industrial-training/industrial-training.php' );
 
-// Same as setup.sh: the Industrial Training landing page with its full-width template.
-wp_insert_post( [
+// Same as setup.sh: the Industrial Training landing page with its full-width template,
+// used as the site's home page.
+$landing_id = wp_insert_post( [
 	'post_type'   => 'page',
 	'post_status' => 'publish',
 	'post_title'  => 'Industrial Training',
 	'post_name'   => 'industrial-training',
 	'meta_input'  => [ '_wp_page_template' => 'industrial-training-full-width.php' ],
 ] );
+update_option( 'show_on_front', 'page' );
+update_option( 'page_on_front', $landing_id );
 
 wp_insert_post( [
 	'post_type'    => 'course',
