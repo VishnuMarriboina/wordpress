@@ -61,8 +61,11 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			<nav class="itp-nav" aria-label="<?php esc_attr_e( 'Page sections', 'industrial-training' ); ?>">
 				<ul role="list">
 					<li><a href="#highlights"><?php echo esc_html( $s['nav']['highlights'] ); ?></a></li>
-					<li><a href="#founder"><?php echo esc_html( $s['nav']['founder'] ); ?></a></li>
 					<li><a href="#tracks"><?php echo esc_html( $s['nav']['tracks'] ); ?></a></li>
+					<?php if ( itp_items( 'studentsData' ) ) : ?>
+						<li><a href="#reviews"><?php echo esc_html( $s['nav']['reviews'] ); ?></a></li>
+					<?php endif; ?>
+					<li><a href="#founder"><?php echo esc_html( $s['nav']['founder'] ); ?></a></li>
 					<li><a href="#contact"><?php echo esc_html( $s['nav']['contact'] ); ?></a></li>
 				</ul>
 			</nav>
@@ -131,7 +134,6 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			</div>
 		</section>
 
-		<?php include ITP_DIR . 'templates/founder.php'; ?>
 
 		<section class="itp-section itp-alt" id="tracks" aria-labelledby="itp-tracks-title" data-itp-spy>
 			<div class="itp-container">

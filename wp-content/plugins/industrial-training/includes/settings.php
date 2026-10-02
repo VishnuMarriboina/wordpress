@@ -121,6 +121,7 @@ function itp_sanitize_settings( $input ): array {
 	// Checkboxes are absent from the POST when unchecked.
 	$out['seo']['enabled']          = empty( $input['seo']['enabled'] ) ? 0 : 1;
 	$out['form']['confirm_student'] = empty( $input['form']['confirm_student'] ) ? 0 : 1;
+	$out['samples']['show']         = empty( $input['samples']['show'] ) ? 0 : 1;
 
 	return $out;
 }
@@ -208,7 +209,7 @@ function itp_field( array $s, array $path, string $label, string $type = 'text',
 		printf( '<input type="%1$s" class="regular-text" id="%2$s" name="%3$s" value="%4$s">', esc_attr( $type ), esc_attr( $id ), esc_attr( itp_name( $path ) ), esc_attr( (string) $value ) );
 	}
 	if ( $help ) {
-		echo '<p class="description">' . wp_kses( $help, [ 'code' => [] ] ) . '</p>';
+		echo '<p class="description">' . wp_kses( $help, [ 'code' => [], 'strong' => [] ] ) . '</p>';
 	}
 	echo '</td></tr>';
 }
@@ -319,6 +320,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'brand_mark' ], __( 'Brand mark text', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_name' ], __( 'Brand name', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'highlights' ], __( 'Link: highlights', 'industrial-training' ) );
+				itp_field( $s, [ 'nav', 'reviews' ], __( 'Link: reviews', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'founder' ], __( 'Link: founder', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'tracks' ], __( 'Link: tracks', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'contact' ], __( 'Link: contact', 'industrial-training' ) );
@@ -417,6 +419,10 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification email', 'industrial-training' ), 'email', esc_html( sprintf( __( 'Leave empty to use %s.', 'industrial-training' ), get_option( 'admin_email' ) ) ) );
 				itp_field( $s, [ 'form', 'confirm_student' ], __( 'Send confirmation email to the student', 'industrial-training' ), 'checkbox' );
 			} );
+
+			$section( __( 'Sample content (testing)', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'samples', 'show' ], __( 'Show sample content to visitors', 'industrial-training' ), 'checkbox', __( 'Shows the sample student reviews, success stories, test colleges and partners from the content file to everyone, each labelled “Sample”. Use this while testing; <strong>switch it off before launch</strong> (or replace every sample with real, approved entries). Logged-in editors always see samples.', 'industrial-training' ) );
+			}, true );
 
 			$section( __( 'SEO', 'industrial-training' ), function () use ( $s ) {
 				itp_field( $s, [ 'seo', 'enabled' ], __( 'Output SEO tags', 'industrial-training' ), 'checkbox', __( 'Title, meta description and Open Graph are skipped automatically when Yoast SEO, Rank Math, AIOSEO or SEOPress is active. JSON-LD (EducationalOrganization + Courses) is always added while this is on.', 'industrial-training' ) );

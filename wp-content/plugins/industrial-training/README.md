@@ -74,20 +74,28 @@ industrial-training/
 
 ## Founder, students, colleges & partners content
 
-Page order: Hero → Why us → **Founder & CEO** → **Journey & Impact** → Tracks → How it works → **Student Success Stories**
-→ **What Our Students Say** → **Colleges & Institutions** (+ **From College Leadership**) → **Organizations We Work With**
-→ **Join Our Community** → **Want to Work With Us?** → Contact → Footer.
+Page order: Hero → Why us → Tracks → How it works → **Student Success Stories** → **Student Reviews & Feedback**
+(“What Our Students Say”, star ratings, carousel) → **Colleges & Institutions** (+ **From College Leadership**)
+→ **Organizations We Work With** → **Join Our Community** → **Journey & Impact** → **Founder & CEO**
+→ **Want to Work With Us?** → Contact → Footer.
 
 All of it comes from one data file with the arrays `founderData`, `impactData`, `studentsData`, `collegeTestimonials`,
 `leadershipTestimonials`, `partnerOrganizations`, `orgImpactData`, `companySocial` and `ctaData`.
 
 1. Copy `content/data.php` to `wp-content/industrial-training/content.php` and edit the copy. It is loaded instead of the
    bundled file and survives plugin updates. A theme or plugin can also change the data with the `itp_content` filter.
-2. **Placeholders.** Entries with `'placeholder' => true` are samples, not real people or organisations.
-   - Logged-in editors see them as dashed cards labelled "Placeholder", plus a note explaining that.
-   - Visitors never see them.
-   - A section appears to visitors only once it has at least one real entry. Until then, visitors see only the
-     Founder, Impact and final CTA sections.
+2. **Sample content.** The bundled file ships invented test data, all marked `'placeholder' => true`:
+   6 past-student reviews and success stories, 4 "Test" colleges, 4 college-leadership quotes and 8 partners.
+   These are not real people, colleges or companies.
+   - Every sample card carries a visible **Sample** label, and each section shows "Sample content shown for
+     demonstration."
+   - **Settings → Industrial Training → Sample content → "Show sample content to visitors"** (on by default for testing)
+     shows the samples to everyone. Logged-in editors always see them, with dashed outlines and an editor note.
+   - **Before launch:** switch the setting off, or replace each sample with a real, approved entry and set
+     `'placeholder' => false`.
+   - With the setting off, a section appears only once it has a real entry. Until then visitors see Journey & Impact,
+     Founder & CEO and the final CTA.
+   - Star ratings (`'rating' => 1–5`) are display only. No review or rating structured data is output.
 3. **Verification badges.** "Verified Student", "College Partner" or the partner's `badge` text show only when an entry has
    `'verified' => true` and is not a placeholder. Set it only after you have confirmed the details and have permission
    to publish them.

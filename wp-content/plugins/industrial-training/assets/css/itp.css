@@ -242,6 +242,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700;line-height:1.4;white-space:nowrap;vertical-align:middle}
 .itp .itp-tag-ok{background:rgba(22,163,74,.12);color:var(--ok-ink)}
 .itp .itp-tag-sample{border:1px dashed var(--danger);color:var(--danger)}
+.itp .itp-preview-public{display:inline-block;padding:4px 12px;border-style:solid;border-color:var(--border);background:var(--surface);color:var(--text-2);font-size:.8rem}
+.itp .itp-card .itp-stars{color:#f59e0b;font-size:1.05rem;letter-spacing:2px;line-height:1}
+.itp .itp-stars-off{color:var(--border)}
 .itp .itp-is-sample{border:2px dashed #94a3b8}
 .itp .itp-person, .itp .itp-testimonial, .itp .itp-college{display:flex;flex-direction:column;gap:18px;height:100%;padding:24px}
 .itp .itp-person-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}

@@ -24,7 +24,8 @@ $bg  = static function () use ( &$alt ) {
 	$alt   = ! $alt;
 	return $class;
 };
-$sample = static fn( array $item ) => itp_is_placeholder( $item ) ? ' itp-is-sample' : '';
+// Dashed outline marks samples for editors only; visitors see the normal card with its "Sample" label.
+$sample = static fn( array $item ) => itp_is_placeholder( $item ) && itp_is_editor() ? ' itp-is-sample' : '';
 $quote  = static function ( string $text ) {
 	echo '<blockquote class="itp-quote"><p>' . esc_html( $text ) . '</p></blockquote>';
 };
@@ -80,15 +81,21 @@ $slide_label = static fn( int $i, int $n ) => sprintf( /* translators: 1: slide 
 
 <?php $with_quotes = array_filter( $students, static fn( $st ) => ! empty( $st['testimonial'] ) ); ?>
 	<?php if ( $with_quotes ) : ?>
-<section class="itp-section<?php echo esc_attr( $bg() ); ?>" aria-labelledby="itp-says-title">
+<section class="itp-section<?php echo esc_attr( $bg() ); ?>" id="reviews" aria-labelledby="itp-says-title" data-itp-spy>
 	<div class="itp-container">
 		<div class="itp-head">
+			<p class="itp-eyebrow itp-reveal"><?php esc_html_e( 'Student reviews & feedback', 'industrial-training' ); ?></p>
 			<h2 class="itp-h2 itp-reveal" id="itp-says-title"><?php esc_html_e( 'What Our Students Say', 'industrial-training' ); ?></h2>
+			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Past students describe their training experience in their own words.', 'industrial-training' ); ?></p>
+			<?php echo itp_preview_note( $with_quotes ); // phpcs:ignore ?>
 		</div>
-		<ul class="itp-grid itp-grid-3" role="list">
-			<?php foreach ( $with_quotes as $st ) : ?>
-				<li class="itp-reveal">
+		<?php $with_quotes = array_values( $with_quotes ); ?>
+		<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="itp-says-title">
+		<ul class="itp-car-track" role="list">
+			<?php foreach ( $with_quotes as $i => $st ) : ?>
+				<li class="itp-car-slide" role="group" aria-roledescription="<?php esc_attr_e( 'slide', 'industrial-training' ); ?>" aria-label="<?php echo esc_attr( $slide_label( $i, count( $with_quotes ) ) ); ?>">
 					<article class="itp-card itp-testimonial<?php echo esc_attr( $sample( $st ) ); ?>">
+						<?php echo itp_stars( $st['rating'] ?? 0 ); // phpcs:ignore ?>
 						<?php $quote( $st['testimonial'] ); ?>
 						<footer class="itp-person-head">
 							<?php echo itp_avatar( $st['photo'] ?? '', (string) ( $st['photoAlt'] ?? '' ), $st['name'], 48 ); // phpcs:ignore ?>
@@ -106,6 +113,8 @@ $slide_label = static fn( int $i, int $n ) => sprintf( /* translators: 1: slide 
 				</li>
 			<?php endforeach; ?>
 		</ul>
+		<?php echo itp_carousel_controls( __( 'student reviews', 'industrial-training' ) ); // phpcs:ignore ?>
+		</div>
 	</div>
 </section>
 	<?php endif; ?>
@@ -230,6 +239,12 @@ $slide_label = static fn( int $i, int $n ) => sprintf( /* translators: 1: slide 
 	</div>
 </section>
 <?php endif; ?>
+
+<?php
+$bg(); // Impact band is dark; keep the alternation in step.
+$founder_bg = $bg();
+include ITP_DIR . 'templates/founder.php';
+?>
 
 <?php if ( $cta ) : ?>
 <section class="itp-band" id="work-with-us" aria-labelledby="itp-cta-title">

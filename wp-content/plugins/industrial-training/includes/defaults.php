@@ -32,6 +32,7 @@ function itp_defaults(): array {
 		'brand_name' => __( 'Industrial Training', 'industrial-training' ),
 		'nav'        => [
 			'highlights' => __( 'Why us', 'industrial-training' ),
+			'reviews'    => __( 'Reviews', 'industrial-training' ),
 			'founder'    => __( 'Founder', 'industrial-training' ),
 			'tracks'     => __( 'Tracks', 'industrial-training' ),
 			'contact'    => __( 'Contact', 'industrial-training' ),
@@ -109,6 +110,11 @@ function itp_defaults(): array {
 			'success_text'    => __( "We've saved your registration for {track}. Our counsellor will call you on {phone} within 2 working days.", 'industrial-training' ),
 			'notify_email'    => '',
 			'confirm_student' => 0,
+		],
+		'samples'    => [
+			// Shows the sample students, colleges and partners from content/data.php to visitors, labelled "Sample".
+			// For testing only — switch off before launch.
+			'show' => 1,
 		],
 		'seo'        => [
 			'enabled'     => 1,

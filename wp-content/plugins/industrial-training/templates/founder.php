@@ -2,7 +2,8 @@
 /**
  * Founder & CEO + journey/impact sections.
  *
- * @var array $s Settings.
+ * @var array  $s          Settings.
+ * @var string $founder_bg Background modifier class from the including template.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -15,7 +16,29 @@ if ( empty( $founder['name'] ) ) {
 }
 $f_social = itp_social_links( $founder['social'] ?? [], $founder['name'], 'itp-social-lg' );
 ?>
-<section class="itp-section itp-alt" id="founder" aria-labelledby="itp-founder-title" data-itp-spy>
+<?php if ( $impact ) : ?>
+<section class="itp-band" id="impact" aria-labelledby="itp-impact-title">
+	<div class="itp-hero-bg" aria-hidden="true"></div>
+	<div class="itp-container">
+		<div class="itp-head">
+			<h2 class="itp-h2 itp-reveal" id="itp-impact-title"><?php esc_html_e( 'Our Journey & Impact', 'industrial-training' ); ?></h2>
+			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Milestones shared by our team, built one batch of students at a time.', 'industrial-training' ); ?></p>
+		</div>
+		<ol class="itp-milestones itp-reveal" role="list">
+			<?php foreach ( $impact as $i => $m ) : ?>
+				<li style="--i:<?php echo (int) $i; ?>">
+					<span class="itp-milestone-dot" aria-hidden="true"></span>
+					<p class="itp-milestone-value"><?php echo itp_stat_value( (string) $m['value'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></p>
+					<p class="itp-milestone-label"><?php echo esc_html( $m['label'] ); ?></p>
+				</li>
+			<?php endforeach; ?>
+		</ol>
+		<p class="itp-fineprint itp-reveal"><?php esc_html_e( 'Figures provided by the company.', 'industrial-training' ); ?></p>
+	</div>
+</section>
+<?php endif; ?>
+
+<section class="itp-section<?php echo esc_attr( $founder_bg ?? ' itp-alt' ); ?>" id="founder" aria-labelledby="itp-founder-title" data-itp-spy>
 	<div class="itp-container itp-founder">
 		<article class="itp-card itp-founder-card itp-reveal" aria-labelledby="itp-founder-name">
 			<div class="itp-founder-photo">
@@ -69,25 +92,3 @@ $f_social = itp_social_links( $founder['social'] ?? [], $founder['name'], 'itp-s
 		</div>
 	</div>
 </section>
-
-<?php if ( $impact ) : ?>
-<section class="itp-band" id="impact" aria-labelledby="itp-impact-title">
-	<div class="itp-hero-bg" aria-hidden="true"></div>
-	<div class="itp-container">
-		<div class="itp-head">
-			<h2 class="itp-h2 itp-reveal" id="itp-impact-title"><?php esc_html_e( 'Our Journey & Impact', 'industrial-training' ); ?></h2>
-			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Milestones shared by our team, built one batch of students at a time.', 'industrial-training' ); ?></p>
-		</div>
-		<ol class="itp-milestones itp-reveal" role="list">
-			<?php foreach ( $impact as $i => $m ) : ?>
-				<li style="--i:<?php echo (int) $i; ?>">
-					<span class="itp-milestone-dot" aria-hidden="true"></span>
-					<p class="itp-milestone-value"><?php echo itp_stat_value( (string) $m['value'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></p>
-					<p class="itp-milestone-label"><?php echo esc_html( $m['label'] ); ?></p>
-				</li>
-			<?php endforeach; ?>
-		</ol>
-		<p class="itp-fineprint itp-reveal"><?php esc_html_e( 'Figures provided by the company.', 'industrial-training' ); ?></p>
-	</div>
-</section>
-<?php endif; ?>

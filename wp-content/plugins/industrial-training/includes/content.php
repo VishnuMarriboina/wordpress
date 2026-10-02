@@ -19,9 +19,13 @@ function itp_content(): array {
 	return $data;
 }
 
-/** Editors see placeholder entries (labelled) so they can preview layouts; visitors never do. */
+function itp_is_editor(): bool {
+	return current_user_can( 'edit_pages' );
+}
+
+/** Whether sample entries render: always for editors; for visitors only while the "show samples" setting is on. */
 function itp_preview_mode(): bool {
-	return (bool) apply_filters( 'itp_preview_placeholders', current_user_can( 'edit_pages' ) );
+	return (bool) apply_filters( 'itp_preview_placeholders', itp_is_editor() || ! empty( itp_settings()['samples']['show'] ) );
 }
 
 /** Entries that should render for the current viewer. */
@@ -38,7 +42,7 @@ function itp_is_placeholder( array $item ): bool {
 /** Verification label, only for verified, non-placeholder entries. */
 function itp_badge( array $item, string $label ): string {
 	if ( itp_is_placeholder( $item ) ) {
-		return '<span class="itp-tag itp-tag-sample">' . esc_html__( 'Placeholder', 'industrial-training' ) . '</span>';
+		return '<span class="itp-tag itp-tag-sample">' . esc_html__( 'Sample', 'industrial-training' ) . '</span>';
 	}
 	if ( ! empty( $item['verified'] ) && '' !== $label ) {
 		return '<span class="itp-tag itp-tag-ok"><span aria-hidden="true">✓</span> ' . esc_html( $label ) . '</span>';
@@ -120,14 +124,30 @@ function itp_stat_value( string $value ): string {
 	return '<span class="itp-count" aria-hidden="true">' . esc_html( $value ) . '</span><span class="itp-sr">' . esc_html( $value ) . '</span>';
 }
 
-/** Small notice shown to editors above sections that contain placeholder entries. */
+/** Notice above sections that contain sample entries (wording differs for editors and visitors). */
 function itp_preview_note( array $items ): string {
 	foreach ( $items as $item ) {
 		if ( itp_is_placeholder( $item ) ) {
-			return '<p class="itp-preview-note" role="note">' . esc_html__( 'Editor preview: the dashed “Placeholder” cards are samples and are hidden from visitors. Replace them with verified details in the content file, then set placeholder to false.', 'industrial-training' ) . '</p>';
+			$text = itp_is_editor()
+				? ( empty( itp_settings()['samples']['show'] )
+					? __( 'Editor preview: cards labelled “Sample” are invented test content and are hidden from visitors. Replace them with verified details in the content file, then set placeholder to false.', 'industrial-training' )
+					: __( 'Editor note: cards labelled “Sample” are invented test content and are currently visible to visitors. Replace them with real entries, or switch off “Show sample content to visitors” before launch.', 'industrial-training' ) )
+				: __( 'Sample content shown for demonstration.', 'industrial-training' );
+			return '<p class="itp-preview-note' . ( itp_is_editor() ? '' : ' itp-preview-public' ) . '" role="note">' . esc_html( $text ) . '</p>';
 		}
 	}
 	return '';
+}
+
+/** Star rating (1–5). Purely visual stars with a text equivalent. */
+function itp_stars( $rating ): string {
+	$rating = max( 0, min( 5, (int) $rating ) );
+	if ( ! $rating ) {
+		return '';
+	}
+	/* translators: %d: rating out of 5 */
+	$label = sprintf( __( 'Rated %d out of 5', 'industrial-training' ), $rating );
+	return '<p class="itp-stars" role="img" aria-label="' . esc_attr( $label ) . '"><span aria-hidden="true">' . str_repeat( '★', $rating ) . '<span class="itp-stars-off">' . str_repeat( '★', 5 - $rating ) . '</span></span></p>';
 }
 
 /** Carousel controls (prev/next + dots container filled by JS). */
