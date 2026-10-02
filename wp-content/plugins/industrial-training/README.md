@@ -4,7 +4,7 @@
 saved privately in WordPress. Works in any theme, as a shortcode, a block, or a page template.
 
 - WordPress 6.4+, PHP 8.1+. No jQuery, no frameworks, no build step.
-- Front-end assets (`assets/css/itp.css` + `assets/js/itp.js`, ~29 KB unminified) load only on pages that use the plugin.
+- Front-end assets (`assets/css/itp.css` + `assets/js/itp.js`, ~43 KB unminified, ~11 KB gzipped) load only on pages that use the plugin.
 
 ## File tree
 
@@ -13,6 +13,7 @@ industrial-training/
 ├── industrial-training.php      Bootstrap, constants, activation
 ├── uninstall.php                Deletes settings (registrations kept unless ITP_DELETE_DATA)
 ├── includes/
+│   ├── content.php              Content loader, placeholder filter, social-links component, avatars
 │   ├── defaults.php             All default content + placeholder photo list
 │   ├── helpers.php              Settings merge, allowed values, validation, responsive images
 │   ├── frontend.php             Assets, [industrial_training] shortcode, block, page template
@@ -20,8 +21,11 @@ industrial-training/
 │   ├── registrations.php        Private itp_registration CPT, list table, filter, CSV export
 │   ├── seo.php                  Title, meta description, Open Graph, JSON-LD
 │   └── settings.php             Settings → Industrial Training (all content, tracks repeater)
+├── content/data.php             Founder, students, colleges, leadership, partners, CTA (edit a copy, see below)
 ├── templates/
 │   ├── landing.php              Page markup
+│   ├── founder.php              Founder & CEO + journey/impact
+│   ├── outcomes.php             Success stories, testimonials, colleges, leadership, partners, community, final CTA
 │   └── page-full-width.php      "Industrial Training (full screen)" template: landing page only, no theme header/footer
 ├── blocks/landing/block.json    "Industrial Training Page" block (server-rendered)
 ├── assets/
@@ -68,6 +72,36 @@ industrial-training/
 - **Stored values:** branch, year and track are stored in English, and the JSON keys
   (`fullName, email, phone, college, branch, year, track`) match the existing `/register` API.
 
+## Founder, students, colleges & partners content
+
+Page order: Hero → Why us → **Founder & CEO** → **Journey & Impact** → Tracks → How it works → **Student Success Stories**
+→ **What Our Students Say** → **Colleges & Institutions** (+ **From College Leadership**) → **Organizations We Work With**
+→ **Join Our Community** → **Want to Work With Us?** → Contact → Footer.
+
+All of it comes from one data file with the arrays `founderData`, `impactData`, `studentsData`, `collegeTestimonials`,
+`leadershipTestimonials`, `partnerOrganizations`, `orgImpactData`, `companySocial` and `ctaData`.
+
+1. Copy `content/data.php` to `wp-content/industrial-training/content.php` and edit the copy. It is loaded instead of the
+   bundled file and survives plugin updates. A theme or plugin can also change the data with the `itp_content` filter.
+2. **Placeholders.** Entries with `'placeholder' => true` are samples, not real people or organisations.
+   - Logged-in editors see them as dashed cards labelled "Placeholder", plus a note explaining that.
+   - Visitors never see them.
+   - A section appears to visitors only once it has at least one real entry. Until then, visitors see only the
+     Founder, Impact and final CTA sections.
+3. **Verification badges.** "Verified Student", "College Partner" or the partner's `badge` text show only when an entry has
+   `'verified' => true` and is not a placeholder. Set it only after you have confirmed the details and have permission
+   to publish them.
+4. **Social links.** Paste full `https://` URLs. Empty values and `#` are never rendered. Every link opens in a new tab
+   with `rel="noopener noreferrer"` and an accessible label such as "Ram on LinkedIn (opens in a new tab)". The same
+   component (`itp_social_links()`) is used for the founder, students, colleges, leadership, partners and the company.
+5. **Photos and logos.** Use a Media Library attachment ID (recommended) or an image URL, and always fill the `…Alt` text.
+   Empty values show an initials avatar. Stock photos are deliberately not used for people.
+6. **Numbers.** Only the company-provided figures are included: 10+ years, 10,000+ students, 200+ colleges. A college's
+   `studentsTrained` stays hidden until you fill it with a verified number.
+
+> Heads-up: the hero stats (2,400+ students, 60+ partners, 85%) came from the first spec and contradict the
+> founder figures (10,000+ students, 200+ colleges). Update them under Settings → Industrial Training → Hero.
+
 ## Test checklist
 
 | Area | Check |
@@ -87,4 +121,5 @@ industrial-training/
 | Admin | Registrations list shows Name, Email, Phone, College, Branch, Year, Track, Date. The track filter and search (name/email/phone/college) work. Export CSV downloads the filtered rows (manage_options only). |
 | Emails | The admin notification arrives. With "Send confirmation email" ticked, the student gets one too. |
 | SEO | View source: title, meta description, og:image = hero photo, one JSON-LD graph. With Yoast/Rank Math active there are no duplicate tags. |
+| New sections | As a visitor (logged out): no placeholder text or dashed cards, and no `#` links. As an editor: placeholders are labelled. Carousels show 3 / 2 / 1 cards at desktop / tablet / phone, prev/next and dots work, and there is no autoplay. |
 | Performance | Lighthouse mobile: images have width/height (no CLS), the hero photo is `fetchpriority="high"`, all other images are lazy, JS is deferred. |

@@ -32,6 +32,7 @@ function itp_defaults(): array {
 		'brand_name' => __( 'Industrial Training', 'industrial-training' ),
 		'nav'        => [
 			'highlights' => __( 'Why us', 'industrial-training' ),
+			'founder'    => __( 'Founder', 'industrial-training' ),
 			'tracks'     => __( 'Tracks', 'industrial-training' ),
 			'contact'    => __( 'Contact', 'industrial-training' ),
 			'register'   => __( 'Register', 'industrial-training' ),

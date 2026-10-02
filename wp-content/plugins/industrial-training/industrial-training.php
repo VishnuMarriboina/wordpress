@@ -21,6 +21,7 @@ define( 'ITP_OPTION', 'itp_settings' );
 
 require_once ITP_DIR . 'includes/defaults.php';
 require_once ITP_DIR . 'includes/helpers.php';
+require_once ITP_DIR . 'includes/content.php';
 require_once ITP_DIR . 'includes/frontend.php';
 require_once ITP_DIR . 'includes/seo.php';
 require_once ITP_DIR . 'includes/rest.php';

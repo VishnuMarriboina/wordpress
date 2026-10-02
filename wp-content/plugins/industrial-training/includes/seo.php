@@ -45,6 +45,15 @@ add_action( 'wp_head', function () {
 		'email'     => $contact['email'],
 		'address'   => [ '@type' => 'PostalAddress', 'streetAddress' => $contact['address'], 'addressCountry' => 'IN' ],
 	];
+	$founder = itp_content()['founderData'] ?? [];
+	if ( ! empty( $founder['name'] ) ) {
+		$org['founder'] = array_filter( [
+			'@type'    => 'Person',
+			'name'     => $founder['name'],
+			'jobTitle' => $founder['designation'] ?? '',
+			'sameAs'   => array_values( array_filter( array_map( 'itp_real_url', (array) ( $founder['social'] ?? [] ) ) ) ),
+		] );
+	}
 	$graph   = [ $org ];
 	foreach ( $s['tracks']['items'] as $track ) {
 		$graph[] = [

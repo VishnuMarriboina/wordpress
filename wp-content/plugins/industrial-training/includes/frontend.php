@@ -40,6 +40,8 @@ function itp_enqueue(): void {
 		'endpoint' => esc_url_raw( rest_url( 'industrial-training/v1/register' ) ),
 		'nonce'    => wp_create_nonce( 'wp_rest' ),
 		'i18n'     => [
+			/* translators: %d: carousel page number */
+			'slide'      => __( 'Go to page %d', 'industrial-training' ),
 			'submitting' => __( 'Submitting…', 'industrial-training' ),
 			'submit'     => __( 'Submit registration', 'industrial-training' ),
 			'retry'      => __( 'Try again', 'industrial-training' ),

@@ -295,6 +295,22 @@ function itp_settings_page(): void {
 			</form>
 		</div>
 
+		<div class="itp-intro">
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: 1: bundled content file, 2: override path */
+						__( '<strong>Founder, student stories, college &amp; leadership testimonials and partners</strong> are edited in a content file: copy %1$s to %2$s and edit the copy (it survives plugin updates). Entries marked <code>placeholder</code> are only visible to logged-in editors.', 'industrial-training' ),
+						'<code>wp-content/plugins/industrial-training/content/data.php</code>',
+						'<code>wp-content/industrial-training/content.php</code>'
+					),
+					[ 'code' => [], 'strong' => [] ]
+				);
+				?>
+			</p>
+		</div>
+
 		<form method="post" action="options.php">
 			<?php settings_fields( 'itp_settings_group' ); ?>
 
@@ -303,6 +319,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'brand_mark' ], __( 'Brand mark text', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_name' ], __( 'Brand name', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'highlights' ], __( 'Link: highlights', 'industrial-training' ) );
+				itp_field( $s, [ 'nav', 'founder' ], __( 'Link: founder', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'tracks' ], __( 'Link: tracks', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'contact' ], __( 'Link: contact', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'register' ], __( 'Register button', 'industrial-training' ) );

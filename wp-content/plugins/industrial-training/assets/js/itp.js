@@ -108,6 +108,50 @@
 		}
 	}
 
+	// Carousels: native scroll-snap track + prev/next + dots. No autoplay.
+	$$('[data-itp-carousel]').forEach((car) => {
+		const track = $('.itp-car-track', car);
+		const slides = [...track.children];
+		const prev = $('[data-itp-prev]', car);
+		const next = $('[data-itp-next]', car);
+		const dots = $('[data-itp-dots]', car);
+		if (!slides.length || !prev) return;
+		let per = 1;
+		let pages = 1;
+		const pageOf = () => Math.round((track.scrollLeft / Math.max(1, track.scrollWidth - track.clientWidth)) * (pages - 1));
+		const go = (p) => {
+			const target = slides[Math.max(0, Math.min(p, pages - 1)) * per];
+			track.scrollTo({ left: target.offsetLeft - slides[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+		};
+		const update = () => {
+			const p = pageOf();
+			const end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+			prev.setAttribute('aria-disabled', String(track.scrollLeft <= 2));
+			next.setAttribute('aria-disabled', String(end));
+			[...dots.children].forEach((d, i) => d.setAttribute('aria-current', String(i === p)));
+		};
+		const build = () => {
+			per = Math.max(1, Math.round(track.clientWidth / slides[0].getBoundingClientRect().width));
+			pages = Math.ceil(slides.length / per);
+			car.classList.toggle('is-static', pages < 2);
+			dots.replaceChildren(...Array.from({ length: pages }, (_, i) => {
+				const b = document.createElement('button');
+				b.type = 'button';
+				b.setAttribute('aria-label', (T.slide || 'Go to page %d').replace('%d', i + 1));
+				b.addEventListener('click', () => go(i));
+				return b;
+			}));
+			update();
+		};
+		prev.addEventListener('click', () => prev.getAttribute('aria-disabled') !== 'true' && go(pageOf() - 1));
+		next.addEventListener('click', () => next.getAttribute('aria-disabled') !== 'true' && go(pageOf() + 1));
+		let raf = 0;
+		track.addEventListener('scroll', () => raf || (raf = requestAnimationFrame(() => { raf = 0; update(); })), { passive: true });
+		if ('ResizeObserver' in window) new ResizeObserver(build).observe(track);
+		build();
+		car.classList.add('is-ready');
+	});
+
 	// Registration modal
 	const dlg = $('#itp-register');
 	if (! dlg || typeof dlg.showModal !== 'function') return;
