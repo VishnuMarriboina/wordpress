@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "industrial-training/landing",
+	"title": "Industrial Training Page",
+	"category": "widgets",
+	"icon": "welcome-learn-more",
+	"description": "The full Industrial Training Program landing page with registration form. Edit the content under Settings → Industrial Training.",
+	"keywords": [ "training", "landing", "registration" ],
+	"textdomain": "industrial-training",
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"align": [ "wide", "full" ]
+	},
+	"attributes": {
+		"align": { "type": "string", "default": "full" }
+	},
+	"editorScript": "itp-block-editor"
+}

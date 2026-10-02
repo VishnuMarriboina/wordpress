@@ -1,0 +1,13 @@
+.itp-admin .itp-intro { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 4px 16px 12px; margin: 16px 0; }
+.itp-admin .itp-intro form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.itp-admin .itp-section { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; margin: 0 0 12px; }
+.itp-admin .itp-section > summary { cursor: pointer; padding: 14px 16px; font-size: 14px; font-weight: 600; }
+.itp-admin .itp-section[open] > summary { border-bottom: 1px solid #f0f0f1; }
+.itp-admin .itp-section .form-table, .itp-admin .itp-tracks { margin: 0 16px; width: calc(100% - 32px); }
+.itp-admin .itp-track-row { border: 1px solid #dcdcde; border-radius: 6px; margin: 12px 0; background: #f6f7f7; }
+.itp-admin .itp-track-row .form-table { margin: 0 12px; width: calc(100% - 24px); }
+.itp-admin .itp-track-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid #dcdcde; background: #fff; border-radius: 6px 6px 0 0; }
+.itp-admin .itp-image { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.itp-admin .itp-image-preview img { width: 80px; height: 60px; object-fit: cover; border-radius: 4px; display: block; }
+.itp-admin .itp-section > p { margin: 0 16px 16px; }
+.itp-admin .itp-save { position: sticky; bottom: 0; background: #f0f0f1; padding: 12px 0; z-index: 2; }

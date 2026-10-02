@@ -1,0 +1,9 @@
+{
+  "name": "training/site",
+  "description": "Training WordPress site. The \"vercel\" script assembles WordPress core during the Vercel build.",
+  "type": "project",
+  "require": {},
+  "scripts": {
+    "vercel": "@php vercel/build.php"
+  }
+}

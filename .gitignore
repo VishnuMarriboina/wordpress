@@ -1,0 +1,11 @@
+.env
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+vendor/
+
+# Vercel
+.vercel/
+wordpress/
+composer.lock

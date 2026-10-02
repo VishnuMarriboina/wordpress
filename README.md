@@ -6,6 +6,7 @@ Local WordPress development environment using Docker.
 |------------|-----------------------------|
 | WordPress  | http://localhost:8080       |
 | WP Admin   | http://localhost:8080/wp-admin |
+| Training page | http://localhost:8080/industrial-training/ |
 | phpMyAdmin | http://localhost:8081       |
 
 ## Requirements
@@ -44,7 +45,9 @@ docker compose exec wordpress tail -f /var/www/html/wp-content/debug.log
 ├── setup.sh                 # one-time install script
 └── wp-content/
     ├── themes/training-theme/   # your custom theme (live-mounted)
-    └── plugins/training-core/   # your custom plugin (live-mounted)
+    └── plugins/
+        ├── training-core/          # starter plugin (live-mounted)
+        └── industrial-training/    # Industrial Training landing page plugin — see its README.md
 ```
 
 WordPress core lives in a Docker volume; only your theme and plugin are in this
