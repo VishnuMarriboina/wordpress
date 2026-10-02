@@ -33,7 +33,7 @@ Set these in Vercel → Settings → Environment Variables, then deploy (see ste
 | `WP_SITE_TITLE` | `Training Site` |
 
 Log in at `https://<your-deployment>/wp-admin/`. Training Core is active, `training-theme`
-is active, permalinks are set to *Post name*, and there is a sample course at `/courses/sample-course/`.
+is active, permalinks are set to *Post name*, Industrial Training is active with its landing page at `/industrial-training/`, and there is a sample course at `/courses/sample-course/`.
 
 **Demo mode is for looking at the UI only.** Anything you change in wp-admin (posts,
 settings, menus) lives in the function's `/tmp` and **resets** whenever Vercel starts a
@@ -96,8 +96,8 @@ Moving an existing local site instead? Export the local DB (phpMyAdmin at
 ## Serverless limitations (important)
 
 - **Read-only filesystem.** Plugins and themes cannot be installed or updated from
-  wp-admin (`DISALLOW_FILE_MODS` is on). Add them to the repo and redeploy. A new plugin
-  needs a copy step in `vercel/build.php`.
+  wp-admin (`DISALLOW_FILE_MODS` is on). Add them to `wp-content/` in the repo and redeploy
+  (every theme/plugin folder there is bundled automatically).
 - **Media uploads are not persisted.** Uploads to `wp-content/uploads` fail or vanish.
   Use an offload plugin that stores media in S3, Cloudflare R2 or similar
   (e.g. *WP Offload Media*) before relying on the Media Library.

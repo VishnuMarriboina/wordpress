@@ -34,6 +34,16 @@ update_option( 'permalink_structure', '/%postname%/' );
 switch_theme( 'training-theme' );
 activate_plugin( 'sqlite-database-integration/load.php' );
 activate_plugin( 'training-core/training-core.php' );
+activate_plugin( 'industrial-training/industrial-training.php' );
+
+// Same as setup.sh: the Industrial Training landing page with its full-width template.
+wp_insert_post( [
+	'post_type'   => 'page',
+	'post_status' => 'publish',
+	'post_title'  => 'Industrial Training',
+	'post_name'   => 'industrial-training',
+	'meta_input'  => [ '_wp_page_template' => 'industrial-training-full-width.php' ],
+] );
 
 wp_insert_post( [
 	'post_type'    => 'course',

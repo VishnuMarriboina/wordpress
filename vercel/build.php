@@ -79,9 +79,12 @@ foreach ( glob( $target . '/wp-content/themes/*', GLOB_ONLYDIR ) as $dir ) {
 rrmdir( $target . '/wp-content/plugins/akismet' );
 @unlink( $target . '/wp-content/plugins/hello.php' );
 
-// Project code + config.
-rcopy( $root . '/wp-content/themes/training-theme', $target . '/wp-content/themes/training-theme' );
-rcopy( $root . '/wp-content/plugins/training-core', $target . '/wp-content/plugins/training-core' );
+// Project code + config: every theme and plugin in the repo's wp-content.
+foreach ( [ 'themes', 'plugins' ] as $type ) {
+	foreach ( glob( $root . "/wp-content/{$type}/*", GLOB_ONLYDIR ) as $dir ) {
+		rcopy( $dir, $target . "/wp-content/{$type}/" . basename( $dir ) );
+	}
+}
 rcopy( __DIR__ . '/mu-plugins', $target . '/wp-content/mu-plugins' );
 copy( __DIR__ . '/wp-config.php', $target . '/wp-config.php' );
 
