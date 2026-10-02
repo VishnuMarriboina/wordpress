@@ -1,8 +1,9 @@
 # Deploying to Vercel
 
 Vercel runs this WordPress site as a single PHP serverless function using the
-community runtime [`vercel-php`](https://github.com/vercel-community/php) (PHP 8.3,
-same as `docker-compose.yml`). Docker is only used for local development.
+community runtime [`vercel-php`](https://github.com/vercel-community/php) `vercel-php@0.9.0`
+(PHP 8.5). The older PHP 8.3 runtime (`0.7.4`) ships SQLite 3.7.17, which is too old for demo mode
+(the SQLite plugin needs 3.37+). Docker (PHP 8.3) is only used for local development.
 
 ## How it works
 
