@@ -80,13 +80,40 @@ function itp_render( $atts = [] ): string {
 /* ---------- Plugin page template (works with classic and block themes) ---------- */
 
 add_filter( 'theme_page_templates', function ( $templates ) {
-	$templates[ ITP_TEMPLATE ] = __( 'Industrial Training (full width)', 'industrial-training' );
+	$templates[ ITP_TEMPLATE ] = __( 'Industrial Training (full screen)', 'industrial-training' );
 	return $templates;
 } );
 
 add_filter( 'template_include', function ( $template ) {
-	if ( is_page() && ITP_TEMPLATE === get_page_template_slug() ) {
+	if ( itp_is_canvas_page() ) {
 		return ITP_DIR . 'templates/page-full-width.php';
 	}
 	return $template;
 } );
+
+/** Whether the current request is a page using the full-screen template. */
+function itp_is_canvas_page(): bool {
+	return is_page() && ITP_TEMPLATE === get_page_template_slug();
+}
+
+/**
+ * The full-screen template has no theme markup, so theme stylesheets (link colours,
+ * containers, ...) would only leak into the landing page. Drop every style served
+ * from the active theme's folders.
+ */
+function itp_dequeue_theme_styles(): void {
+	if ( ! itp_is_canvas_page() ) {
+		return;
+	}
+	$theme_urls = array_unique( [ get_stylesheet_directory_uri(), get_template_directory_uri() ] );
+	$styles     = wp_styles();
+	foreach ( $styles->queue as $handle ) {
+		$src = $styles->registered[ $handle ]->src ?? '';
+		foreach ( $theme_urls as $url ) {
+			if ( $src && str_starts_with( $src, $url ) ) {
+				wp_dequeue_style( $handle );
+			}
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'itp_dequeue_theme_styles', 999 );

@@ -282,7 +282,7 @@ function itp_settings_page(): void {
 			<p>
 				<?php
 				echo wp_kses(
-					__( 'Add the page with the shortcode <code>[industrial_training]</code>, the “Industrial Training Page” block, or pick the page template <strong>Industrial Training (full width)</strong>.', 'industrial-training' ),
+					__( 'Add the page with the shortcode <code>[industrial_training]</code>, the “Industrial Training Page” block, or pick the page template <strong>Industrial Training (full screen)</strong>.', 'industrial-training' ),
 					[ 'code' => [], 'strong' => [] ]
 				);
 				?>

@@ -22,7 +22,7 @@ industrial-training/
 │   └── settings.php             Settings → Industrial Training (all content, tracks repeater)
 ├── templates/
 │   ├── landing.php              Page markup
-│   └── page-full-width.php      "Industrial Training (full width)" template (classic + block themes)
+│   └── page-full-width.php      "Industrial Training (full screen)" template: landing page only, no theme header/footer
 ├── blocks/landing/block.json    "Industrial Training Page" block (server-rendered)
 ├── assets/
 │   ├── css/itp.css              Landing styles (scoped under .itp)
@@ -39,7 +39,7 @@ industrial-training/
    Plugins → Add New → Upload. Then activate **Industrial Training**. (In this repo's Docker setup it's already
    mounted, and `./setup.sh` activates it.)
 2. **Create the page.** Pages → Add New, title "Industrial Training". Pick one of these:
-   - **Recommended:** Page Attributes → Template → **Industrial Training (full width)**. Leave the content empty.
+   - **Recommended:** Page Attributes → Template → **Industrial Training (full screen)**. Leave the content empty.
    - Or add the **Industrial Training Page** block (it is full width by default).
    - Or paste `[industrial_training]` into the content, an Elementor Shortcode widget or a Divi Code module.
      If your builder stores content somewhere the plugin can't detect, the CSS loads in the footer instead.
@@ -56,8 +56,8 @@ industrial-training/
 
 ### Notes
 
-- **Sticky header:** it sticks under the theme's menu. Sticky positioning breaks if a theme wrapper has
-  `overflow: hidden`. The full-width template avoids that in most themes.
+- **Sticky header:** with the full-screen template it sticks to the top of the window (below the admin bar).
+  With the shortcode or block it sticks under the theme's menu, and breaks if a theme wrapper has `overflow: hidden`.
 - **Page caching:** the form uses a `wp_rest` nonce, which is valid for 12–24 hours. If full-page caching keeps pages
   longer than that, exclude this page or set the cache lifetime under 12 hours. Otherwise students see "Your session has
   expired".
