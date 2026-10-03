@@ -67,6 +67,8 @@ function itp_defaults(): array {
 			'lead'          => __( 'A six-month internship (compulsory) with hands-on work in real plants, labs and project teams. Two batches a year: May to November and November to May. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.', 'industrial-training' ),
 			// Main message: under-18s can join too (from age 14 under NAPS). Leave 'eligible_title' empty to hide.
 			'eligible_title' => __( 'Below 18? You can join too!', 'industrial-training' ),
+			'eligible_text'  => '', // Optional line under the title; empty = hidden.
+			'eligible_note'  => '', // Optional condition; empty = hidden.
 			'cta_primary'   => __( 'Register now', 'industrial-training' ),
 			'cta_secondary' => __( 'Explore tracks', 'industrial-training' ),
 			'image'         => 0,
@@ -121,8 +123,10 @@ function itp_defaults(): array {
 			// Highlighted banner under the stipend. While its title is set, the NAPS card is left out of the grid.
 			// Pill shown next to the stipend; many students don't know the apprenticeship age rules.
 			'age'         => __( '🎂 Below 18? You can join too', 'industrial-training' ),
-			
-			
+			'naps'        => [
+				// Age tiles (value + label) shown in the NAPS banner; empty = hidden.
+				// e.g. [ 'value' => '14+ years', 'label' => 'Minimum age to join' ], [ '18+ years', 'For hazardous trades' ], [ 'Up to 35', 'At registration, for govt. stipend support' ].
+				'ages'     => [],
 				'eligible' => __( '✅ Students below 18 are eligible', 'industrial-training' ),
 				'title' => __( 'Apprenticeships through NAPS', 'industrial-training' ),
 				'text'  => __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ),

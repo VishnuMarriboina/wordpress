@@ -103,7 +103,9 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 							<span class="itp-eligible-icon" aria-hidden="true">🎉</span>
 							<div>
 								<p class="itp-eligible-title"><?php echo esc_html( $hero['eligible_title'] ); ?></p>
-								<p class="itp-eligible-text"><?php echo esc_html( $hero['eligible_text'] ); ?></p>
+								<?php if ( ! empty( $hero['eligible_text'] ) ) : ?>
+									<p class="itp-eligible-text"><?php echo esc_html( $hero['eligible_text'] ); ?></p>
+								<?php endif; ?>
 								<?php if ( ! empty( $hero['eligible_note'] ) ) : ?>
 									<p class="itp-eligible-note"><?php echo esc_html( $hero['eligible_note'] ); ?></p>
 								<?php endif; ?>
