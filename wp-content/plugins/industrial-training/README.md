@@ -92,8 +92,8 @@ All of it comes from one data file with the arrays `founderData`, `impactData`, 
    These are not real people, colleges or companies.
    - Every sample card carries a visible **Sample** label, and each section shows "Sample content shown for
      demonstration."
-   - **Settings → Industrial Training → Sample content → "Show sample content to visitors"** (on by default for testing)
-     shows the samples to everyone. Logged-in editors always see them, with dashed outlines and an editor note.
+   - **Settings → Industrial Training → Sample content → "Show sample content to visitors"**
+     shows the samples to everyone. It is off by default; while it is off nobody sees them, including logged-in editors.
    - **Before launch:** switch the setting off, or replace each sample with a real, approved entry and set
      `'placeholder' => false`.
    - With the setting off, a section appears only once it has a real entry. Until then visitors see Journey & Impact,

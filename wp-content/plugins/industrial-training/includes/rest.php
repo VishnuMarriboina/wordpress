@@ -75,7 +75,7 @@ function itp_rest_register( WP_REST_Request $request ): WP_REST_Response {
 function itp_send_emails( int $id, array $d ): void {
 	$s    = itp_settings();
 	$site = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
-	$to   = is_email( $s['form']['notify_email'] ) ? $s['form']['notify_email'] : get_option( 'admin_email' );
+	$to   = itp_email_list( $s['form']['notify_email'] ) ?: get_option( 'admin_email' );
 
 	$lines = [
 		__( 'Name', 'industrial-training' )          => $d['fullName'],
@@ -99,6 +99,8 @@ function itp_send_emails( int $id, array $d ): void {
 		/* translators: 1: first name, 2: track, 3: phone, 4: site name */
 		$msg = sprintf( __( "Hi %1\$s,\n\nThank you for registering for the %2\$s track. Our counsellor will call you on %3\$s within 2 working days to confirm your batch.\n\n— %4\$s", 'industrial-training' ), strtok( $d['fullName'], ' ' ), $d['track'], $d['phone'], $site );
 		/* translators: %s: site name */
-		wp_mail( $d['email'], sprintf( __( 'Your Industrial Training registration — %s', 'industrial-training' ), $site ), $msg );
+		// Replies from students go to the public contact address.
+		$reply = is_email( $s['contact']['email'] ) ? [ 'Reply-To: ' . $s['brand_name'] . ' <' . $s['contact']['email'] . '>' ] : [];
+		wp_mail( $d['email'], sprintf( __( 'Your Industrial Training registration — %s', 'industrial-training' ), $site ), $msg, $reply );
 	}
 }

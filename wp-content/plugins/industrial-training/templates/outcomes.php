@@ -17,8 +17,8 @@ $partners = itp_items( 'partnerOrganizations' );
 $community = itp_social_links( $c['companySocial'] ?? [], $s['brand_name'], 'itp-social-lg' );
 $cta      = $c['ctaData'] ?? [];
 
-// Alternate backgrounds across whichever sections render (the section before is "How it works", plain).
-$alt = true;
+// Alternate backgrounds across whichever sections render (the section before is "How it works", grey).
+$alt = false;
 $bg  = static function () use ( &$alt ) {
 	$class = $alt ? ' itp-alt' : '';
 	$alt   = ! $alt;

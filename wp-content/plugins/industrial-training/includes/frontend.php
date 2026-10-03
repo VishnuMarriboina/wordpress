@@ -8,8 +8,8 @@ defined( 'ABSPATH' ) || exit;
 const ITP_TEMPLATE = 'industrial-training-full-width.php';
 
 add_action( 'init', function () {
-	wp_register_style( 'itp', ITP_URL . 'assets/css/itp.css', [], ITP_VERSION );
-	wp_register_script( 'itp', ITP_URL . 'assets/js/itp.js', [], ITP_VERSION, [ 'strategy' => 'defer', 'in_footer' => true ] );
+	wp_register_style( 'itp', ITP_URL . 'assets/css/itp.css', [], itp_asset_ver( 'assets/css/itp.css' ) );
+	wp_register_script( 'itp', ITP_URL . 'assets/js/itp.js', [], itp_asset_ver( 'assets/js/itp.js' ), [ 'strategy' => 'defer', 'in_footer' => true ] );
 	wp_register_script( 'itp-block-editor', ITP_URL . 'assets/js/block.js', [ 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-block-editor' ], ITP_VERSION, true );
 	wp_set_script_translations( 'itp-block-editor', 'industrial-training', ITP_DIR . 'languages' );
 

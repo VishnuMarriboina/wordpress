@@ -20,12 +20,25 @@ function itp_default_photos(): array {
 		'civil'   => [ '1541888946425-d81bb19240f5', __( 'Site engineers in hard hats overlooking a construction site', 'industrial-training' ) ],
 		'web'     => [ '1522071820081-009f0129c71c', __( 'Developers coding together on laptops around a table', 'industrial-training' ) ],
 		'contact' => [ '1581091226825-a6a2a5aee158', __( 'Engineer working on a laptop inside a factory lab', 'industrial-training' ) ],
+		// "What we offer students" cards.
+		'safety'      => [ '1622612023350-b15f063eabe6', __( 'Worker wearing a white safety helmet and high-visibility vest', 'industrial-training' ) ],
+		'certificate' => [ '1589330694653-ded6df03f754', __( 'Signed certificate with a red seal', 'industrial-training' ) ],
+		'placement'   => [ '1758518730384-be3d205838e8', __( 'Candidate shaking hands with an interviewer after a job interview', 'industrial-training' ) ],
+		'stay'        => [ '1781415980730-bfcf192e38bc', __( 'Clean, well-lit shared room with neatly made beds', 'industrial-training' ) ],
+		'everyone'    => [ '1558023608-bbcc13ffdc24', __( 'Group of smiling young men and women students', 'industrial-training' ) ],
+		'criteria'    => [ '1758270705290-62b6294dd044', __( 'Students gathered around a laptop in a classroom', 'industrial-training' ) ],
+		'colleges'    => [ '1635246550194-11af93a2763f', __( 'Students sitting together on a college campus', 'industrial-training' ) ],
+		'naps'        => [ '1581092160607-ee22621dd758', __( 'Trainees in safety glasses learning on machines in a workshop', 'industrial-training' ) ],
 	];
 }
 
 function itp_defaults(): array {
 	$track = static function ( $name, $branch, $weeks, $summary, $skills, $photo ) {
 		return compact( 'name', 'branch', 'weeks', 'summary', 'skills', 'photo' ) + [ 'image' => 0 ];
+	};
+	// 'note' is the fine print shown under the card text (conditions, disclaimers).
+	$offer = static function ( $icon, $title, $text, $note, $photo ) {
+		return compact( 'icon', 'title', 'text', 'note', 'photo' ) + [ 'image' => 0 ];
 	};
 
 	return [
@@ -34,6 +47,7 @@ function itp_defaults(): array {
 		'brand_name' => __( 'Skillrise Technologies', 'industrial-training' ),
 		'nav'        => [
 			'highlights' => __( 'Why us', 'industrial-training' ),
+			'offers'     => __( 'What you get', 'industrial-training' ),
 			'reviews'    => __( 'Reviews', 'industrial-training' ),
 			'founder'    => __( 'Founder', 'industrial-training' ),
 			'tracks'     => __( 'Tracks', 'industrial-training' ),
@@ -69,6 +83,23 @@ function itp_defaults(): array {
 				[ 'icon' => '💼', 'title' => __( 'Placement support', 'industrial-training' ), 'text' => __( 'Resume reviews, mock interviews and referrals to hiring partners.', 'industrial-training' ) ],
 			],
 		],
+		'offers'     => [
+			'title'       => __( 'What We Offer Students', 'industrial-training' ),
+			'lead'        => __( 'A safe, supportive and career-focused internship and training experience: practical exposure, professional skills and preparation for your future career.', 'industrial-training' ),
+			'items'       => [
+				$offer( '🛡️', __( 'Student safety comes first', 'industrial-training' ), __( 'The safety and well-being of our students is one of our priorities. We maintain a professional, respectful and supportive environment throughout the internship and training period.', 'industrial-training' ), '', 'safety' ),
+				$offer( '🎓', __( 'Certification', 'industrial-training' ), __( 'Students who successfully complete the internship or training program receive a certificate recognising their participation and practical learning experience.', 'industrial-training' ), '', 'certificate' ),
+				$offer( '💼', __( 'Placement guidance & opportunities', 'industrial-training' ), __( 'Career guidance and placement support to understand career paths, prepare for opportunities and connect with relevant organisations where opportunities are available.', 'industrial-training' ), __( 'Placement assistance does not guarantee employment.', 'industrial-training' ), 'placement' ),
+				$offer( '🏠', __( 'Accommodation guidance', 'industrial-training' ), __( 'Need a place to stay during your internship or training? We guide you and refer you to suitable accommodation options.', 'industrial-training' ), __( 'Subject to availability and applicable terms.', 'industrial-training' ), 'stay' ),
+				$offer( '👩‍💻', __( 'Opportunities for all students', 'industrial-training' ), __( 'Our programs are open to eligible students regardless of gender, with equal learning and professional-development opportunities for male and female students.', 'industrial-training' ), '', 'everyone' ),
+				$offer( '📋', __( 'No minimum pass-percentage', 'industrial-training' ), __( 'Explore our programs without a restrictive academic pass-percentage requirement.', 'industrial-training' ), __( 'Subject to the eligibility requirements of the particular program.', 'industrial-training' ), 'criteria' ),
+				$offer( '🏫', __( 'Students from any college', 'industrial-training' ), __( 'Apply regardless of your college or institution. We do not restrict opportunities to students from specific colleges.', 'industrial-training' ), __( 'Subject to the requirements of the particular program.', 'industrial-training' ), 'colleges' ),
+				$offer( '👨‍🎓', __( 'Apprenticeships through NAPS', 'industrial-training' ), __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ), __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ), 'naps' ),
+			],
+			'cta_title'   => __( '🚀 Learn. Experience. Grow.', 'industrial-training' ),
+			'cta_text'    => __( 'Gain practical experience, build industry-relevant skills and take your next career step with greater confidence.', 'industrial-training' ),
+			'cta_button'  => __( 'Apply for an internship', 'industrial-training' ),
+		],
 		'tracks'     => [
 			'title'  => __( 'Training tracks', 'industrial-training' ),
 			'lead'   => __( 'Pick the track that matches your branch. Each one ends with a graded project.', 'industrial-training' ),
@@ -92,9 +123,9 @@ function itp_defaults(): array {
 		'contact'    => [
 			'title'      => __( 'Questions? Talk to us', 'industrial-training' ),
 			'lead'       => __( 'Our counsellors help you choose the right track and batch.', 'industrial-training' ),
-			'phone'      => '+91 98765 43210',
+			'phone'      => '+91 93929 20858',
 			'whatsapp'   => '+91 93929 20858',
-			'email'      => 'training@example.com',
+			'email'      => 'info@skillrisetechnologies.com',
 			'address'    => __( 'Training Centre, Industrial Estate, Hyderabad, Telangana', 'industrial-training' ),
 			'hours'      => __( 'Mon – Sat, 9:30 AM – 6:00 PM', 'industrial-training' ),
 			'cta_title'  => __( 'Seats are limited each batch', 'industrial-training' ),
@@ -111,13 +142,13 @@ function itp_defaults(): array {
 			'note'            => __( 'All fields are required.', 'industrial-training' ),
 			'success_title'   => __( "You're registered, {name}!", 'industrial-training' ),
 			'success_text'    => __( "We've saved your registration for {track}. Our counsellor will call you on {phone} within 2 working days.", 'industrial-training' ),
-			'notify_email'    => '',
+			'notify_email'    => 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com',
 			'confirm_student' => 0,
 		],
 		'samples'    => [
 			// Shows the sample students, colleges and partners from content/data.php to visitors, labelled "Sample".
-			// For testing only — switch off before launch.
-			'show' => 1,
+			// For testing only. Off by default so visitors never see invented entries.
+			'show' => 0,
 		],
 		'seo'        => [
 			'enabled'     => 1,

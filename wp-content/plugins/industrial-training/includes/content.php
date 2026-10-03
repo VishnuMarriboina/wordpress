@@ -23,9 +23,9 @@ function itp_is_editor(): bool {
 	return current_user_can( 'edit_pages' );
 }
 
-/** Whether sample entries render: always for editors; for visitors only while the "show samples" setting is on. */
+/** Whether sample entries render: only while the "show samples" setting is on (for everyone, so editors see what visitors see). */
 function itp_preview_mode(): bool {
-	return (bool) apply_filters( 'itp_preview_placeholders', itp_is_editor() || ! empty( itp_settings()['samples']['show'] ) );
+	return (bool) apply_filters( 'itp_preview_placeholders', ! empty( itp_settings()['samples']['show'] ) );
 }
 
 /** Entries that should render for the current viewer. */

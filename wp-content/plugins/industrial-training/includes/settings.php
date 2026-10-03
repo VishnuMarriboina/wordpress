@@ -35,8 +35,8 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
 		return;
 	}
 	wp_enqueue_media();
-	wp_enqueue_style( 'itp-admin', ITP_URL . 'assets/css/admin.css', [], ITP_VERSION );
-	wp_enqueue_script( 'itp-admin', ITP_URL . 'assets/js/admin.js', [], ITP_VERSION, true );
+	wp_enqueue_style( 'itp-admin', ITP_URL . 'assets/css/admin.css', [], itp_asset_ver( 'assets/css/admin.css' ) );
+	wp_enqueue_script( 'itp-admin', ITP_URL . 'assets/js/admin.js', [], itp_asset_ver( 'assets/js/admin.js' ), true );
 	wp_localize_script( 'itp-admin', 'itpAdmin', [
 		'choose' => __( 'Choose image', 'industrial-training' ),
 		'use'    => __( 'Use this image', 'industrial-training' ),
@@ -57,8 +57,9 @@ function itp_sanitize_value( string $key, $value ) {
 		case 'weeks':
 			return absint( $value );
 		case 'email':
-		case 'notify_email':
 			return sanitize_email( $value );
+		case 'notify_email':
+			return implode( ', ', itp_email_list( $value ) );
 		case 'credits':
 			return wp_kses( $value, [ 'a' => [ 'href' => true, 'rel' => true, 'target' => true ] ] );
 		case 'lead':
@@ -173,6 +174,10 @@ add_action( 'admin_post_itp_import_photos', function () {
 		$fill( $track['image'], $track['photo'] ?? '' );
 	}
 	unset( $track );
+	foreach ( $settings['offers']['items'] as &$offer ) {
+		$fill( $offer['image'], $offer['photo'] ?? '' );
+	}
+	unset( $offer );
 	update_option( ITP_OPTION, $settings );
 
 	wp_safe_redirect( add_query_arg( [ 'page' => ITP_PAGE, 'itp_imported' => count( $ids ), 'itp_failed' => $failed ], admin_url( 'options-general.php' ) ) );
@@ -293,7 +298,7 @@ function itp_settings_page(): void {
 				<input type="hidden" name="action" value="itp_import_photos">
 				<?php wp_nonce_field( 'itp_import_photos' ); ?>
 				<button class="button"><?php esc_html_e( 'Import placeholder photos into Media Library', 'industrial-training' ); ?></button>
-				<span class="description"><?php esc_html_e( 'Copies the 8 default photos bundled with the plugin (with alt text) into the Media Library and assigns them to empty image slots. Optional: the page already shows them without this.', 'industrial-training' ); ?></span>
+				<span class="description"><?php esc_html_e( 'Copies the default photos bundled with the plugin (with alt text) into the Media Library and assigns them to empty image slots. Optional: the page already shows them without this.', 'industrial-training' ); ?></span>
 			</form>
 		</div>
 
@@ -322,6 +327,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'brand_mark' ], __( 'Brand mark text', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_name' ], __( 'Brand name', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'highlights' ], __( 'Link: highlights', 'industrial-training' ) );
+				itp_field( $s, [ 'nav', 'offers' ], __( 'Link: what we offer', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'reviews' ], __( 'Link: reviews', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'founder' ], __( 'Link: founder', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'tracks' ], __( 'Link: tracks', 'industrial-training' ) );
@@ -348,6 +354,23 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'hero', 'float_title' ], __( 'Floating label title', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'float_text' ], __( 'Floating label text', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'scroll_label' ], __( 'Scroll cue label (screen readers)', 'industrial-training' ) );
+			} );
+
+			$section( __( 'What we offer students', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'offers', 'title' ], __( 'Section title', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
+				foreach ( array_keys( itp_defaults()['offers']['items'] ) as $i ) {
+					/* translators: %d: card number */
+					$n = sprintf( __( 'Card %d', 'industrial-training' ), $i + 1 );
+					itp_field( $s, [ 'offers', 'items', $i, 'icon' ], $n . ' — ' . __( 'icon', 'industrial-training' ) );
+					itp_field( $s, [ 'offers', 'items', $i, 'title' ], $n . ' — ' . __( 'title', 'industrial-training' ) );
+					itp_field( $s, [ 'offers', 'items', $i, 'text' ], $n . ' — ' . __( 'text', 'industrial-training' ), 'textarea' );
+					itp_field( $s, [ 'offers', 'items', $i, 'note' ], $n . ' — ' . __( 'fine print', 'industrial-training' ), 'text', __( 'Conditions or disclaimer shown under the text. Leave empty to hide.', 'industrial-training' ) );
+					itp_field( $s, [ 'offers', 'items', $i, 'image' ], $n . ' — ' . __( 'photo', 'industrial-training' ), 'image' );
+				}
+				itp_field( $s, [ 'offers', 'cta_title' ], __( 'Banner title', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'cta_text' ], __( 'Banner text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'offers', 'cta_button' ], __( 'Banner button', 'industrial-training' ) );
 			} );
 
 			$section( __( 'Why train with us', 'industrial-training' ), function () use ( $s ) {
@@ -419,12 +442,12 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'form', 'success_title' ], __( 'Success heading', 'industrial-training' ), 'text', __( '<code>{name}</code> = first name.', 'industrial-training' ) );
 				itp_field( $s, [ 'form', 'success_text' ], __( 'Success text', 'industrial-training' ), 'textarea', __( 'Placeholders: <code>{name}</code> <code>{track}</code> <code>{phone}</code>', 'industrial-training' ) );
 				/* translators: %s: admin email */
-				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification email', 'industrial-training' ), 'email', esc_html( sprintf( __( 'Leave empty to use %s.', 'industrial-training' ), get_option( 'admin_email' ) ) ) );
+				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification emails', 'industrial-training' ), 'text', esc_html( sprintf( __( 'One or more addresses, separated by commas. Leave empty to use %s.', 'industrial-training' ), get_option( 'admin_email' ) ) ) );
 				itp_field( $s, [ 'form', 'confirm_student' ], __( 'Send confirmation email to the student', 'industrial-training' ), 'checkbox' );
 			} );
 
 			$section( __( 'Sample content (testing)', 'industrial-training' ), function () use ( $s ) {
-				itp_field( $s, [ 'samples', 'show' ], __( 'Show sample content to visitors', 'industrial-training' ), 'checkbox', __( 'Shows the sample student reviews, success stories, test colleges and partners from the content file to everyone, each labelled “Sample”. Use this while testing; <strong>switch it off before launch</strong> (or replace every sample with real, approved entries). Logged-in editors always see samples.', 'industrial-training' ) );
+				itp_field( $s, [ 'samples', 'show' ], __( 'Show sample content to visitors', 'industrial-training' ), 'checkbox', __( 'Shows the sample student reviews, success stories, test colleges and partners from the content file to everyone, each labelled “Sample”. Use this while testing; <strong>switch it off before launch</strong> (or replace every sample with real, approved entries).', 'industrial-training' ) );
 			}, true );
 
 			$section( __( 'SEO', 'industrial-training' ), function () use ( $s ) {

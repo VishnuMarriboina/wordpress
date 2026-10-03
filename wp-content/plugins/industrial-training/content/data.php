@@ -15,7 +15,7 @@
  * - Entries with 'placeholder' => true are invented samples, not real people or organisations. They always
  *   carry a visible "Sample" label.
  * - Visitors see them only while Settings → Industrial Training → "Show sample content to visitors" is on
- *   (for testing). Logged-in editors always see them. Turn that setting off before launch.
+ *   (for testing). Turn that setting off before launch.
  * - Replace a sample with verified, consented information, then set 'placeholder' => false.
  * - With the setting off, a section appears only when it has at least one real (non-placeholder) entry.
  *

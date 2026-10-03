@@ -17,6 +17,20 @@ function itp_merge( array $defaults, array $saved ): array {
 	return $defaults;
 }
 
+/** Valid addresses from a comma/semicolon/space separated list. */
+function itp_email_list( $value ): array {
+	return array_values( array_unique( array_filter( array_map( 'sanitize_email', preg_split( '/[\s,;]+/', (string) $value ) ), 'is_email' ) ) );
+}
+
+/**
+ * Cache-busting version for a plugin file: changes whenever the file does, so CDNs (Hostinger's caches
+ * for 7 days) and browsers fetch the new copy after every upload.
+ */
+function itp_asset_ver( string $path ): string {
+	$time = @filemtime( ITP_DIR . $path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+	return ITP_VERSION . ( $time ? '.' . $time : '' );
+}
+
 function itp_settings(): array {
 	static $cache = null;
 	if ( null === $cache ) {
@@ -130,7 +144,7 @@ function itp_image( int $id, string $photo, array $ratio, string $sizes, array $
 	}
 	// Default photos ship with the plugin (assets/images/photos/<key>-<width>.webp), already cropped to the slot's ratio.
 	$alt    = $photos[ $photo ][1];
-	$url    = static fn( $w ) => ITP_URL . 'assets/images/photos/' . $photo . '-' . $w . '.webp?v=' . ITP_VERSION;
+	$url    = static fn( $w ) => ITP_URL . 'assets/images/photos/' . $photo . '-' . $w . '.webp?v=' . itp_asset_ver( 'assets/images/photos/' . $photo . '-' . $w . '.webp' );
 	$srcset = implode( ', ', array_map( static fn( $w ) => $url( $w ) . ' ' . $w . 'w', [ 480, 800, 1200 ] ) );
 
 	$attr = [
