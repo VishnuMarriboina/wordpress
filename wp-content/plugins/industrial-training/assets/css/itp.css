@@ -422,9 +422,12 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-tag-sample{border:1px dashed var(--danger);color:var(--danger)}
 .itp .itp-preview-public{display:inline-block;padding:4px 12px;border-style:solid;border-color:var(--border);background:var(--surface);color:var(--text-2);font-size:.8rem}
 /* Gold rating stars everywhere (scoped tightly so theme or card text colours can't override them). */
-.itp p.itp-stars, .itp p.itp-stars > span{color:#f5a50b;font-family:"Segoe UI Symbol", "DejaVu Sans", Arial, sans-serif;font-variant-emoji:text}
-.itp p.itp-stars{font-size:1.05rem;letter-spacing:2px;line-height:1;text-shadow:0 1px 0 rgba(180,83,9,.3)}
-.itp p.itp-stars .itp-stars-off{color:#d6dde8;text-shadow:none}
+.itp p.itp-stars{display:inline-flex;align-items:center;gap:6px;font-size:1.05rem;line-height:1}
+.itp p.itp-stars .itp-stars-row{position:relative;display:inline-block;font-family:"Segoe UI Symbol", "DejaVu Sans", Arial, sans-serif;font-variant-emoji:text;letter-spacing:2px;white-space:nowrap}
+.itp p.itp-stars .itp-stars-off{color:#d6dde8}
+/* Golden-red filled stars; the width share draws half stars for 4.5. */
+.itp p.itp-stars .itp-stars-on{position:absolute;top:0;left:0;width:var(--fill, 100%);overflow:hidden;background:linear-gradient(90deg, #fbbf24, #f59e0b 40%, #ea580c 75%, #dc2626);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 rgba(153,27,27,.25))}
+.itp p.itp-stars .itp-stars-num{color:#c2410c;font-size:.85em;font-weight:800}
 .itp .itp-is-sample{border:2px dashed #94a3b8}
 .itp .itp-person, .itp .itp-testimonial, .itp .itp-college{display:flex;flex-direction:column;gap:18px;height:100%;padding:24px}
 .itp .itp-person-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
@@ -487,6 +490,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-kind{background:rgba(165,180,252,.12);color:#c7d2fe}
 	.itp .itp-strip dd{color:#fbbf24}
 	.itp p.itp-stars .itp-stars-off{color:#334155}
+	.itp p.itp-stars .itp-stars-num{color:#fb923c}
 }
 /* Motion (hidden states only after JS adds .motion-ready) */
 .itp.motion-ready .itp-header{animation:itp-drop .6s var(--ease) backwards}

@@ -191,13 +191,19 @@ function itp_preview_note( array $items ): string {
 
 /** Star rating (1–5). Purely visual stars with a text equivalent. */
 function itp_stars( $rating ): string {
-	$rating = max( 0, min( 5, (int) $rating ) );
+	// Half steps (4.5 etc.): rounded to the nearest 0.5, between 0 and 5.
+	$rating = max( 0, min( 5, round( (float) $rating * 2 ) / 2 ) );
 	if ( ! $rating ) {
 		return '';
 	}
-	/* translators: %d: rating out of 5 */
-	$label = sprintf( __( 'Rated %d out of 5', 'industrial-training' ), $rating );
-	return '<p class="itp-stars" role="img" aria-label="' . esc_attr( $label ) . '"><span aria-hidden="true">' . str_repeat( '★', $rating ) . '<span class="itp-stars-off">' . str_repeat( '★', 5 - $rating ) . '</span></span></p>';
+	$shown = rtrim( rtrim( number_format( $rating, 1 ), '0' ), '.' ); // 4.5, 5, 4
+	/* translators: %s: rating out of 5, e.g. 4.5 */
+	$label = sprintf( __( 'Rated %s out of 5', 'industrial-training' ), $shown );
+	// Five grey stars with five coloured stars on top, clipped to the rating's share of the width.
+	return '<p class="itp-stars" role="img" aria-label="' . esc_attr( $label ) . '">'
+		. '<span class="itp-stars-row" aria-hidden="true" style="--fill:' . esc_attr( $rating / 5 * 100 ) . '%">'
+		. '<span class="itp-stars-off">★★★★★</span><span class="itp-stars-on">★★★★★</span></span>'
+		. '<span class="itp-stars-num" aria-hidden="true">' . esc_html( $shown ) . '</span></p>';
 }
 
 /** Carousel controls (prev/next + dots container filled by JS). */

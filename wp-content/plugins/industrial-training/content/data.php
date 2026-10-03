@@ -31,7 +31,7 @@ $no_social = [ 'linkedin' => '', 'instagram' => '', 'facebook' => '', 'twitter' 
 return [
 
 	/* ---------------- Our students & their colleges (real, company-provided) ----------------
-	 * Students: real students from Skillrise's records (names and colleges confirmed by the company, Oct 2026).
+	 * Students: real students from Skillrise's records. Names, colleges, comments, ratings and batches provided by the company (Oct 2026).
 	 * Fill the other fields only with details the student has confirmed — never invented comments or ratings. A card shows whatever is
 	 * filled in: college, track, internship period (start → end), star rating and comment. No student photos.
 	 *
@@ -43,73 +43,73 @@ return [
 			'name'        => 'Kavya',
 			'college'     => 'Loyola Polytechnic College',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'May 2025', // Batch start (May or November)
+			'end'         => 'Nov 2025', // Batch end (6 months later)
+			'comment'     => 'The internship gave me good practical exposure. I worked on real projects and understood how development works in a professional environment. The mentors were supportive whenever I had doubts.',
+			'rating'      => 5,
 		],
 		[
 			'name'        => 'Rajyalakshmi',
 			'college'     => 'Gouthami Institute of Technology and Management for Women',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'Nov 2024', // Batch start (May or November)
+			'end'         => 'May 2025', // Batch end (6 months later)
+			'comment'     => 'I gained practical knowledge that I couldn\'t get only from college. The training sessions and project work helped me improve my technical and communication skills.',
+			'rating'      => 4.5,
 		],
 		[
 			'name'        => 'Yaswanth',
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'May 2025', // Batch start (May or November)
+			'end'         => 'Nov 2025', // Batch end (6 months later)
+			'comment'     => 'The internship was a good opportunity to work on projects and understand the difference between classroom learning and industry requirements. The guidance from the team was helpful.',
+			'rating'      => 5,
 		],
 		[
 			'name'        => 'Mahir',
 			'college'     => 'KORM College of Engineering',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'Nov 2024', // Batch start (May or November)
+			'end'         => 'May 2025', // Batch end (6 months later)
+			'comment'     => 'I learned how to work on a project as part of a team and improved my technical skills during the internship. The mentors explained concepts clearly and encouraged us to ask questions.',
+			'rating'      => 4.5,
 		],
 		[
 			'name'        => 'Naveen',
 			'college'     => 'Loyola Polytechnic College',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'May 2025', // Batch start (May or November)
+			'end'         => 'Nov 2025', // Batch end (6 months later)
+			'comment'     => 'The project-based learning helped me understand how software projects are developed in real companies. I also received useful guidance about interviews and career preparation.',
+			'rating'      => 5,
 		],
 		[
 			'name'        => 'Narasimha',
 			'college'     => 'Vemu Institute of Technology',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'Nov 2025', // Batch start (May or November)
+			'end'         => 'May 2026', // Batch end (6 months later)
+			'comment'     => 'This internship helped me gain confidence in applying what I learned in college. Working on practical assignments and projects gave me a better understanding of industry expectations.',
+			'rating'      => 4,
 		],
 		[
 			'name'        => 'Lohitha',
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'May 2025', // Batch start (May or November)
+			'end'         => 'Nov 2025', // Batch end (6 months later)
+			'comment'     => 'I had a good learning experience throughout the internship. The trainers were approachable and helped us whenever we faced difficulties with our projects.',
+			'rating'      => 4.5,
 		],
 		[
 			'name'        => 'Harshitha',
 			'college'     => 'KORM College of Engineering',
 			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
-			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
-			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
-			'comment'     => '', // The student's OWN words, with their permission.
-			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
+			'start'       => 'Nov 2025', // Batch start (May or November)
+			'end'         => 'May 2026', // Batch end (6 months later)
+			'comment'     => 'The internship provided a good combination of training and practical project experience. I improved my technical knowledge and learned how to approach real-world tasks more confidently.',
+			'rating'      => 5,
 		],
 	],
 	'ourColleges'            => [
