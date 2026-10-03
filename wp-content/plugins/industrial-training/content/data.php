@@ -31,25 +31,153 @@ $no_social = [ 'linkedin' => '', 'instagram' => '', 'facebook' => '', 'twitter' 
 return [
 
 	/* ---------------- Our students & their colleges (real, company-provided) ----------------
-	 * Shown in the "Our Students" section. Add 'college' => 'Loyola Polytechnic College' to a student
-	 * to show their college under the name, and 'photo' => 'assets/images/students/kavya.jpg' (with consent)
-	 * to replace the initials. */
+	 * Students: the entries below are DEMO content (invented comments, Unsplash stock photos, labelled "Sample"
+	 * on the page). Replace each with a real student's confirmed details and delete its 'placeholder' line.
+	 * Fill each field only with real details the student has confirmed. A card shows whatever is
+	 * filled in: photo (else initials), college, track, year, star rating and comment.
+	 * Put photos in assets/images/students/ (square JPG, about 400×400 px).
+	 *
+	 * Colleges: public facts (checked October 2026 on the colleges' Careers360 / directory listings).
+	 * 'image' takes a campus photo in assets/images/colleges/ — use one the college has given you permission
+	 * to use. Without one, the card shows a designed header with the college's initials. */
 	'ourStudents'            => [
-		[ 'name' => 'Kavya' ],
-		[ 'name' => 'Rajyalakshmi' ],
-		[ 'name' => 'Yaswanth' ],
-		[ 'name' => 'Mahir' ],
-		[ 'name' => 'Naveen' ],
-		[ 'name' => 'Narasimha' ],
-		[ 'name' => 'Lohitha' ],
-		[ 'name' => 'Harshitha' ],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Kavya',
+			'photo'       => 'assets/images/students/kavya.webp',
+			'college'     => 'Gouthami Institute of Technology and Management for Women',
+			'track'       => 'Embedded & IoT',
+			'year'        => '2025',
+			'comment'     => 'I had only seen sensors in textbooks. Here I built a working IoT project with my team and finally understood how the hardware and code fit together.',
+			'rating'      => 5,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Rajyalakshmi',
+			'photo'       => 'assets/images/students/rajyalakshmi.webp',
+			'college'     => 'Vasavi Polytechnic',
+			'track'       => 'Electrical Systems & PLC',
+			'year'        => '2025',
+			'comment'     => 'Wiring a real control panel and writing PLC logic gave me confidence I never got in the classroom. The mentors were patient with every question.',
+			'rating'      => 5,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Yaswanth',
+			'photo'       => 'assets/images/students/yaswanth.webp',
+			'college'     => 'Loyola Polytechnic College',
+			'track'       => 'Manufacturing & CNC',
+			'year'        => '2024',
+			'comment'     => 'Running CNC machines on the shop floor was the best part. The stipend also helped me support myself during the training.',
+			'rating'      => 5,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Mahir',
+			'photo'       => 'assets/images/students/mahir.webp',
+			'college'     => 'KORM College of Engineering',
+			'track'       => 'Software & Web',
+			'year'        => '2025',
+			'comment'     => 'We built a complete web app from start to finish. The code reviews from mentors taught me how real software teams work.',
+			'rating'      => 4,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Naveen',
+			'photo'       => 'assets/images/students/naveen.webp',
+			'college'     => 'Vemu Institute of Technology',
+			'track'       => 'Electrical Systems & PLC',
+			'year'        => '2024',
+			'comment'     => 'Troubleshooting motors and drives with experienced engineers was a great learning experience. I now explain my project confidently in interviews.',
+			'rating'      => 5,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Narasimha',
+			'photo'       => 'assets/images/students/narasimha.webp',
+			'college'     => 'Loyola Polytechnic College',
+			'track'       => 'Civil & AutoCAD',
+			'year'        => '2025',
+			'comment'     => 'Site visits and AutoCAD drawings made civil engineering feel real. I learned to read plans the way site engineers do.',
+			'rating'      => 4,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Lohitha',
+			'photo'       => 'assets/images/students/lohitha.webp',
+			'college'     => 'Gouthami Institute of Technology and Management for Women',
+			'track'       => 'Software & Web',
+			'year'        => '2025',
+			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these weeks than in a whole semester.',
+			'rating'      => 5,
+		],
+		[
+			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'name'        => 'Harshitha',
+			'photo'       => 'assets/images/students/harshitha.webp',
+			'college'     => 'Vasavi Polytechnic',
+			'track'       => 'Embedded & IoT',
+			'year'        => '2024',
+			'comment'     => 'From the counselling call to the certificate, everything was clear. The hands-on projects and placement guidance were really helpful.',
+			'rating'      => 5,
+		],
 	],
 	'ourColleges'            => [
-		[ 'name' => 'Loyola Polytechnic College', 'location' => 'Pulivendula' ],
-		[ 'name' => 'KORM College', 'location' => 'Kadapa' ],
-		[ 'name' => 'Vemu Institute of Technology', 'location' => 'Chittoor' ],
-		[ 'name' => 'Gouthami Institute of Technology', 'location' => 'Proddatur' ],
-		[ 'name' => 'Vasavi Polytechnic College', 'location' => 'Banaganapalle' ],
+		[
+			'name'        => 'Loyola Polytechnic College',
+			'location'    => 'Pulivendula',
+			'district'    => 'YSR Kadapa district',
+			'type'        => 'Polytechnic',
+			'established' => '1980',
+			'approvals'   => 'AICTE approved · Admissions through AP POLYCET',
+			'courses'     => [ 'Civil', 'Mechanical', 'EEE', 'ECE', 'Computer', 'Mining' ],
+			'image'       => '',
+			'website'     => '',
+		],
+		[
+			'name'        => 'KORM College of Engineering',
+			'location'    => 'Kadapa',
+			'district'    => 'YSR Kadapa district',
+			'type'        => 'Engineering',
+			'established' => '2006',
+			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur',
+			'courses'     => [ 'B.Tech', 'M.Tech', 'MBA' ],
+			'image'       => '',
+			'website'     => '',
+		],
+		[
+			'name'        => 'Vemu Institute of Technology',
+			'location'    => 'P. Kothakota, near Pakala',
+			'district'    => 'Chittoor district',
+			'type'        => 'Engineering',
+			'established' => '2008',
+			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur · NAAC A+ & NBA accredited',
+			'courses'     => [ 'CSE', 'ECE', 'EEE', 'Mechanical', 'Civil' ],
+			'image'       => '',
+			'website'     => '',
+		],
+		[
+			'name'        => 'Gouthami Institute of Technology and Management for Women',
+			'location'    => 'Proddatur',
+			'district'    => 'YSR Kadapa district',
+			'type'        => 'Engineering (Women)',
+			'established' => '2009',
+			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur',
+			'courses'     => [ 'CSE', 'ECE', 'EEE', 'Civil' ],
+			'image'       => '',
+			'website'     => '',
+		],
+		[
+			'name'        => 'Vasavi Polytechnic',
+			'location'    => 'Banaganapalle',
+			'district'    => 'Nandyal district',
+			'type'        => 'Polytechnic',
+			'established' => '1984',
+			'approvals'   => 'AICTE approved · Recognised by SBTET Andhra Pradesh',
+			'courses'     => [ 'Civil', 'Mechanical', 'ECE', 'EEE', 'Computer' ],
+			'image'       => '',
+			'website'     => '',
+		],
 	],
 
 	/* ---------------- Founder & CEO (company-provided information) ---------------- */

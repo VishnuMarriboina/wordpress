@@ -187,7 +187,13 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 /* About */
 .itp .itp-about{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
 .itp .itp-about-visual{position:relative;display:grid;place-items:center;padding:24px}
-.itp .itp-about-card{position:relative;z-index:1;display:grid;justify-items:center;gap:14px;width:100%;max-width:420px;padding:36px 28px;border:1px solid var(--border);border-radius:24px;background:var(--surface);box-shadow:var(--shadow-lg);text-align:center}
+.itp .itp-about-card{position:relative;z-index:1;display:grid;justify-items:center;gap:14px;width:100%;max-width:420px;padding:36px 28px;border:1px solid #e5e7eb;border-radius:24px;background:#fff;color:#0f172a;box-shadow:var(--shadow-lg);text-align:center}
+/* The logo has dark-navy lettering, so its card stays white in dark mode too. */
+.itp .itp-about-card .itp-about-stats{border-top-color:#e5e7eb}
+.itp .itp-about-card .itp-about-stats div + div{border-left-color:#e5e7eb}
+.itp .itp-about-card .itp-about-stats dd{color:#1e3a8a}
+.itp .itp-about-card .itp-about-stats dt{color:#475569}
+.itp .itp-about-card .itp-about-tag{color:#b45309}
 .itp .itp-about-logo{width:234px;max-width:100%;height:auto}
 .itp .itp-about-tag{color:var(--accent-ink);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .itp .itp-about-stats{display:grid;grid-template-columns:repeat(3, 1fr);width:100%;margin-top:8px;border-top:1px solid var(--border)}
@@ -221,13 +227,38 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-person:hover .itp-person-avatar{animation:itp-bounce .7s var(--ease)}
 .itp .itp-person .itp-person-name{font-size:1.1rem;font-weight:700}
 .itp .itp-person-meta{color:var(--text-2);font-size:.85rem}
-.itp .itp-colleges-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
-.itp .itp-college-chip{display:flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-weight:600;box-shadow:var(--shadow);transition:transform .3s var(--ease), border-color .3s}
-.itp .itp-college-chip:hover{transform:translateY(-3px);border-color:var(--accent)}
-.itp .itp-college-mark{width:44px;height:44px;font-size:.9rem}
-.itp .itp-college-text{display:flex;flex-direction:column;line-height:1.25}
-.itp .itp-college-place{color:var(--text-2);font-size:.8rem;font-weight:500}
-.itp.motion-ready .itp-people .itp-reveal.itp-in, .itp.motion-ready .itp-colleges-row .itp-reveal.itp-in{animation-delay:calc(var(--i) * 80ms)}
+.itp .itp-person-avatar{width:80px;height:80px}
+.itp .itp-person-college{color:var(--brand);font-size:.85rem;font-weight:600}
+.itp .itp-person .itp-stars{margin-top:2px}
+.itp .itp-voices{display:grid;grid-template-columns:repeat(2, 1fr);gap:20px;margin-bottom:20px}
+.itp .itp-person.has-comment{display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:start;padding:24px;text-align:left}
+.itp .itp-person.has-comment .itp-person-avatar{grid-row:span 4;margin:0}
+.itp .itp-person.has-comment .itp-person-quote{grid-column:1 / -1}
+.itp .itp-person-quote{position:relative;margin:12px 0 0;padding:14px 16px 14px 40px;border-radius:14px;background:var(--bg-alt);color:var(--text-2);font-style:italic}
+.itp .itp-person-quote::before{content:"“";position:absolute;left:12px;top:-4px;color:var(--accent);font-size:2.6rem;font-style:normal;line-height:1}
+/* College cards */
+.itp .itp-campus-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.itp .itp-campus-grid > li{flex:0 1 calc((100% - 48px) / 3)}
+.itp .itp-campus{display:flex;flex-direction:column;overflow:hidden}
+.itp .itp-campus-media{position:relative;display:grid;place-items:center;overflow:hidden;aspect-ratio:16 / 9;background:radial-gradient(120% 120% at 0% 0%, #2563eb, var(--brand) 45%, var(--brand-2))}
+.itp .itp-campus-media.is-poly{background:radial-gradient(120% 120% at 0% 0%, #fbbf24, #d97706 50%, #9a3412)}
+.itp .itp-campus-media::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);background-size:26px 26px}
+.itp .itp-campus-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.itp .itp-campus:hover .itp-campus-media img{transform:scale(1.06)}
+.itp .itp-campus-mono{position:relative;color:#fff;font-size:3rem;font-weight:800;letter-spacing:.06em;text-shadow:0 6px 20px rgba(0,0,0,.25);transition:transform .5s var(--ease)}
+.itp .itp-campus:hover .itp-campus-mono{transform:scale(1.08)}
+.itp .itp-campus-icon{position:absolute;right:14px;bottom:12px;font-size:1.6rem;opacity:.9}
+.itp .itp-campus-type{position:absolute;left:12px;top:12px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--text);font-size:.75rem;font-weight:700}
+.itp .itp-campus-body{display:flex;flex:1;flex-direction:column;gap:10px;padding:20px 20px 22px}
+.itp .itp-campus-body h4{font-size:1.08rem;font-weight:700;line-height:1.3}
+.itp .itp-campus-place{color:var(--text-2);font-size:.9rem}
+.itp .itp-campus-facts{display:grid;gap:8px;padding:12px 0;border-block:1px solid var(--border)}
+.itp .itp-campus-facts div{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:.88rem}
+.itp .itp-campus-facts dt{color:var(--text-2)}
+.itp .itp-campus-facts dd{font-weight:600}
+.itp .itp-campus .itp-chips{margin:2px 0 0}
+.itp .itp-campus .itp-btn{align-self:flex-start;margin-top:auto}
+.itp.motion-ready .itp-people .itp-reveal.itp-in, .itp.motion-ready .itp-voices .itp-reveal.itp-in, .itp.motion-ready .itp-campus-grid .itp-reveal.itp-in{animation-delay:calc(var(--i) * 80ms)}
 
 .itp .itp-contact{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .itp .itp-address{margin-top:28px;font-style:normal}
@@ -425,6 +456,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-brand-logo{height:38px}
 	.itp .itp-steps{grid-template-columns:1fr}
 	.itp .itp-people{grid-template-columns:repeat(2, 1fr);gap:14px}
+	.itp .itp-campus-grid > li{flex-basis:100%}
 	.itp .itp-about-stats dd{font-size:1rem}
 	.itp .itp-offer-nav{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:-16px -16px 32px;padding:4px 16px;scrollbar-width:none}
 	.itp .itp-offer-nav li{flex:none}
@@ -479,6 +511,8 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-steps::before, .itp .itp-steps::after{display:none}
 	.itp .itp-about{grid-template-columns:1fr;gap:40px}
 	.itp .itp-people{grid-template-columns:repeat(3, 1fr)}
+	.itp .itp-campus-grid > li{flex-basis:calc((100% - 24px) / 2)}
+	.itp .itp-voices{grid-template-columns:1fr}
 }
 @media (max-width:760px){
 	.itp .itp-nav, .itp .itp-scroll{display:none}

@@ -41,30 +41,78 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 			<p class="itp-eyebrow itp-reveal"><?php esc_html_e( 'Our students', 'industrial-training' ); ?></p>
 			<h2 class="itp-h2 itp-reveal" id="itp-students-title"><?php esc_html_e( 'Students Who Trained With Us', 'industrial-training' ); ?></h2>
 			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Students from different colleges who gained hands-on industry experience with Skillrise Technologies.', 'industrial-training' ); ?></p>
+			<?php if ( array_filter( $our_students, 'itp_is_placeholder' ) ) : ?>
+				<p class="itp-preview-note itp-preview-public" role="note"><?php esc_html_e( 'Sample content shown for demonstration.', 'industrial-training' ); ?></p>
+			<?php endif; ?>
 		</div>
-		<?php if ( $our_students ) : ?>
-			<ul class="itp-people" role="list">
-				<?php foreach ( $our_students as $i => $st ) : ?>
-					<li class="itp-person itp-reveal" style="--i:<?php echo (int) $i; ?>">
-						<?php echo itp_avatar( $st['photo'] ?? '', (string) $st['name'], (string) $st['name'], 72, 'itp-avatar itp-person-avatar' ); // phpcs:ignore ?>
-						<p class="itp-person-name"><?php echo esc_html( $st['name'] ); ?></p>
-						<p class="itp-person-meta"><?php echo esc_html( $st['college'] ?? __( 'Industrial Training', 'industrial-training' ) ); ?></p>
+		<?php
+		// Students with a comment get a wide testimonial card first; the rest follow as compact cards.
+		usort( $our_students, static fn( $a, $b ) => (int) ( '' === trim( (string) ( $a['comment'] ?? '' ) ) ) <=> (int) ( '' === trim( (string) ( $b['comment'] ?? '' ) ) ) );
+		$groups = [ 'itp-voices' => [], 'itp-people' => [] ];
+		foreach ( $our_students as $st ) {
+			$groups[ '' !== trim( (string) ( $st['comment'] ?? '' ) ) ? 'itp-voices' : 'itp-people' ][] = $st;
+		}
+		?>
+		<?php foreach ( array_filter( $groups ) as $list_class => $list ) : ?>
+			<ul class="<?php echo esc_attr( $list_class ); ?>" role="list">
+				<?php foreach ( $list as $i => $st ) : ?>
+					<?php $has_comment = 'itp-voices' === $list_class; ?>
+					<li class="itp-person<?php echo $has_comment ? ' has-comment' : ''; ?> itp-reveal" style="--i:<?php echo (int) $i; ?>">
+						<?php echo itp_avatar( $st['photo'] ?? '', (string) $st['name'], (string) $st['name'], 80, 'itp-avatar itp-person-avatar' ); // phpcs:ignore ?>
+						<p class="itp-person-name"><?php echo esc_html( $st['name'] ); ?> <?php echo itp_badge( $st, '' ); // phpcs:ignore ?></p>
+						<p class="itp-person-meta"><?php echo esc_html( implode( ' · ', array_filter( [ $st['track'] ?? '', $st['year'] ?? '' ] ) ) ?: __( 'Industrial Training', 'industrial-training' ) ); ?></p>
+						<?php if ( ! empty( $st['college'] ) ) : ?>
+							<p class="itp-person-college"><span aria-hidden="true">🏫</span> <?php echo esc_html( $st['college'] ); ?></p>
+						<?php endif; ?>
+						<?php echo itp_stars( $st['rating'] ?? 0 ); // phpcs:ignore ?>
+						<?php if ( $has_comment ) : ?>
+							<blockquote class="itp-person-quote"><p><?php echo esc_html( $st['comment'] ); ?></p></blockquote>
+						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>
-		<?php endif; ?>
+		<?php endforeach; ?>
 		<?php if ( $our_colleges ) : ?>
 			<h3 class="itp-subhead itp-reveal"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
-			<ul class="itp-colleges-row" role="list">
+			<ul class="itp-campus-grid" role="list">
 				<?php foreach ( $our_colleges as $i => $col ) : ?>
-					<li class="itp-college-chip itp-reveal" style="--i:<?php echo (int) $i; ?>">
-						<?php echo itp_avatar( $col['logo'] ?? '', '', (string) $col['name'], 44, 'itp-avatar itp-college-mark' ); // phpcs:ignore ?>
-						<span class="itp-college-text">
-							<span class="itp-college-name"><?php echo esc_html( $col['name'] ); ?></span>
-							<?php if ( ! empty( $col['location'] ) ) : ?>
-								<span class="itp-college-place"><span aria-hidden="true">📍</span> <?php echo esc_html( $col['location'] ); ?></span>
+					<?php
+					$img  = itp_real_url( $col['image'] ?? '' ) ?: itp_local_url( $col['image'] ?? '' );
+					$site = itp_real_url( $col['website'] ?? '' );
+					$poly = false !== stripos( (string) ( $col['type'] ?? '' ), 'polytechnic' );
+					?>
+					<li class="itp-card itp-campus itp-reveal" style="--i:<?php echo (int) $i; ?>">
+						<div class="itp-campus-media<?php echo $poly ? ' is-poly' : ''; ?>">
+							<?php if ( $img ) : ?>
+								<img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( sprintf( /* translators: %s: college */ __( '%s campus', 'industrial-training' ), $col['name'] ) ); ?>" width="640" height="360" loading="lazy" decoding="async">
+							<?php else : ?>
+								<span class="itp-campus-mono" aria-hidden="true"><?php echo esc_html( itp_initials( (string) $col['name'] ) ); ?></span>
+								<span class="itp-campus-icon" aria-hidden="true"><?php echo $poly ? '🛠️' : '🎓'; ?></span>
 							<?php endif; ?>
-						</span>
+							<?php if ( ! empty( $col['type'] ) ) : ?>
+								<span class="itp-campus-type"><?php echo esc_html( $col['type'] ); ?></span>
+							<?php endif; ?>
+						</div>
+						<div class="itp-campus-body">
+							<h4><?php echo esc_html( $col['name'] ); ?></h4>
+							<p class="itp-campus-place"><span aria-hidden="true">📍</span> <?php echo esc_html( implode( ', ', array_filter( [ $col['location'] ?? '', $col['district'] ?? '' ] ) ) ); ?></p>
+							<dl class="itp-campus-facts">
+								<?php if ( ! empty( $col['established'] ) ) : ?>
+									<div><dt><?php esc_html_e( 'Established', 'industrial-training' ); ?></dt><dd><?php echo esc_html( $col['established'] ); ?></dd></div>
+								<?php endif; ?>
+								<?php if ( ! empty( $col['approvals'] ) ) : ?>
+									<div><dt><?php esc_html_e( 'Recognition', 'industrial-training' ); ?></dt><dd><?php echo esc_html( $col['approvals'] ); ?></dd></div>
+								<?php endif; ?>
+							</dl>
+							<?php if ( ! empty( $col['courses'] ) ) : ?>
+								<ul class="itp-chips" role="list" aria-label="<?php esc_attr_e( 'Courses', 'industrial-training' ); ?>">
+									<?php foreach ( (array) $col['courses'] as $course ) : ?><li><?php echo esc_html( $course ); ?></li><?php endforeach; ?>
+								</ul>
+							<?php endif; ?>
+							<?php if ( $site ) : ?>
+								<a class="itp-btn itp-btn-outline itp-btn-sm" href="<?php echo esc_url( $site ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'College website', 'industrial-training' ); ?><span class="itp-sr"> <?php esc_html_e( '(opens in a new tab)', 'industrial-training' ); ?></span> <span aria-hidden="true">↗</span></a>
+							<?php endif; ?>
+						</div>
 					</li>
 				<?php endforeach; ?>
 			</ul>

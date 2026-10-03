@@ -126,6 +126,13 @@ function itp_avatar( $src, string $alt, string $name, int $size, string $class =
 	return sprintf( '<span class="%1$s itp-initials" aria-hidden="true">%2$s</span>', esc_attr( $class ), esc_html( $initials ?: '?' ) );
 }
 
+/** Monogram for an organisation: first letters of up to 3 words, skipping "of", "and", "for", "the". */
+function itp_initials( string $name ): string {
+	$words = preg_split( '/\s+/', trim( preg_replace( '/[^\p{L}\p{N}\s]/u', '', $name ) ) );
+	$words = array_filter( $words, static fn( $w ) => '' !== $w && ! in_array( strtolower( $w ), [ 'of', 'and', 'for', 'the' ], true ) );
+	return mb_strtoupper( implode( '', array_map( static fn( $w ) => mb_substr( $w, 0, 1 ), array_slice( array_values( $words ), 0, 3 ) ) ) );
+}
+
 /** Stat with count-up markup (animated span hidden from screen readers, final value in .itp-sr). */
 function itp_stat_value( string $value ): string {
 	if ( ! preg_match( '/\d/', $value ) ) {
