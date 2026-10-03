@@ -392,11 +392,10 @@ $select = static function ( string $name, string $placeholder, array $options, b
 						$field( 'email', __( 'Email', 'industrial-training' ), $input( 'email', 'email', [ 'maxlength' => 254, 'autocomplete' => 'email', 'inputmode' => 'email', 'spellcheck' => 'false' ] ) );
 						$field( 'phone', __( 'Phone', 'industrial-training' ), $input( 'phone', 'tel', [ 'maxlength' => 16, 'autocomplete' => 'tel-national', 'inputmode' => 'numeric', 'placeholder' => __( '10-digit mobile number', 'industrial-training' ) ] ) );
 						$field( 'college', __( 'College / Polytechnic', 'industrial-training' ), $input( 'college', 'text', [ 'maxlength' => 150, 'autocomplete' => 'organization' ] ), true );
-						$field( 'branch', __( 'Branch', 'industrial-training' ), $select( 'branch', __( 'Select your branch', 'industrial-training' ), itp_branches() ) );
-						$field( 'year', __( 'Year of study (optional)', 'industrial-training' ), $select( 'year', __( 'Select your year', 'industrial-training' ), itp_years(), false ) );
-						$names = itp_track_names();
-						$field( 'track', __( 'Training track (optional)', 'industrial-training' ), $select( 'track', __( 'Select a track', 'industrial-training' ), array_combine( $names, $names ), false ), true );
+						$field( 'branch', __( 'Branch', 'industrial-training' ), $select( 'branch', __( 'Select your branch', 'industrial-training' ), itp_branches() ), true );
 						?>
+						<?php // Not shown: records which track card's "Register for this track" button opened the form (empty otherwise). ?>
+						<input type="hidden" id="itp-track" name="track" value="">
 						<div class="itp-hp" aria-hidden="true">
 							<label for="itp-website"><?php esc_html_e( 'Leave this field empty', 'industrial-training' ); ?></label>
 							<input type="text" id="itp-website" name="website" tabindex="-1" autocomplete="off">

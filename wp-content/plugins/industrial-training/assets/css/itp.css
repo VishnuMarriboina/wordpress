@@ -37,7 +37,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 
 .itp .itp-skip{position:absolute;top:8px;left:-9999px;z-index:100;padding:10px 16px;border-radius:10px;background:var(--brand);color:#fff;font-weight:600;text-decoration:none}
 .itp .itp-skip:focus{left:8px;transform:none}
-.itp .itp-container{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
+.itp .itp-container{width:100%;max-width:1240px;margin:0 auto;padding:0 20px}
 .itp .itp-main:focus{outline:none;box-shadow:none}
 
 /* Buttons */
@@ -84,7 +84,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-hero-bg::before{content:"";background-image:linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);background-size:44px 44px;mask-image:linear-gradient(#000 10%, transparent 85%)}
 .itp .itp-hero-bg::after{content:"";background:radial-gradient(600px 400px at 90% 0%, rgba(251,191,36,.16), transparent 70%), radial-gradient(600px 460px at 0% 100%, rgba(99,102,241,.28), transparent 70%)}
 .itp .itp-orb{position:absolute;top:-140px;right:-60px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle, rgba(251,191,36,.28), transparent 65%);animation:itp-drift 14s ease-in-out infinite alternate}
-.itp .itp-hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.itp .itp-hero-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .itp .itp-badge{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.08);color:#e2e8f0;font-size:.875rem;font-weight:500}
 .itp .itp-dot{position:relative;width:8px;height:8px;border-radius:50%;background:#22c55e}
 .itp .itp-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#22c55e;animation:itp-ping 1.8s cubic-bezier(0, 0, .2, 1) infinite}
@@ -114,8 +114,8 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-collage{--rx:0deg;--ry:0deg;--tx:0px;--ty:0px;position:relative;margin-bottom:40px}
 .itp .itp-photo-main, .itp .itp-photo-inset, .itp .itp-float{transition:transform .5s var(--ease)}
 .itp .itp-photo-main{transform:perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry))}
-.itp .itp-photo-main img{width:100%;aspect-ratio:5 / 4;object-fit:cover;border-radius:24px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08)}
-.itp .itp-photo-inset{position:absolute;left:-6%;bottom:-40px;width:44%;transform:translate(calc(var(--tx) * -1), calc(var(--ty) * -1))}
+.itp .itp-photo-main img{width:100%;aspect-ratio:1 / 1.12;object-fit:cover;object-position:50% 30%;border-radius:24px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08)}
+.itp .itp-photo-inset{position:absolute;left:-8%;bottom:-36px;width:48%;transform:translate(calc(var(--tx) * -1), calc(var(--ty) * -1))}
 .itp .itp-photo-inset img{width:100%;aspect-ratio:4 / 3;object-fit:cover;border:5px solid #0b1533;border-radius:18px;box-shadow:0 24px 48px -20px rgba(0,0,0,.7)}
 .itp .itp-float{position:absolute;top:20px;right:-14px;display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:rgba(15,23,42,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 16px 32px -16px rgba(0,0,0,.6);transform:translate(var(--tx), var(--ty))}
 .itp.motion-ready .itp-float{animation:itp-bob 5s ease-in-out 1.2s infinite}
@@ -200,9 +200,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-steps.itp-in .itp-step-icon{animation:itp-pop .5s var(--ease) backwards, itp-bob 4s ease-in-out infinite;animation-delay:calc(var(--i) * 180ms + 500ms), calc(var(--i) * 300ms + 1.5s)}
 
 /* About */
-.itp .itp-about{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.itp .itp-about{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .itp .itp-about-visual{position:relative;display:grid;place-items:center;padding:24px}
-.itp .itp-about-card{position:relative;z-index:1;display:grid;justify-items:center;gap:14px;width:100%;max-width:420px;padding:36px 28px;border:1px solid #e5e7eb;border-radius:24px;background:#fff;color:#0f172a;box-shadow:var(--shadow-lg);text-align:center}
+.itp .itp-about-card{position:relative;z-index:1;display:grid;justify-items:center;gap:14px;width:100%;max-width:520px;padding:44px 36px;border:1px solid #e5e7eb;border-radius:26px;background:#fff;color:#0f172a;box-shadow:var(--shadow-lg);text-align:center}
 /* The logo has dark-navy lettering, so its card stays white in dark mode too. */
 .itp .itp-about-card .itp-about-stats{border-top-color:#e5e7eb}
 /* Light divider lines inside the white card, also in dark mode (the stats rules use var(--border)). */
@@ -210,16 +210,16 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-about-card .itp-about-stats dd{color:#1e3a8a}
 .itp .itp-about-card .itp-about-stats dt{color:#334155}
 .itp .itp-about-card .itp-about-tag{color:#b45309}
-.itp .itp-about-logo{width:234px;max-width:100%;height:auto}
+.itp .itp-about-logo{width:300px;max-width:100%;height:auto}
 .itp .itp-about-tag{color:var(--accent-ink);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .itp .itp-about-stats{display:grid;grid-template-columns:repeat(2, 1fr);width:100%;margin-top:8px;border-top:1px solid var(--border)}
 .itp .itp-about-stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;padding:14px 4px 0}
 .itp .itp-about-stats div:first-child{grid-column:1 / -1;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.itp .itp-about-stats div:first-child dd{font-size:1.35rem}
+.itp .itp-about-stats div:first-child dd{font-size:1.6rem}
 .itp .itp-about-stats div:nth-child(n+3){border-left:1px solid var(--border)}
-.itp .itp-about-stats dd{color:var(--brand);font-size:1.15rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.itp .itp-about-stats dd{color:var(--brand);font-size:1.3rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
 .itp .itp-about-stats dt{margin-top:2px;color:var(--text-2);font-size:.86rem;font-weight:500;line-height:1.35}
-.itp .itp-about-ring{position:absolute;inset:0;margin:auto;width:min(100%, 480px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from 0deg, rgba(251,191,36,.35), rgba(37,99,235,.25), rgba(49,46,129,.25), rgba(251,191,36,.35));filter:blur(40px);opacity:.8}
+.itp .itp-about-ring{position:absolute;inset:0;margin:auto;width:min(100%, 580px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from 0deg, rgba(251,191,36,.35), rgba(37,99,235,.25), rgba(49,46,129,.25), rgba(251,191,36,.35));filter:blur(40px);opacity:.8}
 .itp.motion-ready .itp-about-ring{animation:itp-spin 18s linear infinite}
 .itp.motion-ready .itp-about-card{animation:itp-bob 7s ease-in-out infinite}
 .itp .itp-about-text{margin-top:14px;color:var(--text-2)}
@@ -425,9 +425,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp p.itp-stars{display:inline-flex;align-items:center;gap:6px;font-size:1.05rem;line-height:1}
 .itp p.itp-stars .itp-stars-row{position:relative;display:inline-block;font-family:"Segoe UI Symbol", "DejaVu Sans", Arial, sans-serif;font-variant-emoji:text;letter-spacing:2px;white-space:nowrap}
 .itp p.itp-stars .itp-stars-off{color:#d6dde8}
-/* Golden-red filled stars; the width share draws half stars for 4.5. */
-.itp p.itp-stars .itp-stars-on{position:absolute;top:0;left:0;width:var(--fill, 100%);overflow:hidden;background:linear-gradient(90deg, #fbbf24, #f59e0b 40%, #ea580c 75%, #dc2626);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 rgba(153,27,27,.25))}
-.itp p.itp-stars .itp-stars-num{color:#c2410c;font-size:.85em;font-weight:800}
+/* Golden-yellow filled stars; the width share draws half stars for 4.5. */
+.itp p.itp-stars .itp-stars-on{position:absolute;top:0;left:0;width:var(--fill, 100%);overflow:hidden;color:#f5b301;text-shadow:0 1px 0 rgba(161,98,7,.35)}
+.itp p.itp-stars .itp-stars-num{color:#b7791f;font-size:.85em;font-weight:800}
 .itp .itp-is-sample{border:2px dashed #94a3b8}
 .itp .itp-person, .itp .itp-testimonial, .itp .itp-college{display:flex;flex-direction:column;gap:18px;height:100%;padding:24px}
 .itp .itp-person-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
@@ -490,7 +490,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-kind{background:rgba(165,180,252,.12);color:#c7d2fe}
 	.itp .itp-strip dd{color:#fbbf24}
 	.itp p.itp-stars .itp-stars-off{color:#334155}
-	.itp p.itp-stars .itp-stars-num{color:#fb923c}
+	.itp p.itp-stars .itp-stars-num{color:#fbbf24}
 }
 /* Motion (hidden states only after JS adds .motion-ready) */
 .itp.motion-ready .itp-header{animation:itp-drop .6s var(--ease) backwards}

@@ -179,7 +179,7 @@
 	const label = $('.itp-submit-label', dlg);
 	const view = $('.itp-form-view', dlg);
 	const done = $('.itp-success', dlg);
-	const FIELDS = ['fullName', 'email', 'phone', 'college', 'branch', 'year', 'track'];
+	const FIELDS = ['fullName', 'email', 'phone', 'college', 'branch'];
 	// Same rules as the server (includes/helpers.php).
 	const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
 	const phoneDigits = (raw) => {
@@ -218,8 +218,6 @@
 		if (ph) e.phone = ph;
 		if (! d.college) e.college = T.college;
 		allowed('branch', d.branch) || (e.branch = T.branch);
-		// Year of study and training track are optional.
-		['year', 'track'].forEach((k) => d[k] === '' || allowed(k, d[k]) || (e[k] = T[k]));
 		return e;
 	};
 	const showErrors = (errors, shake) => {
@@ -270,7 +268,7 @@
 		if (dlg.open) return;
 		opener = btn;
 		reset();
-		if (btn.dataset.track) form.elements.track.value = btn.dataset.track;
+		form.elements.track.value = btn.dataset.track || ''; // hidden; set by "Register for this track"
 		dlg.showModal();
 		form.elements.fullName.focus();
 	};

@@ -83,7 +83,7 @@ function itp_send_emails( int $id, array $d ): void {
 		__( 'Phone', 'industrial-training' )         => $d['phone'],
 		__( 'College', 'industrial-training' )       => $d['college'],
 		__( 'Branch', 'industrial-training' )        => $d['branch'],
-		__( 'Year', 'industrial-training' )          => $d['year'],
+		__( 'Year', 'industrial-training' )          => '' !== $d['year'] ? $d['year'] : '—',
 		__( 'Track', 'industrial-training' )         => '' !== $d['track'] ? $d['track'] : '—',
 	];
 	$body = '';

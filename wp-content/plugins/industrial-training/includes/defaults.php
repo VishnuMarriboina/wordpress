@@ -181,7 +181,7 @@ function itp_defaults(): array {
 		],
 		'form'       => [
 			'title'           => __( 'Register for Industrial Training', 'industrial-training' ),
-			'note'            => __( 'Year of study and training track are optional; all other fields are required.', 'industrial-training' ),
+			'note'            => __( 'All fields are required.', 'industrial-training' ),
 			'success_title'   => __( "You're registered, {name}!", 'industrial-training' ),
 			'success_text'    => __( "We've saved your registration for {track}. Our counsellor will call you on {phone} within 2 working days.", 'industrial-training' ),
 			// Registration alerts go here only; info@ (the contact email) is kept for enquiries.

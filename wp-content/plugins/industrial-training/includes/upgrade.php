@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 13;
+const ITP_SETTINGS_VERSION = 14;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -28,7 +28,7 @@ function itp_upgrade_settings(): void {
 			[ [ 'form', 'notify_email' ], [ '', 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com' ] ],
 			[ [ 'footer', 'copyright' ], [ '© {year} Industrial Training Program. All rights reserved.' ] ],
 			[ [ 'seo', 'title' ], [ 'Industrial Training Program for Diploma Students' ] ],
-			[ [ 'form', 'note' ], [ 'All fields are required.' ] ], // Year and track became optional.
+			[ [ 'form', 'note' ], [ 'Year of study and training track are optional; all other fields are required.' ] ], // Year and track fields were removed from the form.
 			[ [ 'hero', 'badge' ], [ 'Admissions open · Next batch starts soon' ] ],
 			[ [ 'hero', 'lead' ], [ 'Six to eight weeks of hands-on work in real plants, labs and project teams. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.' ] ],
 			[ [ 'offers', 'age' ], [ '🎂 Age: 14+ years (18+ for hazardous trades)' ] ],
