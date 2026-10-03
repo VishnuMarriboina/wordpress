@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 4;
+const ITP_SETTINGS_VERSION = 10;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -23,10 +23,14 @@ function itp_upgrade_settings(): void {
 			[ [ 'brand_mark' ], [ 'IT' ] ],
 			[ [ 'brand_name' ], [ 'Industrial Training' ] ],
 			[ [ 'contact', 'email' ], [ 'training@example.com', '' ] ],
-			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '' ] ],
-			[ [ 'form', 'notify_email' ], [ '' ] ],
+			[ [ 'contact', 'address' ], [ 'Training Centre, Industrial Estate, Hyderabad, Telangana', '' ] ],
+			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '+91 93929 20858', '' ] ],
+			[ [ 'form', 'notify_email' ], [ '', 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com' ] ],
 			[ [ 'footer', 'copyright' ], [ '© {year} Industrial Training Program. All rights reserved.' ] ],
 			[ [ 'seo', 'title' ], [ 'Industrial Training Program for Diploma Students' ] ],
+			[ [ 'hero', 'badge' ], [ 'Admissions open · Next batch starts soon' ] ],
+			[ [ 'hero', 'lead' ], [ 'Six to eight weeks of hands-on work in real plants, labs and project teams. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.' ] ],
+			[ [ 'offers', 'age' ], [ '🎂 Age: 14+ years (18+ for hazardous trades)' ] ],
 			[ [ 'footer', 'credits' ], [ 'Photos: <a href="https://unsplash.com/">Unsplash</a> contributors, used under the <a href="https://unsplash.com/license">Unsplash License</a>.' ] ],
 		];
 		foreach ( $steps as [ $path, $old ] ) {
@@ -58,6 +62,23 @@ function itp_upgrade_settings(): void {
 		// Stipend shown in full ("₹17,000 – ₹21,500") and first, in its own tile.
 		if ( in_array( '₹17K–21.5K', array_column( (array) ( $saved['stats'] ?? [] ), 'value' ), true ) ) {
 			$saved['stats'] = $new['stats'];
+		}
+		// Company figures confirmed as 4,000+ students, 50+ colleges, 6+ years: replace the earlier 10,000+ / 200+ set.
+		$values = array_column( (array) ( $saved['stats'] ?? [] ), 'value' );
+		if ( in_array( '10,000+', $values, true ) || in_array( '200+', $values, true ) ) {
+			$saved['stats'] = $new['stats'];
+		}
+		if ( str_contains( (string) ( $saved['about']['text2'] ?? '' ), '10,000+ students and work with 200+ colleges' ) ) {
+			$saved['about']['text2'] = $new['about']['text2'];
+		}
+		if ( 'Every batch is guided by engineers with 10+ years on the job.' === ( $saved['highlights']['items'][1]['text'] ?? '' ) ) {
+			$saved['highlights']['items'][1]['text'] = $new['highlights']['items'][1]['text'];
+		}
+		// Six-month batches (May–Nov, Nov–May): update the step texts that still hold the old wording.
+		foreach ( [ 1 => 'Our team calls within 2 working days to confirm your track and batch.', 2 => 'Work on real machines and projects with industry mentors, and earn a stipend of ₹17,000 – ₹21,500 per month.' ] as $i => $old_text ) {
+			if ( $old_text === ( $saved['steps']['items'][ $i ]['text'] ?? null ) ) {
+				$saved['steps']['items'][ $i ]['text'] = $new['steps']['items'][ $i ]['text'];
+			}
 		}
 		// Invented sample students, colleges and partners must not be public on a live site.
 		$saved['samples']['show'] = 0;

@@ -73,8 +73,8 @@ add_action( 'wp_head', function () {
 			'provider'            => [ '@id' => $org['@id'] ],
 			'educationalLevel'    => 'Diploma',
 			'teaches'             => itp_skills( (string) $track['skills'] ),
-			'timeRequired'        => 'P' . (int) $track['weeks'] . 'W',
-			'hasCourseInstance'   => [ '@type' => 'CourseInstance', 'courseMode' => 'Onsite', 'courseWorkload' => 'P' . (int) $track['weeks'] . 'W' ],
+			'timeRequired'        => 'P6M', // Every internship is six months.
+			'hasCourseInstance'   => [ '@type' => 'CourseInstance', 'courseMode' => 'Onsite', 'courseWorkload' => 'P6M' ],
 		];
 	}
 

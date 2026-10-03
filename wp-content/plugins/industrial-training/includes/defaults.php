@@ -61,10 +61,14 @@ function itp_defaults(): array {
 			'register'   => __( 'Register', 'industrial-training' ),
 		],
 		'hero'       => [
-			'badge'         => __( 'Admissions open · Next batch starts soon', 'industrial-training' ),
+			'badge'         => __( 'Admissions open · Batches start in May & November', 'industrial-training' ),
 			'title'         => __( 'Industrial Training Program', 'industrial-training' ),
 			'title_accent'  => __( 'for Diploma Students', 'industrial-training' ),
-			'lead'          => __( 'Six to eight weeks of hands-on work in real plants, labs and project teams. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.', 'industrial-training' ),
+			'lead'          => __( 'A six-month internship (compulsory) with hands-on work in real plants, labs and project teams. Two batches a year: May to November and November to May. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.', 'industrial-training' ),
+			// Main message: under-18s can join too (from age 14 under NAPS). Leave 'eligible_title' empty to hide.
+			'eligible_title' => __( 'Below 18? You can join too!', 'industrial-training' ),
+			'eligible_text'  => __( 'Students from 14 years of age are eligible through NAPS apprenticeships. No minimum pass percentage.', 'industrial-training' ),
+			'eligible_note'  => __( 'Hazardous trades need 18+. Extra safeguards apply for students below 18.', 'industrial-training' ),
 			'cta_primary'   => __( 'Register now', 'industrial-training' ),
 			'cta_secondary' => __( 'Explore tracks', 'industrial-training' ),
 			'image'         => 0,
@@ -77,15 +81,16 @@ function itp_defaults(): array {
 		'stats'      => [
 			// The first stat gets a full-width tile; the rest sit side by side below it.
 			[ 'value' => '₹17,000 – ₹21,500', 'label' => __( 'monthly stipend', 'industrial-training' ) ],
-			[ 'value' => '10,000+', 'label' => __( 'students trained', 'industrial-training' ) ],
-			[ 'value' => '200+', 'label' => __( 'colleges connected', 'industrial-training' ) ],
+			[ 'value' => '4,000+', 'label' => __( 'students trained', 'industrial-training' ) ],
+			[ 'value' => '50+', 'label' => __( 'colleges connected', 'industrial-training' ) ],
+			[ 'value' => '6+', 'label' => __( 'years of experience', 'industrial-training' ) ],
 		],
 		
 		'about'      => [
 			'eyebrow' => __( 'About us', 'industrial-training' ),
 			'title'   => __( 'About Skillrise Technologies', 'industrial-training' ),
 			'text'    => __( 'Skillrise Technologies helps diploma and engineering students turn classroom knowledge into real industry skills. Through internships, industrial training and apprenticeships, students work on real machines and projects, learn from experienced mentors and earn a monthly stipend while they train.', 'industrial-training' ),
-			'text2'   => __( 'Founded by Y Arun Kumar Reddy, we have trained 10,000+ students and work with 200+ colleges. Our goal is simple: practical experience, professional skills and the confidence to take the next step in your career.', 'industrial-training' ),
+			'text2'   => __( 'Founded by Y Arun Kumar Reddy, we bring 6+ years of experience, have trained 4,000+ students and work with 50+ colleges. Our goal is simple: practical experience, professional skills and the confidence to take the next step in your career.', 'industrial-training' ),
 			'points'  => [
 				[ 'icon' => '🎯', 'title' => __( 'Our mission', 'industrial-training' ), 'text' => __( 'Make every student industry-ready with hands-on training.', 'industrial-training' ) ],
 				[ 'icon' => '🤝', 'title' => __( 'Who we serve', 'industrial-training' ), 'text' => __( 'Diploma and engineering students from any college.', 'industrial-training' ) ],
@@ -97,7 +102,7 @@ function itp_defaults(): array {
 			'lead'  => __( 'Built for diploma students who want industry experience before their first job.', 'industrial-training' ),
 			'items' => [
 				[ 'icon' => '🏭', 'title' => __( 'Real shop-floor work', 'industrial-training' ), 'text' => __( 'Train inside partner plants and labs, not just a classroom.', 'industrial-training' ) ],
-				[ 'icon' => '🧑', 'title' => __( 'Industry mentors', 'industrial-training' ), 'text' => __( 'Every batch is guided by engineers with 10+ years on the job.', 'industrial-training' ) ],
+				[ 'icon' => '🧑', 'title' => __( 'Industry mentors', 'industrial-training' ), 'text' => __( 'Every batch is guided by experienced engineers from industry.', 'industrial-training' ) ],
 				[ 'icon' => '📜', 'title' => __( 'Recognised certificate', 'industrial-training' ), 'text' => __( 'Get a certificate and project report your college can count as credit.', 'industrial-training' ) ],
 				[ 'icon' => '💼', 'title' => __( 'Placement support', 'industrial-training' ), 'text' => __( 'Resume reviews, mock interviews and referrals to hiring partners.', 'industrial-training' ) ],
 			],
@@ -117,7 +122,17 @@ function itp_defaults(): array {
 			],
 			'stipend'     => __( '💰 Stipend: ₹17,000 – ₹21,500 per month', 'industrial-training' ),
 			// Highlighted banner under the stipend. While its title is set, the NAPS card is left out of the grid.
+			// Pill shown next to the stipend; many students don't know the apprenticeship age rules.
+			'age'         => __( '🎂 Below 18? You can join too — from 14 years', 'industrial-training' ),
+			'batch'       => __( '📅 6 months · May–Nov or Nov–May', 'industrial-training' ),
 			'naps'        => [
+				// Age rules under the Apprentices Act, 1961 / NAPS (checked on msde.gov.in & myscheme.gov.in, Oct 2026).
+				'ages'  => [
+					[ 'value' => __( '14+ years', 'industrial-training' ), 'label' => __( 'Minimum age to join', 'industrial-training' ) ],
+					[ 'value' => __( '18+ years', 'industrial-training' ), 'label' => __( 'For hazardous trades', 'industrial-training' ) ],
+					[ 'value' => __( 'Up to 35', 'industrial-training' ), 'label' => __( 'At registration, for govt. stipend support', 'industrial-training' ) ],
+				],
+				'eligible' => __( '✅ Students below 18 are eligible — join from 14 years of age', 'industrial-training' ),
 				'title' => __( 'Apprenticeships through NAPS', 'industrial-training' ),
 				'text'  => __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ),
 				'note'  => __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ),
@@ -138,23 +153,33 @@ function itp_defaults(): array {
 				$track( __( 'Software & Web', 'industrial-training' ), __( 'Computer Science · Any branch', 'industrial-training' ), 6, __( 'Ship a real web app in a small team: HTML, CSS, JavaScript, Git and a deployed backend.', 'industrial-training' ), __( 'JavaScript & React, Git workflow, REST APIs', 'industrial-training' ), 'web' ),
 			],
 		],
+		// Internship calendar: fixed six-month batches, joining only in May or November.
+		'batches'    => [
+			'title'    => __( 'Internship batches', 'industrial-training' ),
+			'duration' => __( '6 months', 'industrial-training' ),
+			'note'     => __( 'Every internship is 6 months (compulsory). Joining is only in May or November.', 'industrial-training' ),
+			'items'    => [
+				[ 'label' => __( 'May batch', 'industrial-training' ), 'start' => __( 'May', 'industrial-training' ), 'end' => __( 'November', 'industrial-training' ) ],
+				[ 'label' => __( 'November batch', 'industrial-training' ), 'start' => __( 'November', 'industrial-training' ), 'end' => __( 'May', 'industrial-training' ) ],
+			],
+		],
 		'steps'      => [
 			'title' => __( 'How it works', 'industrial-training' ),
 			'lead'  => __( 'Four simple steps from registration to your first industry role.', 'industrial-training' ),
 			'items' => [
 				[ 'icon' => '📝', 'title' => __( 'Register', 'industrial-training' ), 'text' => __( 'Fill the short form. It takes under two minutes.', 'industrial-training' ), 'photo' => 'step-register', 'image' => 0 ],
-				[ 'icon' => '📞', 'title' => __( 'Counselling call', 'industrial-training' ), 'text' => __( 'Our team calls within 2 working days to confirm your track and batch.', 'industrial-training' ), 'photo' => 'step-call', 'image' => 0 ],
-				[ 'icon' => '🛠️', 'title' => __( 'Hands-on training with stipend', 'industrial-training' ), 'text' => __( 'Work on real machines and projects with industry mentors, and earn a stipend of ₹17,000 – ₹21,500 per month.', 'industrial-training' ), 'photo' => 'step-train', 'image' => 0 ],
+				[ 'icon' => '📞', 'title' => __( 'Counselling call', 'industrial-training' ), 'text' => __( 'Our team calls within 2 working days to confirm your track and your batch: May or November.', 'industrial-training' ), 'photo' => 'step-call', 'image' => 0 ],
+				[ 'icon' => '🛠️', 'title' => __( 'Hands-on training with stipend', 'industrial-training' ), 'text' => __( 'Six months of hands-on work on real machines and projects with industry mentors, earning a stipend of ₹17,000 – ₹21,500 per month.', 'industrial-training' ), 'photo' => 'step-train', 'image' => 0 ],
 				[ 'icon' => '🎓', 'title' => __( 'Certificate & career', 'industrial-training' ), 'text' => __( 'Complete the program, get your certificate and move forward with placement guidance.', 'industrial-training' ), 'photo' => 'step-career', 'image' => 0 ],
 			],
 		],
 		'contact'    => [
 			'title'      => __( 'Questions? Talk to us', 'industrial-training' ),
 			'lead'       => __( 'Our counsellors help you choose the right track and batch.', 'industrial-training' ),
-			'phone'      => '+91 93929 20858',
+			'phone'      => '+91 86393 54430',
 			'whatsapp'   => '+91 93929 20858',
 			'email'      => 'info@skillrisetechnologies.com',
-			'address'    => __( 'Training Centre, Industrial Estate, Hyderabad, Telangana', 'industrial-training' ),
+			'address'    => __( '18/3, Ramanagar Main Rd, Dobbaspet, Chandanahosahalli, Karnataka 562111', 'industrial-training' ),
 			'hours'      => __( 'Mon – Sat, 9:30 AM – 6:00 PM', 'industrial-training' ),
 			'cta_title'  => __( 'Seats are limited each batch', 'industrial-training' ),
 			'cta_text'   => __( "Register today and we'll call you within 2 working days.", 'industrial-training' ),
@@ -170,8 +195,12 @@ function itp_defaults(): array {
 			'note'            => __( 'All fields are required.', 'industrial-training' ),
 			'success_title'   => __( "You're registered, {name}!", 'industrial-training' ),
 			'success_text'    => __( "We've saved your registration for {track}. Our counsellor will call you on {phone} within 2 working days.", 'industrial-training' ),
-			'notify_email'    => 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com',
+			// Registration alerts go here only; info@ (the contact email) is kept for enquiries.
+			'notify_email'    => 'arunreddy@skillrisetechnologies.com',
 			'confirm_student' => 0,
+			// Registrations allowed per internet connection every 10 minutes (anti-spam). Raise for college drives,
+			// where many students share one Wi-Fi.
+			'rate_limit'      => 30,
 		],
 		'samples'    => [
 			// Shows the sample students, colleges and partners from content/data.php to visitors, labelled "Sample".

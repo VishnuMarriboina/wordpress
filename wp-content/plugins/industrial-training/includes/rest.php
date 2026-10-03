@@ -5,7 +5,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_RATE_LIMIT  = 5;
 const ITP_RATE_WINDOW = 10 * MINUTE_IN_SECONDS;
 
 add_action( 'rest_api_init', function () {
@@ -43,7 +42,8 @@ function itp_rest_register( WP_REST_Request $request ): WP_REST_Response {
 	$key    = 'itp_rl_' . md5( itp_client_ip() );
 	$bucket = get_transient( $key );
 	$bucket = is_array( $bucket ) ? $bucket : [ 'count' => 0, 'start' => time() ];
-	if ( $bucket['count'] >= ITP_RATE_LIMIT ) {
+	$limit  = min( 500, max( 1, (int) ( itp_settings()['form']['rate_limit'] ?? 30 ) ) );
+	if ( $bucket['count'] >= $limit ) {
 		$retry = max( 1, $bucket['start'] + ITP_RATE_WINDOW - time() );
 		$res   = itp_rest_error( __( 'Too many registrations from your network. Please wait a few minutes and try again.', 'industrial-training' ), 429 );
 		$res->header( 'Retry-After', (string) $retry );
@@ -92,8 +92,20 @@ function itp_send_emails( int $id, array $d ): void {
 	}
 	$body .= "\n" . admin_url( 'post.php?post=' . $id . '&action=edit' );
 
+	// Without an SMTP plugin WordPress sends from wordpress@<domain>, a mailbox that doesn't exist, and Hostinger
+	// often drops those. Send from the real contact mailbox instead when it is on the site's own domain.
+	$from = itp_from_header( $s );
+
+	// Record whether the alert was handed to the mail server, shown in the Registrations list ("Email alert").
+	$error   = '';
+	$on_fail = static function ( WP_Error $e ) use ( &$error ) {
+		$error = $e->get_error_message();
+	};
+	add_action( 'wp_mail_failed', $on_fail );
 	/* translators: 1: site name, 2: student name */
-	wp_mail( $to, sprintf( __( '[%1$s] New training registration: %2$s', 'industrial-training' ), $site, $d['fullName'] ), $body, [ 'Reply-To: ' . $d['fullName'] . ' <' . $d['email'] . '>' ] );
+	$sent = wp_mail( $to, sprintf( __( '[%1$s] New training registration: %2$s', 'industrial-training' ), $site, $d['fullName'] ), $body, array_merge( $from, [ 'Reply-To: ' . $d['fullName'] . ' <' . $d['email'] . '>' ] ) );
+	remove_action( 'wp_mail_failed', $on_fail );
+	update_post_meta( $id, '_itp_mail', $sent ? 'sent' : 'failed: ' . ( $error ?: __( 'unknown error', 'industrial-training' ) ) );
 
 	if ( ! empty( $s['form']['confirm_student'] ) && is_email( $d['email'] ) ) {
 		/* translators: 1: first name, 2: track, 3: phone, 4: site name */
@@ -101,6 +113,16 @@ function itp_send_emails( int $id, array $d ): void {
 		/* translators: %s: site name */
 		// Replies from students go to the public contact address.
 		$reply = is_email( $s['contact']['email'] ) ? [ 'Reply-To: ' . $s['brand_name'] . ' <' . $s['contact']['email'] . '>' ] : [];
-		wp_mail( $d['email'], sprintf( __( 'Your Industrial Training registration — %s', 'industrial-training' ), $site ), $msg, $reply );
+		wp_mail( $d['email'], sprintf( __( 'Your Industrial Training registration — %s', 'industrial-training' ), $site ), $msg, array_merge( $from, $reply ) );
 	}
+}
+
+/** "From: Brand <info@domain>" when the contact email is on the site's own domain (so the server may send as it). */
+function itp_from_header( array $s ): array {
+	$email = (string) ( $s['contact']['email'] ?? '' );
+	$host  = preg_replace( '/^www\./', '', (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+	if ( ! is_email( $email ) || '' === $host || strtolower( substr( strrchr( $email, '@' ), 1 ) ) !== strtolower( $host ) ) {
+		return [];
+	}
+	return [ 'From: ' . wp_specialchars_decode( $s['brand_name'], ENT_QUOTES ) . ' <' . $email . '>' ];
 }

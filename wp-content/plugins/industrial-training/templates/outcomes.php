@@ -45,34 +45,32 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 				<p class="itp-preview-note itp-preview-public" role="note"><?php esc_html_e( 'Sample content shown for demonstration.', 'industrial-training' ); ?></p>
 			<?php endif; ?>
 		</div>
-		<?php
-		// Students with a comment get a wide testimonial card first; the rest follow as compact cards.
-		usort( $our_students, static fn( $a, $b ) => (int) ( '' === trim( (string) ( $a['comment'] ?? '' ) ) ) <=> (int) ( '' === trim( (string) ( $b['comment'] ?? '' ) ) ) );
-		$groups = [ 'itp-voices' => [], 'itp-people' => [] ];
-		foreach ( $our_students as $st ) {
-			$groups[ '' !== trim( (string) ( $st['comment'] ?? '' ) ) ? 'itp-voices' : 'itp-people' ][] = $st;
-		}
-		?>
-		<?php foreach ( array_filter( $groups ) as $list_class => $list ) : ?>
-			<ul class="<?php echo esc_attr( $list_class ); ?>" role="list">
-				<?php foreach ( $list as $i => $st ) : ?>
-					<?php $has_comment = 'itp-voices' === $list_class; ?>
-					<li class="itp-person<?php echo $has_comment ? ' has-comment' : ''; ?> itp-reveal" style="--i:<?php echo (int) $i; ?>">
-						<?php echo itp_avatar( $st['photo'] ?? '', (string) $st['name'], (string) $st['name'], 80, 'itp-avatar itp-person-avatar' ); // phpcs:ignore ?>
-						<p class="itp-person-name"><?php echo esc_html( $st['name'] ); ?> <?php echo itp_badge( $st, '' ); // phpcs:ignore ?></p>
-						<p class="itp-person-meta"><?php echo esc_html( implode( ' · ', array_filter( [ $st['track'] ?? '', $st['year'] ?? '' ] ) ) ?: __( 'Industrial Training', 'industrial-training' ) ); ?></p>
-						<?php echo itp_internship_period( $st ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		<?php if ( $our_students ) : ?>
+			<ul class="itp-students" role="list">
+				<?php foreach ( $our_students as $i => $st ) : ?>
+					<?php $photo = itp_real_url( $st['photo'] ?? '' ) ?: itp_local_url( $st['photo'] ?? '' ); ?>
+					<li class="itp-card itp-student itp-reveal" style="--i:<?php echo (int) $i; ?>">
+						<header class="itp-student-top">
+							<?php if ( $photo ) : ?>
+								<img class="itp-student-photo" src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $st['name'] ); ?>" width="48" height="48" loading="lazy" decoding="async">
+							<?php endif; ?>
+							<div class="itp-student-id">
+								<h4 class="itp-student-name"><?php echo esc_html( $st['name'] ); ?> <?php echo itp_badge( $st, '' ); // phpcs:ignore ?></h4>
+								<p class="itp-student-track"><?php echo esc_html( $st['track'] ?? '' ?: __( 'Industrial Training', 'industrial-training' ) ); ?></p>
+							</div>
+							<?php echo itp_stars( $st['rating'] ?? 0 ); // phpcs:ignore ?>
+						</header>
 						<?php if ( ! empty( $st['college'] ) ) : ?>
-							<p class="itp-person-college"><span aria-hidden="true">🏫</span> <?php echo esc_html( $st['college'] ); ?></p>
+							<p class="itp-student-college"><span aria-hidden="true">🏫</span> <?php echo esc_html( $st['college'] ); ?></p>
 						<?php endif; ?>
-						<?php echo itp_stars( $st['rating'] ?? 0 ); // phpcs:ignore ?>
-						<?php if ( $has_comment ) : ?>
-							<blockquote class="itp-person-quote"><p><?php echo esc_html( $st['comment'] ); ?></p></blockquote>
+						<?php echo itp_internship_period( $st ); // phpcs:ignore ?>
+						<?php if ( '' !== trim( (string) ( $st['comment'] ?? '' ) ) ) : ?>
+							<blockquote class="itp-student-quote"><p><?php echo esc_html( $st['comment'] ); ?></p></blockquote>
 						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>
-		<?php endforeach; ?>
+		<?php endif; ?>
 		<?php if ( $our_colleges ) : ?>
 			<h3 class="itp-subhead itp-reveal"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
 			<ul class="itp-campus-grid" role="list">

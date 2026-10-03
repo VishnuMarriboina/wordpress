@@ -72,6 +72,7 @@ add_filter( 'manage_' . ITP_CPT . '_posts_columns', function () {
 		'itp_branch'  => __( 'Branch', 'industrial-training' ),
 		'itp_year'    => __( 'Year', 'industrial-training' ),
 		'itp_track'   => __( 'Track', 'industrial-training' ),
+		'itp_mail'    => __( 'Email alert', 'industrial-training' ),
 		'date'        => __( 'Date', 'industrial-training' ),
 	];
 } );
@@ -80,6 +81,15 @@ add_action( 'manage_' . ITP_CPT . '_posts_custom_column', function ( $column, $p
 	$value = (string) get_post_meta( $post_id, '_' . $column, true );
 	if ( 'itp_email' === $column ) {
 		printf( '<a href="mailto:%1$s">%2$s</a>', esc_attr( $value ), esc_html( $value ) );
+	} elseif ( 'itp_mail' === $column ) {
+		// "sent" = accepted by the mail server; delivery to the inbox still depends on SMTP / spam filters.
+		if ( 'sent' === $value ) {
+			echo '<span style="color:#15803d">✓ ' . esc_html__( 'Sent', 'industrial-training' ) . '</span>';
+		} elseif ( str_starts_with( $value, 'failed' ) ) {
+			printf( '<span style="color:#b91c1c" title="%1$s">✗ %2$s</span><br><small>%1$s</small>', esc_attr( trim( substr( $value, 7 ) ) ), esc_html__( 'Failed', 'industrial-training' ) );
+		} else {
+			echo '<span style="color:#64748b">—</span>';
+		}
 	} elseif ( 'itp_phone' === $column ) {
 		printf( '<a href="tel:%1$s">%2$s</a>', esc_attr( preg_replace( '/[^0-9+]/', '', $value ) ), esc_html( $value ) );
 	} else {

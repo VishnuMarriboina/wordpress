@@ -45,7 +45,7 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Kavya',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/kavya.jpg' (with permission).
-			'college'     => 'Gouthami Institute of Technology and Management for Women',
+			'college'     => 'Loyola Polytechnic College',
 			'track'       => 'Embedded & IoT',
 			'start'       => 'Jan 2025', // Internship started
 			'end'         => 'Jun 2025', // Internship completed ('' = still in progress)
@@ -56,7 +56,7 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Rajyalakshmi',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/rajyalakshmi.jpg' (with permission).
-			'college'     => 'Vasavi Polytechnic',
+			'college'     => 'Gouthami Institute of Technology and Management for Women',
 			'track'       => 'Electrical Systems & PLC',
 			'start'       => 'Feb 2025', // Internship started
 			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
@@ -67,7 +67,7 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Yaswanth',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/yaswanth.jpg' (with permission).
-			'college'     => 'Loyola Polytechnic College',
+			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Manufacturing & CNC',
 			'start'       => 'Jul 2024', // Internship started
 			'end'         => 'Dec 2024', // Internship completed ('' = still in progress)
@@ -89,7 +89,7 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Naveen',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/naveen.jpg' (with permission).
-			'college'     => 'Vemu Institute of Technology',
+			'college'     => 'Loyola Polytechnic College',
 			'track'       => 'Electrical Systems & PLC',
 			'start'       => 'Jun 2024', // Internship started
 			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
@@ -100,7 +100,7 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Narasimha',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/narasimha.jpg' (with permission).
-			'college'     => 'Loyola Polytechnic College',
+			'college'     => 'Vemu Institute of Technology',
 			'track'       => 'Civil & AutoCAD',
 			'start'       => 'Mar 2025', // Internship started
 			'end'         => 'Aug 2025', // Internship completed ('' = still in progress)
@@ -111,18 +111,18 @@ return [
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Lohitha',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/lohitha.jpg' (with permission).
-			'college'     => 'Gouthami Institute of Technology and Management for Women',
+			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Software & Web',
 			'start'       => 'Feb 2025', // Internship started
 			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
-			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these weeks than in a whole semester.',
+			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these six months than in a whole semester.',
 			'rating'      => 5,
 		],
 		[
 			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Harshitha',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/harshitha.jpg' (with permission).
-			'college'     => 'Vasavi Polytechnic',
+			'college'     => 'KORM College of Engineering',
 			'track'       => 'Embedded & IoT',
 			'start'       => 'Aug 2024', // Internship started
 			'end'         => 'Jan 2025', // Internship completed ('' = still in progress)
@@ -197,12 +197,12 @@ return [
 	'founderData'            => [
 		'name'              => 'Y Arun Kumar Reddy',
 		'designation'       => 'Founder & CEO',
-		'experience'        => '10+ Years',
-		'studentsTrained'   => '10,000+',
-		'collegesConnected' => '200+',
+		'experience'        => '6+ Years',
+		'studentsTrained'   => '4,000+',
+		'collegesConnected' => '50+',
 		'photo'             => 'assets/images/founder-arun-kumar-reddy.jpg', // Stored in the plugin, no external link.
 		'photoAlt'          => 'Y Arun Kumar Reddy, Founder & CEO',
-		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 10+ years of experience in student training, technology education, and career development. Through his work, he has helped 10,000+ students and collaborated with 200+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
+		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 6+ years of experience in student training, technology education, and career development. Through his work, he has helped 4,000+ students and collaborated with 50+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
 		'tagline'           => 'Helping students learn, grow and prepare for industry careers.',
 		'vision'            => 'To help every student gain practical, hands-on skills and the confidence to grow toward real industry opportunities.',
 		'social'            => $no_social, // e.g. 'linkedin' => 'https://www.linkedin.com/in/…'
@@ -210,9 +210,9 @@ return [
 
 	/* ---------------- Founder journey / impact (company-provided figures only) ---------------- */
 	'impactData'             => [
-		[ 'value' => '10+', 'label' => 'Years of Experience' ],
-		[ 'value' => '10,000+', 'label' => 'Students Trained' ],
-		[ 'value' => '200+', 'label' => 'Colleges Connected' ],
+		[ 'value' => '6+', 'label' => 'Years of Experience' ],
+		[ 'value' => '4,000+', 'label' => 'Students Trained' ],
+		[ 'value' => '50+', 'label' => 'Colleges Connected' ],
 		[ 'value' => 'Multiple', 'label' => 'Industry & Academic Collaborations' ],
 	],
 
@@ -467,8 +467,8 @@ return [
 
 	/* ---------------- Partner-network figures (company-provided only) ---------------- */
 	'orgImpactData'          => [
-		[ 'value' => '200+', 'label' => 'Colleges Connected' ],
-		[ 'value' => '10,000+', 'label' => 'Students Reached' ],
+		[ 'value' => '50+', 'label' => 'Colleges Connected' ],
+		[ 'value' => '4,000+', 'label' => 'Students Reached' ],
 		[ 'value' => 'Multiple', 'label' => 'Academic Collaborations' ],
 		[ 'value' => 'Industry', 'label' => 'Connections' ],
 	],

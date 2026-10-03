@@ -107,11 +107,8 @@ All of it comes from one data file with the arrays `founderData`, `impactData`, 
    component (`itp_social_links()`) is used for the founder, students, colleges, leadership, partners and the company.
 5. **Photos and logos.** Use a Media Library attachment ID (recommended) or an image URL, and always fill the `…Alt` text.
    Empty values show an initials avatar. Stock photos are deliberately not used for people.
-6. **Numbers.** Only the company-provided figures are included: 10+ years, 10,000+ students, 200+ colleges. A college's
+6. **Numbers.** Only the company-provided figures are included: 6+ years, 4,000+ students, 50+ colleges (same everywhere on the page). A college's
    `studentsTrained` stays hidden until you fill it with a verified number.
-
-> Heads-up: the hero stats (2,400+ students, 60+ partners, 85%) came from the first spec and contradict the
-> founder figures (10,000+ students, 200+ colleges). Update them under Settings → Industrial Training → Hero.
 
 ## Test checklist
 

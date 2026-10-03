@@ -98,6 +98,18 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 						<span class="itp-h1-accent"><?php echo esc_html( $hero['title_accent'] ); ?></span>
 					</h1>
 					<p class="itp-hero-lead itp-rise" style="--i:2"><?php echo esc_html( $hero['lead'] ); ?></p>
+					<?php if ( ! empty( $hero['eligible_title'] ) ) : ?>
+						<div class="itp-eligible itp-rise" style="--i:3">
+							<span class="itp-eligible-icon" aria-hidden="true">🎉</span>
+							<div>
+								<p class="itp-eligible-title"><?php echo esc_html( $hero['eligible_title'] ); ?></p>
+								<p class="itp-eligible-text"><?php echo esc_html( $hero['eligible_text'] ); ?></p>
+								<?php if ( ! empty( $hero['eligible_note'] ) ) : ?>
+									<p class="itp-eligible-note"><?php echo esc_html( $hero['eligible_note'] ); ?></p>
+								<?php endif; ?>
+							</div>
+						</div>
+					<?php endif; ?>
 					<div class="itp-actions itp-rise" style="--i:3">
 						<?php $opener( $hero['cta_primary'], 'itp-btn-primary itp-shine' ); ?>
 						<a class="itp-btn itp-btn-ghost" href="#tracks"><?php echo esc_html( $hero['cta_secondary'] ); ?> <?php echo $arrow; // phpcs:ignore ?></a>
@@ -190,8 +202,18 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 					<h2 class="itp-h2 itp-reveal" id="itp-offers-title"><?php echo esc_html( $offers['title'] ); ?></h2>
 					<p class="itp-lead itp-reveal"><?php echo esc_html( $offers['lead'] ); ?></p>
 				</div>
-				<?php if ( ! empty( $offers['stipend'] ) ) : ?>
-					<p class="itp-stipend itp-reveal"><?php echo esc_html( $offers['stipend'] ); ?></p>
+				<?php if ( ! empty( $offers['stipend'] ) || ! empty( $offers['age'] ) || ! empty( $offers['batch'] ) ) : ?>
+					<div class="itp-pills itp-reveal">
+						<?php if ( ! empty( $offers['stipend'] ) ) : ?>
+							<p class="itp-stipend"><?php echo esc_html( $offers['stipend'] ); ?></p>
+						<?php endif; ?>
+						<?php if ( ! empty( $offers['age'] ) ) : ?>
+							<p class="itp-stipend itp-age"><?php echo esc_html( $offers['age'] ); ?></p>
+						<?php endif; ?>
+						<?php if ( ! empty( $offers['batch'] ) ) : ?>
+							<p class="itp-stipend itp-batch"><?php echo esc_html( $offers['batch'] ); ?></p>
+						<?php endif; ?>
+					</div>
 				<?php endif; ?>
 				<?php
 				$naps = $offers['naps'] ?? [];
@@ -207,6 +229,17 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 							<p class="itp-naps-kicker"><?php esc_html_e( 'Government apprenticeship scheme', 'industrial-training' ); ?></p>
 							<h3><?php echo esc_html( $naps['title'] ); ?></h3>
 							<p><?php echo esc_html( $naps['text'] ); ?></p>
+							<?php if ( ! empty( $naps['eligible'] ) ) : ?>
+								<p class="itp-naps-eligible"><?php echo esc_html( $naps['eligible'] ); ?></p>
+							<?php endif; ?>
+							<?php $ages = array_filter( (array) ( $naps['ages'] ?? [] ), static fn( $a ) => ! empty( $a['value'] ) ); ?>
+							<?php if ( $ages ) : ?>
+								<dl class="itp-naps-ages" aria-label="<?php esc_attr_e( 'Age requirements', 'industrial-training' ); ?>">
+									<?php foreach ( $ages as $age ) : ?>
+										<div><dt><?php echo esc_html( $age['label'] ); ?></dt><dd><?php echo esc_html( $age['value'] ); ?></dd></div>
+									<?php endforeach; ?>
+								</dl>
+							<?php endif; ?>
 							<?php if ( ! empty( $naps['note'] ) ) : ?>
 								<p class="itp-naps-note"><?php echo esc_html( $naps['note'] ); ?></p>
 							<?php endif; ?>
@@ -257,9 +290,7 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 						<li class="itp-card itp-track itp-reveal">
 							<div class="itp-track-media">
 								<?php echo itp_image( (int) $track['image'], (string) ( $track['photo'] ?? '' ), [ 16, 10 ], '(max-width: 560px) 92vw, (max-width: 1000px) 46vw, 360px' ); // phpcs:ignore ?>
-								<span class="itp-weeks">
-									<?php /* translators: %d: number of weeks */ echo esc_html( sprintf( _n( '%d week', '%d weeks', (int) $track['weeks'], 'industrial-training' ), (int) $track['weeks'] ) ); ?>
-								</span>
+								<span class="itp-weeks"><?php echo esc_html( $s['batches']['duration'] ); ?></span>
 							</div>
 							<div class="itp-track-body">
 								<p class="itp-branch"><?php echo esc_html( $track['branch'] ); ?></p>
@@ -299,6 +330,29 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 						</li>
 					<?php endforeach; ?>
 				</ol>
+				<?php $batches = $s['batches']; ?>
+				<?php if ( ! empty( $batches['items'] ) ) : ?>
+					<div class="itp-batches itp-reveal" aria-labelledby="itp-batches-title">
+						<h3 class="itp-batches-title" id="itp-batches-title"><span aria-hidden="true">📅</span> <?php echo esc_html( $batches['title'] ); ?></h3>
+						<ul class="itp-batch-list" role="list">
+							<?php foreach ( $batches['items'] as $b ) : ?>
+								<li class="itp-batch">
+									<p class="itp-batch-label"><?php echo esc_html( $b['label'] ); ?></p>
+									<p class="itp-batch-range">
+										<span><?php echo esc_html( $b['start'] ); ?></span>
+										<span class="itp-batch-arrow" aria-hidden="true"></span>
+										<span class="itp-sr"><?php esc_html_e( 'to', 'industrial-training' ); ?></span>
+										<span><?php echo esc_html( $b['end'] ); ?></span>
+									</p>
+									<p class="itp-batch-len"><?php echo esc_html( $batches['duration'] ); ?></p>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+						<?php if ( ! empty( $batches['note'] ) ) : ?>
+							<p class="itp-batches-note"><?php echo esc_html( $batches['note'] ); ?></p>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
 				<div class="itp-steps-cta itp-reveal"><?php $opener( $s['nav']['register'], 'itp-btn-primary itp-shine', '', ' ' . $arrow ); ?></div>
 			</div>
 		</section>

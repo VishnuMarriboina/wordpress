@@ -56,6 +56,8 @@ function itp_sanitize_value( string $key, $value ) {
 		case 'inset_image':
 		case 'weeks':
 			return absint( $value );
+		case 'rate_limit':
+			return min( 500, max( 1, absint( $value ) ) );
 		case 'email':
 			return sanitize_email( $value );
 		case 'notify_email':
@@ -255,7 +257,6 @@ function itp_track_row( $index, array $track ): void {
 			<?php
 			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'name' ), __( 'Track name', 'industrial-training' ), 'text', __( 'Also used as the option in the form’s “Training track” list.', 'industrial-training' ) );
 			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'branch' ), __( 'Branches', 'industrial-training' ) );
-			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'weeks' ), __( 'Weeks', 'industrial-training' ), 'number' );
 			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'summary' ), __( 'Summary', 'industrial-training' ), 'textarea' );
 			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'skills' ), __( 'Skills', 'industrial-training' ), 'text', __( 'Comma-separated, e.g. <code>CNC programming, GD&amp;T basics</code>', 'industrial-training' ) );
 			itp_field( [ 'tracks' => [ 'items' => [ $index => $track ] ] ], $p( 'image' ), __( 'Cover photo', 'industrial-training' ), 'image' );
@@ -347,6 +348,9 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'hero', 'title' ], __( 'Heading', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'title_accent' ], __( 'Heading (amber line)', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'hero', 'eligible_title' ], __( 'Under-18 highlight — title', 'industrial-training' ), 'text', __( 'Green callout under the hero text. Leave empty to hide.', 'industrial-training' ) );
+				itp_field( $s, [ 'hero', 'eligible_text' ], __( 'Under-18 highlight — text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'hero', 'eligible_note' ], __( 'Under-18 highlight — condition', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'cta_primary' ], __( 'Primary button', 'industrial-training' ) );
 				itp_field( $s, [ 'hero', 'cta_secondary' ], __( 'Secondary button', 'industrial-training' ) );
 				foreach ( [ 0, 1, 2 ] as $i ) {
@@ -381,7 +385,16 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'offers', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'offers', 'stipend' ], __( 'Stipend banner', 'industrial-training' ), 'text', __( 'Leave empty to hide.', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'age' ], __( 'Age banner', 'industrial-training' ), 'text', __( 'Shown next to the stipend. Leave empty to hide.', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'batch' ], __( 'Batch banner', 'industrial-training' ), 'text', __( 'Shown next to the stipend. Leave empty to hide.', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'naps', 'eligible' ], __( 'NAPS banner — under-18 line', 'industrial-training' ), 'text', __( 'Green highlight inside the NAPS banner. Leave empty to hide.', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'naps', 'title' ], __( 'NAPS banner — title', 'industrial-training' ), 'text', __( 'Leave empty to hide the banner and show NAPS as a normal card instead.', 'industrial-training' ) );
+				foreach ( array_keys( itp_defaults()['offers']['naps']['ages'] ) as $i ) {
+					/* translators: %d: tile number */
+					$n = sprintf( __( 'NAPS age tile %d', 'industrial-training' ), $i + 1 );
+					itp_field( $s, [ 'offers', 'naps', 'ages', $i, 'value' ], $n . ' — ' . __( 'value', 'industrial-training' ) );
+					itp_field( $s, [ 'offers', 'naps', 'ages', $i, 'label' ], $n . ' — ' . __( 'label', 'industrial-training' ) );
+				}
 				itp_field( $s, [ 'offers', 'naps', 'text' ], __( 'NAPS banner — text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'offers', 'naps', 'note' ], __( 'NAPS banner — conditions', 'industrial-training' ), 'textarea' );
 				foreach ( array_keys( itp_defaults()['offers']['items'] ) as $i ) {
@@ -432,6 +445,19 @@ function itp_settings_page(): void {
 			</details>
 
 			<?php
+			$section( __( 'Internship batches', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'batches', 'title' ], __( 'Title', 'industrial-training' ) );
+				itp_field( $s, [ 'batches', 'duration' ], __( 'Duration', 'industrial-training' ), 'text', __( 'Also shown on every track card.', 'industrial-training' ) );
+				itp_field( $s, [ 'batches', 'note' ], __( 'Note', 'industrial-training' ), 'textarea' );
+				foreach ( array_keys( itp_defaults()['batches']['items'] ) as $i ) {
+					/* translators: %d: batch number */
+					$n = sprintf( __( 'Batch %d', 'industrial-training' ), $i + 1 );
+					itp_field( $s, [ 'batches', 'items', $i, 'label' ], $n . ' — ' . __( 'name', 'industrial-training' ) );
+					itp_field( $s, [ 'batches', 'items', $i, 'start' ], $n . ' — ' . __( 'starts', 'industrial-training' ) );
+					itp_field( $s, [ 'batches', 'items', $i, 'end' ], $n . ' — ' . __( 'ends', 'industrial-training' ) );
+				}
+			} );
+
 			$section( __( 'How it works', 'industrial-training' ), function () use ( $s ) {
 				itp_field( $s, [ 'steps', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'steps', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
@@ -472,6 +498,7 @@ function itp_settings_page(): void {
 				/* translators: %s: admin email */
 				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification emails', 'industrial-training' ), 'text', esc_html( sprintf( __( 'One or more addresses, separated by commas. Leave empty to use %s.', 'industrial-training' ), get_option( 'admin_email' ) ) ) );
 				itp_field( $s, [ 'form', 'confirm_student' ], __( 'Send confirmation email to the student', 'industrial-training' ), 'checkbox' );
+				itp_field( $s, [ 'form', 'rate_limit' ], __( 'Registrations per network (per 10 minutes)', 'industrial-training' ), 'number', __( 'Anti-spam limit for one internet connection. Students on the same college Wi-Fi share it, so raise this (e.g. 200) before a college registration drive and lower it afterwards. 1–500.', 'industrial-training' ) );
 			} );
 
 			$section( __( 'Sample content (testing)', 'industrial-training' ), function () use ( $s ) {

@@ -48,7 +48,7 @@ $f_social = itp_social_links( $founder['social'] ?? [], $founder['name'], 'itp-s
 				<h3 class="itp-founder-name" id="itp-founder-name"><?php echo esc_html( $founder['name'] ); ?></h3>
 				<p class="itp-founder-role"><?php echo esc_html( $founder['designation'] ?? '' ); ?></p>
 				<?php if ( ! empty( $founder['experience'] ) ) : ?>
-					<?php /* translators: %s: e.g. "10+ Years" */ ?>
+					<?php /* translators: %s: e.g. "6+ Years" */ ?>
 					<p class="itp-pill"><?php echo esc_html( sprintf( __( '%s Experience', 'industrial-training' ), $founder['experience'] ) ); ?></p>
 				<?php endif; ?>
 			</header>
