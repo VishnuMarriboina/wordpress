@@ -217,7 +217,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-eyebrow{margin-bottom:8px;color:var(--accent-ink);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .itp .itp-muted{color:var(--text-2)}
 .itp .itp-avatar{display:grid;flex:none;place-items:center;width:48px;height:48px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#2563eb,var(--brand) 60%,var(--brand-2));color:#fde68a;font-weight:800}
-.itp .itp-logo{border-radius:14px;background:var(--bg-alt);color:var(--brand);border:1px solid var(--border);object-fit:contain}
+.itp .itp-logo{border-radius:14px;background:#fff;color:var(--brand);border:1px solid var(--border);object-fit:contain}
 .itp .itp-logo-lg{width:64px;height:64px;margin-bottom:6px}
 .itp .itp-person-head > .itp-avatar{width:52px;height:52px}
 .itp .itp-avatar-xl{width:160px;height:160px;font-size:3.2rem;box-shadow:0 0 0 6px var(--surface),0 0 0 8px rgba(245,158,11,.55),var(--shadow-lg)}
@@ -325,7 +325,6 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 @media (prefers-color-scheme:dark){
 	.itp .itp-kind{background:rgba(165,180,252,.12);color:#c7d2fe}
 	.itp .itp-strip dd{color:#fbbf24}
-	.itp .itp-logo{color:#c7d2fe}
 }
 @media (max-width:1000px){
 	.itp .itp-founder{grid-template-columns:1fr;gap:40px}
