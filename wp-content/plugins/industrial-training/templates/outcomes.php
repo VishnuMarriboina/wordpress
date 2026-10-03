@@ -17,8 +17,8 @@ $partners = itp_items( 'partnerOrganizations' );
 $community = itp_social_links( $c['companySocial'] ?? [], $s['brand_name'], 'itp-social-lg' );
 $cta      = $c['ctaData'] ?? [];
 
-// Alternate backgrounds across whichever sections render (the section before is "How it works", grey).
-$alt = false;
+// Alternate backgrounds across whichever sections render (the section before is "How it works", plain).
+$alt = true;
 $bg  = static function () use ( &$alt ) {
 	$class = $alt ? ' itp-alt' : '';
 	$alt   = ! $alt;
@@ -30,7 +30,48 @@ $quote  = static function ( string $text ) {
 	echo '<blockquote class="itp-quote"><p>' . esc_html( $text ) . '</p></blockquote>';
 };
 $slide_label = static fn( int $i, int $n ) => sprintf( /* translators: 1: slide number, 2: total */ __( '%1$d of %2$d', 'industrial-training' ), $i + 1, $n );
+$our_students = array_values( array_filter( (array) ( $c['ourStudents'] ?? [] ), static fn( $x ) => ! empty( $x['name'] ) ) );
+$our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ), static fn( $x ) => ! empty( $x['name'] ) ) );
 ?>
+
+<?php if ( $our_students || $our_colleges ) : ?>
+<section class="itp-section<?php echo esc_attr( $bg() ); ?>" id="students" aria-labelledby="itp-students-title" data-itp-spy>
+	<div class="itp-container">
+		<div class="itp-head">
+			<p class="itp-eyebrow itp-reveal"><?php esc_html_e( 'Our students', 'industrial-training' ); ?></p>
+			<h2 class="itp-h2 itp-reveal" id="itp-students-title"><?php esc_html_e( 'Students Who Trained With Us', 'industrial-training' ); ?></h2>
+			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Students from different colleges who gained hands-on industry experience with Skillrise Technologies.', 'industrial-training' ); ?></p>
+		</div>
+		<?php if ( $our_students ) : ?>
+			<ul class="itp-people" role="list">
+				<?php foreach ( $our_students as $i => $st ) : ?>
+					<li class="itp-person itp-reveal" style="--i:<?php echo (int) $i; ?>">
+						<?php echo itp_avatar( $st['photo'] ?? '', (string) $st['name'], (string) $st['name'], 72, 'itp-avatar itp-person-avatar' ); // phpcs:ignore ?>
+						<p class="itp-person-name"><?php echo esc_html( $st['name'] ); ?></p>
+						<p class="itp-person-meta"><?php echo esc_html( $st['college'] ?? __( 'Industrial Training', 'industrial-training' ) ); ?></p>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
+		<?php if ( $our_colleges ) : ?>
+			<h3 class="itp-subhead itp-reveal"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
+			<ul class="itp-colleges-row" role="list">
+				<?php foreach ( $our_colleges as $i => $col ) : ?>
+					<li class="itp-college-chip itp-reveal" style="--i:<?php echo (int) $i; ?>">
+						<?php echo itp_avatar( $col['logo'] ?? '', '', (string) $col['name'], 44, 'itp-avatar itp-college-mark' ); // phpcs:ignore ?>
+						<span class="itp-college-text">
+							<span class="itp-college-name"><?php echo esc_html( $col['name'] ); ?></span>
+							<?php if ( ! empty( $col['location'] ) ) : ?>
+								<span class="itp-college-place"><span aria-hidden="true">📍</span> <?php echo esc_html( $col['location'] ); ?></span>
+							<?php endif; ?>
+						</span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
+	</div>
+</section>
+<?php endif; ?>
 
 <?php if ( $students ) : ?>
 <section class="itp-section<?php echo esc_attr( $bg() ); ?>" id="stories" aria-labelledby="itp-stories-title" data-itp-spy>

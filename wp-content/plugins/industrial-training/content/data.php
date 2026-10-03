@@ -30,6 +30,28 @@ $no_social = [ 'linkedin' => '', 'instagram' => '', 'facebook' => '', 'twitter' 
 
 return [
 
+	/* ---------------- Our students & their colleges (real, company-provided) ----------------
+	 * Shown in the "Our Students" section. Add 'college' => 'Loyola Polytechnic College' to a student
+	 * to show their college under the name, and 'photo' => 'assets/images/students/kavya.jpg' (with consent)
+	 * to replace the initials. */
+	'ourStudents'            => [
+		[ 'name' => 'Kavya' ],
+		[ 'name' => 'Rajyalakshmi' ],
+		[ 'name' => 'Yaswanth' ],
+		[ 'name' => 'Mahir' ],
+		[ 'name' => 'Naveen' ],
+		[ 'name' => 'Narasimha' ],
+		[ 'name' => 'Lohitha' ],
+		[ 'name' => 'Harshitha' ],
+	],
+	'ourColleges'            => [
+		[ 'name' => 'Loyola Polytechnic College', 'location' => 'Pulivendula' ],
+		[ 'name' => 'KORM College', 'location' => 'Kadapa' ],
+		[ 'name' => 'Vemu Institute of Technology', 'location' => 'Chittoor' ],
+		[ 'name' => 'Gouthami Institute of Technology', 'location' => 'Proddatur' ],
+		[ 'name' => 'Vasavi Polytechnic College', 'location' => 'Banaganapalle' ],
+	],
+
 	/* ---------------- Founder & CEO (company-provided information) ---------------- */
 	'founderData'            => [
 		'name'              => 'Y Arun Kumar Reddy',

@@ -61,7 +61,7 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			<a class="itp-brand" href="#itp-top">
 				<?php $logo = itp_real_url( $s['brand_logo'] ) ?: itp_local_url( $s['brand_logo'] ); ?>
 				<?php if ( $logo ) : ?>
-					<img class="itp-logo" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $s['brand_name'] ); ?>" width="117" height="52" decoding="async">
+					<img class="itp-brand-logo" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $s['brand_name'] ); ?>" width="117" height="52" decoding="async">
 				<?php else : ?>
 					<span class="itp-mark" aria-hidden="true"><?php echo esc_html( $s['brand_mark'] ); ?></span>
 					<span><?php echo esc_html( $s['brand_name'] ); ?></span>
@@ -69,10 +69,12 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			</a>
 			<nav class="itp-nav" aria-label="<?php esc_attr_e( 'Page sections', 'industrial-training' ); ?>">
 				<ul role="list">
-					<li><a href="#highlights"><?php echo esc_html( $s['nav']['highlights'] ); ?></a></li>
+					<li><a href="#about"><?php echo esc_html( $s['nav']['about'] ); ?></a></li>
 					<li><a href="#offers"><?php echo esc_html( $s['nav']['offers'] ); ?></a></li>
 					<li><a href="#tracks"><?php echo esc_html( $s['nav']['tracks'] ); ?></a></li>
-					<?php if ( itp_items( 'studentsData' ) ) : ?>
+					<?php if ( ! empty( itp_content()['ourStudents'] ) ) : ?>
+						<li><a href="#students"><?php esc_html_e( 'Students', 'industrial-training' ); ?></a></li>
+					<?php elseif ( itp_items( 'studentsData' ) ) : ?>
 						<li><a href="#reviews"><?php echo esc_html( $s['nav']['reviews'] ); ?></a></li>
 					<?php endif; ?>
 					<li><a href="#founder"><?php echo esc_html( $s['nav']['founder'] ); ?></a></li>
@@ -126,7 +128,44 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			<a class="itp-scroll" href="#highlights" aria-label="<?php echo esc_attr( $hero['scroll_label'] ); ?>"><span class="itp-mouse"><span class="itp-wheel"></span></span></a>
 		</section>
 
-		<section class="itp-section" id="highlights" aria-labelledby="itp-highlights-title" data-itp-spy>
+		<?php $about = $s['about']; ?>
+		<section class="itp-section itp-about-sec" id="about" aria-labelledby="itp-about-title" data-itp-spy>
+			<div class="itp-container itp-about">
+				<div class="itp-about-visual itp-reveal">
+					<div class="itp-about-card">
+						<?php $logo = itp_real_url( $s['brand_logo'] ) ?: itp_local_url( $s['brand_logo'] ); ?>
+						<?php if ( $logo ) : ?>
+							<img class="itp-about-logo" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $s['brand_name'] ); ?>" width="234" height="104" loading="lazy" decoding="async">
+						<?php endif; ?>
+						<p class="itp-about-tag"><?php esc_html_e( 'Empowering your potential', 'industrial-training' ); ?></p>
+						<dl class="itp-about-stats">
+							<?php foreach ( $s['stats'] as $stat ) : ?>
+								<div><dt><?php echo esc_html( $stat['label'] ); ?></dt><dd><?php echo itp_stat_value( (string) $stat['value'] ); // phpcs:ignore ?></dd></div>
+							<?php endforeach; ?>
+						</dl>
+					</div>
+					<span class="itp-about-ring" aria-hidden="true"></span>
+				</div>
+				<div class="itp-about-copy">
+					<p class="itp-eyebrow itp-reveal"><?php echo esc_html( $about['eyebrow'] ); ?></p>
+					<h2 class="itp-h2 itp-reveal" id="itp-about-title"><?php echo esc_html( $about['title'] ); ?></h2>
+					<p class="itp-lead itp-reveal"><?php echo esc_html( $about['text'] ); ?></p>
+					<?php if ( $about['text2'] ) : ?>
+						<p class="itp-about-text itp-reveal"><?php echo esc_html( $about['text2'] ); ?></p>
+					<?php endif; ?>
+					<ul class="itp-about-points" role="list">
+						<?php foreach ( $about['points'] as $i => $pt ) : ?>
+							<li class="itp-reveal">
+								<span class="itp-about-icon" aria-hidden="true"><?php echo esc_html( $pt['icon'] ); ?></span>
+								<span><strong><?php echo esc_html( $pt['title'] ); ?></strong> <?php echo esc_html( $pt['text'] ); ?></span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="itp-section itp-alt" id="highlights" aria-labelledby="itp-highlights-title" data-itp-spy>
 			<div class="itp-container">
 				<div class="itp-head">
 					<h2 class="itp-h2 itp-reveal" id="itp-highlights-title"><?php echo esc_html( $s['highlights']['title'] ); ?></h2>
@@ -145,12 +184,15 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 		</section>
 
 		<?php $offers = $s['offers']; ?>
-		<section class="itp-section itp-alt" id="offers" aria-labelledby="itp-offers-title" data-itp-spy>
+		<section class="itp-section" id="offers" aria-labelledby="itp-offers-title" data-itp-spy>
 			<div class="itp-container">
 				<div class="itp-head">
 					<h2 class="itp-h2 itp-reveal" id="itp-offers-title"><?php echo esc_html( $offers['title'] ); ?></h2>
 					<p class="itp-lead itp-reveal"><?php echo esc_html( $offers['lead'] ); ?></p>
 				</div>
+				<?php if ( ! empty( $offers['stipend'] ) ) : ?>
+					<p class="itp-stipend itp-reveal"><?php echo esc_html( $offers['stipend'] ); ?></p>
+				<?php endif; ?>
 				<?php // At-a-glance chips: jump straight to the card. ?>
 				<ul class="itp-offer-nav itp-reveal" role="list">
 					<?php foreach ( $offers['items'] as $i => $item ) : ?>
@@ -184,7 +226,7 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			</div>
 		</section>
 
-		<section class="itp-section" id="tracks" aria-labelledby="itp-tracks-title" data-itp-spy>
+		<section class="itp-section itp-alt" id="tracks" aria-labelledby="itp-tracks-title" data-itp-spy>
 			<div class="itp-container">
 				<div class="itp-head">
 					<h2 class="itp-h2 itp-reveal" id="itp-tracks-title"><?php echo esc_html( $s['tracks']['title'] ); ?></h2>
@@ -216,20 +258,28 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			</div>
 		</section>
 
-		<section class="itp-section itp-alt" aria-labelledby="itp-steps-title">
+		<section class="itp-section itp-steps-sec" aria-labelledby="itp-steps-title">
 			<div class="itp-container">
 				<div class="itp-head">
 					<h2 class="itp-h2 itp-reveal" id="itp-steps-title"><?php echo esc_html( $s['steps']['title'] ); ?></h2>
+					<?php if ( ! empty( $s['steps']['lead'] ) ) : ?>
+						<p class="itp-lead itp-reveal"><?php echo esc_html( $s['steps']['lead'] ); ?></p>
+					<?php endif; ?>
 				</div>
-				<ol class="itp-steps itp-reveal" role="list">
+				<ol class="itp-steps itp-reveal" role="list" style="--n:<?php echo count( $s['steps']['items'] ); ?>">
 					<?php foreach ( $s['steps']['items'] as $i => $step ) : ?>
 						<li class="itp-step" style="--i:<?php echo (int) $i; ?>">
+							<div class="itp-step-media">
+								<?php echo itp_image( (int) ( $step['image'] ?? 0 ), (string) ( $step['photo'] ?? '' ), [ 4, 3 ], '(max-width: 760px) 92vw, (max-width: 1000px) 46vw, 270px' ); // phpcs:ignore ?>
+								<span class="itp-step-icon" aria-hidden="true"><?php echo esc_html( $step['icon'] ?? '' ); ?></span>
+							</div>
 							<span class="itp-step-num" aria-hidden="true"><?php echo (int) $i + 1; ?></span>
 							<h3><?php echo esc_html( $step['title'] ); ?></h3>
 							<p><?php echo esc_html( $step['text'] ); ?></p>
 						</li>
 					<?php endforeach; ?>
 				</ol>
+				<div class="itp-steps-cta itp-reveal"><?php $opener( $s['nav']['register'], 'itp-btn-primary itp-shine', '', ' ' . $arrow ); ?></div>
 			</div>
 		</section>
 

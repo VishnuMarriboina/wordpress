@@ -114,6 +114,15 @@
 		}
 	}
 
+	// "How it works": the progress line sits at the bottom edge of the step photos.
+	const steps = $('.itp-steps');
+	const media = steps && $('.itp-step-media', steps);
+	if (media) {
+		const place = () => steps.style.setProperty('--media-h', media.offsetHeight + 'px');
+		place();
+		if ('ResizeObserver' in window) new ResizeObserver(place).observe(media);
+	}
+
 	// Carousels: native scroll-snap track + prev/next + dots. No autoplay.
 	$$('[data-itp-carousel]').forEach((car) => {
 		const track = $('.itp-car-track', car);

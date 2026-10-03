@@ -69,6 +69,7 @@ function itp_sanitize_value( string $key, $value ) {
 		case 'success_text':
 		case 'skills':
 		case 'address':
+		case 'text2':
 		case 'cta_text':
 			return sanitize_textarea_field( $value );
 		case 'photo':
@@ -174,6 +175,10 @@ add_action( 'admin_post_itp_import_photos', function () {
 		$fill( $track['image'], $track['photo'] ?? '' );
 	}
 	unset( $track );
+	foreach ( $settings['steps']['items'] as &$step ) {
+		$fill( $step['image'], $step['photo'] ?? '' );
+	}
+	unset( $step );
 	foreach ( $settings['offers']['items'] as &$offer ) {
 		$fill( $offer['image'], $offer['photo'] ?? '' );
 	}
@@ -327,6 +332,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'brand_mark' ], __( 'Brand mark text', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_name' ], __( 'Brand name', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'highlights' ], __( 'Link: highlights', 'industrial-training' ) );
+				itp_field( $s, [ 'nav', 'about' ], __( 'Link: about', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'offers' ], __( 'Link: what we offer', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'reviews' ], __( 'Link: reviews', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'founder' ], __( 'Link: founder', 'industrial-training' ) );
@@ -356,9 +362,24 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'hero', 'scroll_label' ], __( 'Scroll cue label (screen readers)', 'industrial-training' ) );
 			} );
 
+			$section( __( 'About us', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'about', 'eyebrow' ], __( 'Small label', 'industrial-training' ) );
+				itp_field( $s, [ 'about', 'title' ], __( 'Section title', 'industrial-training' ) );
+				itp_field( $s, [ 'about', 'text' ], __( 'Main text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'about', 'text2' ], __( 'Second paragraph', 'industrial-training' ), 'textarea' );
+				foreach ( array_keys( itp_defaults()['about']['points'] ) as $i ) {
+					/* translators: %d: point number */
+					$n = sprintf( __( 'Point %d', 'industrial-training' ), $i + 1 );
+					itp_field( $s, [ 'about', 'points', $i, 'icon' ], $n . ' — ' . __( 'icon', 'industrial-training' ) );
+					itp_field( $s, [ 'about', 'points', $i, 'title' ], $n . ' — ' . __( 'title', 'industrial-training' ) );
+					itp_field( $s, [ 'about', 'points', $i, 'text' ], $n . ' — ' . __( 'text', 'industrial-training' ) );
+				}
+			} );
+
 			$section( __( 'What we offer students', 'industrial-training' ), function () use ( $s ) {
 				itp_field( $s, [ 'offers', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'offers', 'stipend' ], __( 'Stipend banner', 'industrial-training' ), 'text', __( 'Leave empty to hide.', 'industrial-training' ) );
 				foreach ( array_keys( itp_defaults()['offers']['items'] ) as $i ) {
 					/* translators: %d: card number */
 					$n = sprintf( __( 'Card %d', 'industrial-training' ), $i + 1 );
@@ -409,11 +430,14 @@ function itp_settings_page(): void {
 			<?php
 			$section( __( 'How it works', 'industrial-training' ), function () use ( $s ) {
 				itp_field( $s, [ 'steps', 'title' ], __( 'Section title', 'industrial-training' ) );
-				foreach ( [ 0, 1, 2 ] as $i ) {
+				itp_field( $s, [ 'steps', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
+				foreach ( array_keys( itp_defaults()['steps']['items'] ) as $i ) {
 					/* translators: %d: step number */
 					$n = sprintf( __( 'Step %d', 'industrial-training' ), $i + 1 );
+					itp_field( $s, [ 'steps', 'items', $i, 'icon' ], $n . ' — ' . __( 'icon', 'industrial-training' ) );
 					itp_field( $s, [ 'steps', 'items', $i, 'title' ], $n . ' — ' . __( 'title', 'industrial-training' ) );
 					itp_field( $s, [ 'steps', 'items', $i, 'text' ], $n . ' — ' . __( 'text', 'industrial-training' ), 'textarea' );
+					itp_field( $s, [ 'steps', 'items', $i, 'image' ], $n . ' — ' . __( 'photo', 'industrial-training' ), 'image' );
 				}
 			} );
 

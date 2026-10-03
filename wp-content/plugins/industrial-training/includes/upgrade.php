@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 2;
+const ITP_SETTINGS_VERSION = 3;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -27,6 +27,7 @@ function itp_upgrade_settings(): void {
 			[ [ 'form', 'notify_email' ], [ '' ] ],
 			[ [ 'footer', 'copyright' ], [ '© {year} Industrial Training Program. All rights reserved.' ] ],
 			[ [ 'seo', 'title' ], [ 'Industrial Training Program for Diploma Students' ] ],
+			[ [ 'footer', 'credits' ], [ 'Photos: <a href="https://unsplash.com/">Unsplash</a> contributors, used under the <a href="https://unsplash.com/license">Unsplash License</a>.' ] ],
 		];
 		foreach ( $steps as [ $path, $old ] ) {
 			$ref = &$saved;
@@ -45,6 +46,14 @@ function itp_upgrade_settings(): void {
 				$ref[ $last ] = $value;
 			}
 			unset( $ref );
+		}
+		// Lists are saved whole, so new defaults (4 photo steps, real hero figures) replace them only
+		// while they still hold the original placeholder text.
+		if ( 3 === count( $saved['steps']['items'] ?? [] ) && 'Fill the short form. It takes under two minutes.' === ( $saved['steps']['items'][0]['text'] ?? '' ) && 'Join the next batch, work on real projects and earn your certificate.' === ( $saved['steps']['items'][2]['text'] ?? '' ) ) {
+			$saved['steps']['items'] = $new['steps']['items'];
+		}
+		if ( '2,400+' === ( $saved['stats'][0]['value'] ?? '' ) && '85%' === ( $saved['stats'][2]['value'] ?? '' ) ) {
+			$saved['stats'] = $new['stats'];
 		}
 		// Invented sample students, colleges and partners must not be public on a live site.
 		$saved['samples']['show'] = 0;

@@ -28,6 +28,11 @@ function itp_default_photos(): array {
 		'everyone'    => [ '1558023608-bbcc13ffdc24', __( 'Group of smiling young men and women students', 'industrial-training' ) ],
 		'criteria'    => [ '1758270705290-62b6294dd044', __( 'Students gathered around a laptop in a classroom', 'industrial-training' ) ],
 		'colleges'    => [ '1635246550194-11af93a2763f', __( 'Students sitting together on a college campus', 'industrial-training' ) ],
+		// "How it works" steps (4:3).
+		'step-register' => [ '1660982741734-5a7d2730ff28', __( 'Student checking details on his phone in a classroom', 'industrial-training' ) ],
+		'step-call'     => [ '1626863905121-3b0c0ed7b94c', __( 'Counsellors wearing headsets on a call', 'industrial-training' ) ],
+		'step-train'    => [ '1690356107685-3725367f6f3f', __( 'Trainees in blue overalls working at workbenches in a workshop', 'industrial-training' ) ],
+		'step-career'   => [ '1776248783518-400b6d0da64c', __( 'Young professionals in formal wear celebrating together', 'industrial-training' ) ],
 		'naps'        => [ '1581092160607-ee22621dd758', __( 'Trainees in safety glasses learning on machines in a workshop', 'industrial-training' ) ],
 	];
 }
@@ -47,6 +52,7 @@ function itp_defaults(): array {
 		'brand_name' => __( 'Skillrise Technologies', 'industrial-training' ),
 		'nav'        => [
 			'highlights' => __( 'Why us', 'industrial-training' ),
+			'about'      => __( 'About', 'industrial-training' ),
 			'offers'     => __( 'What you get', 'industrial-training' ),
 			'reviews'    => __( 'Reviews', 'industrial-training' ),
 			'founder'    => __( 'Founder', 'industrial-training' ),
@@ -69,9 +75,20 @@ function itp_defaults(): array {
 			'scroll_label'  => __( 'Scroll to highlights', 'industrial-training' ),
 		],
 		'stats'      => [
-			[ 'value' => '2,400+', 'label' => __( 'students trained', 'industrial-training' ) ],
-			[ 'value' => '60+', 'label' => __( 'industry partners', 'industrial-training' ) ],
-			[ 'value' => '85%', 'label' => __( 'placement support rate', 'industrial-training' ) ],
+			[ 'value' => '10,000+', 'label' => __( 'students trained', 'industrial-training' ) ],
+			[ 'value' => '200+', 'label' => __( 'colleges connected', 'industrial-training' ) ],
+			[ 'value' => '₹17K–21.5K', 'label' => __( 'monthly stipend', 'industrial-training' ) ],
+		],
+		'about'      => [
+			'eyebrow' => __( 'About us', 'industrial-training' ),
+			'title'   => __( 'About Skillrise Technologies', 'industrial-training' ),
+			'text'    => __( 'Skillrise Technologies helps diploma and engineering students turn classroom knowledge into real industry skills. Through internships, industrial training and apprenticeships, students work on real machines and projects, learn from experienced mentors and earn a monthly stipend while they train.', 'industrial-training' ),
+			'text2'   => __( 'Founded by Y Arun Kumar Reddy, we have trained 10,000+ students and work with 200+ colleges. Our goal is simple: practical experience, professional skills and the confidence to take the next step in your career.', 'industrial-training' ),
+			'points'  => [
+				[ 'icon' => '🎯', 'title' => __( 'Our mission', 'industrial-training' ), 'text' => __( 'Make every student industry-ready with hands-on training.', 'industrial-training' ) ],
+				[ 'icon' => '🤝', 'title' => __( 'Who we serve', 'industrial-training' ), 'text' => __( 'Diploma and engineering students from any college.', 'industrial-training' ) ],
+				[ 'icon' => '📈', 'title' => __( 'What you gain', 'industrial-training' ), 'text' => __( 'Skills, a stipend, a certificate and career guidance.', 'industrial-training' ) ],
+			],
 		],
 		'highlights' => [
 			'title' => __( 'Why train with us', 'industrial-training' ),
@@ -96,6 +113,7 @@ function itp_defaults(): array {
 				$offer( '🏫', __( 'Students from any college', 'industrial-training' ), __( 'Apply regardless of your college or institution. We do not restrict opportunities to students from specific colleges.', 'industrial-training' ), __( 'Subject to the requirements of the particular program.', 'industrial-training' ), 'colleges' ),
 				$offer( '👨‍🎓', __( 'Apprenticeships through NAPS', 'industrial-training' ), __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ), __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ), 'naps' ),
 			],
+			'stipend'     => __( '💰 Stipend: ₹17,000 – ₹21,500 per month', 'industrial-training' ),
 			'cta_title'   => __( '🚀 Learn. Experience. Grow.', 'industrial-training' ),
 			'cta_text'    => __( 'Gain practical experience, build industry-relevant skills and take your next career step with greater confidence.', 'industrial-training' ),
 			'cta_button'  => __( 'Apply for an internship', 'industrial-training' ),
@@ -114,10 +132,12 @@ function itp_defaults(): array {
 		],
 		'steps'      => [
 			'title' => __( 'How it works', 'industrial-training' ),
+			'lead'  => __( 'Four simple steps from registration to your first industry role.', 'industrial-training' ),
 			'items' => [
-				[ 'title' => __( 'Register', 'industrial-training' ), 'text' => __( 'Fill the short form. It takes under two minutes.', 'industrial-training' ) ],
-				[ 'title' => __( 'Counselling call', 'industrial-training' ), 'text' => __( 'Our team calls within 2 working days to confirm your track and batch.', 'industrial-training' ) ],
-				[ 'title' => __( 'Start training', 'industrial-training' ), 'text' => __( 'Join the next batch, work on real projects and earn your certificate.', 'industrial-training' ) ],
+				[ 'icon' => '📝', 'title' => __( 'Register', 'industrial-training' ), 'text' => __( 'Fill the short form. It takes under two minutes.', 'industrial-training' ), 'photo' => 'step-register', 'image' => 0 ],
+				[ 'icon' => '📞', 'title' => __( 'Counselling call', 'industrial-training' ), 'text' => __( 'Our team calls within 2 working days to confirm your track and batch.', 'industrial-training' ), 'photo' => 'step-call', 'image' => 0 ],
+				[ 'icon' => '🛠️', 'title' => __( 'Hands-on training with stipend', 'industrial-training' ), 'text' => __( 'Work on real machines and projects with industry mentors, and earn a stipend of ₹17,000 – ₹21,500 per month.', 'industrial-training' ), 'photo' => 'step-train', 'image' => 0 ],
+				[ 'icon' => '🎓', 'title' => __( 'Certificate & career', 'industrial-training' ), 'text' => __( 'Complete the program, get your certificate and move forward with placement guidance.', 'industrial-training' ), 'photo' => 'step-career', 'image' => 0 ],
 			],
 		],
 		'contact'    => [
@@ -135,7 +155,7 @@ function itp_defaults(): array {
 		],
 		'footer'     => [
 			'copyright' => __( '© {year} Skillrise Technologies. All rights reserved.', 'industrial-training' ),
-			'credits'   => __( 'Photos: <a href="https://unsplash.com/">Unsplash</a> contributors, used under the <a href="https://unsplash.com/license">Unsplash License</a>.', 'industrial-training' ),
+			'credits'   => '',
 		],
 		'form'       => [
 			'title'           => __( 'Register for Industrial Training', 'industrial-training' ),
