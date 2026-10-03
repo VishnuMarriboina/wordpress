@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 3;
+const ITP_SETTINGS_VERSION = 4;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -53,6 +53,10 @@ function itp_upgrade_settings(): void {
 			$saved['steps']['items'] = $new['steps']['items'];
 		}
 		if ( '2,400+' === ( $saved['stats'][0]['value'] ?? '' ) && '85%' === ( $saved['stats'][2]['value'] ?? '' ) ) {
+			$saved['stats'] = $new['stats'];
+		}
+		// Stipend shown in full ("₹17,000 – ₹21,500") and first, in its own tile.
+		if ( in_array( '₹17K–21.5K', array_column( (array) ( $saved['stats'] ?? [] ), 'value' ), true ) ) {
 			$saved['stats'] = $new['stats'];
 		}
 		// Invented sample students, colleges and partners must not be public on a live site.

@@ -78,12 +78,15 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 				<?php foreach ( $our_colleges as $i => $col ) : ?>
 					<?php
 					$img  = itp_real_url( $col['image'] ?? '' ) ?: itp_local_url( $col['image'] ?? '' );
+					$logo = $img ? '' : ( itp_real_url( $col['logo'] ?? '' ) ?: itp_local_url( $col['logo'] ?? '' ) );
 					$site = itp_real_url( $col['website'] ?? '' );
 					$poly = false !== stripos( (string) ( $col['type'] ?? '' ), 'polytechnic' );
 					?>
 					<li class="itp-card itp-campus itp-reveal" style="--i:<?php echo (int) $i; ?>">
-						<div class="itp-campus-media<?php echo $poly ? ' is-poly' : ''; ?>">
-							<?php if ( $img ) : ?>
+						<div class="itp-campus-media<?php echo $logo ? ' is-logo' : ( $poly ? ' is-poly' : '' ); ?>">
+							<?php if ( $logo ) : ?>
+								<img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( sprintf( /* translators: %s: college */ __( '%s logo', 'industrial-training' ), $col['name'] ) ); ?>" width="96" height="96" loading="lazy" decoding="async">
+							<?php elseif ( $img ) : ?>
 								<img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( sprintf( /* translators: %s: college */ __( '%s campus', 'industrial-training' ), $col['name'] ) ); ?>" width="640" height="360" loading="lazy" decoding="async">
 							<?php else : ?>
 								<span class="itp-campus-mono" aria-hidden="true"><?php echo esc_html( itp_initials( (string) $col['name'] ) ); ?></span>

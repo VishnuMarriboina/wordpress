@@ -67,7 +67,8 @@
 		// Count-up: "2,400+" → prefix, number, suffix. The final value is in a sibling .itp-sr span.
 		const counters = $$('.itp-count').map((el) => {
 			const m = el.textContent.trim().match(/^(\D*)([\d,]*\.?\d+)(.*)$/);
-			if (! m) return null;
+			// Ranges such as "₹17,000 – ₹21,500" stay as written: counting only the first number reads oddly.
+			if (! m || /\d/.test(m[3])) return null;
 			const end = parseFloat(m[2].replace(/,/g, ''));
 			const dec = (m[2].split('.')[1] || '').length;
 			const fmt = (v) => m[1] + (m[2].includes(',') ? v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) : v.toFixed(dec)) + m[3];

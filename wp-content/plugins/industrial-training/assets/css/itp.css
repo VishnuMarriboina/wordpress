@@ -1,11 +1,11 @@
 /* Industrial Training landing page — scoped under .itp; resets use :where(). */
 .itp{
-	--bg:#f7f8fb;--bg-alt:#eef1f6;--surface:#fff;--text:#0f172a;--text-2:#475569;--border:#dde3ec;
+	--bg:#f5f7fb;--bg-alt:#e9eef6;--surface:#fff;--text:#0f172a;--text-2:#475569;--border:#cfd8e4;
 	--accent:#f59e0b;--accent-strong:#d97706;--accent-text:#1a1203;--accent-ink:#b45309;
 	--brand:#1e3a8a;--brand-2:#312e81;--danger:#dc2626;--ok:#16a34a;--ok-ink:#15803d;--focus:#b45309;
 	--ring:0 0 0 3px rgba(245,158,11,.45);
-	--shadow:0 1px 2px rgba(15,23,42,.05), 0 8px 24px -12px rgba(15,23,42,.14);
-	--shadow-lg:0 2px 4px rgba(15,23,42,.06), 0 22px 44px -18px rgba(15,23,42,.28);
+	--shadow:0 1px 3px rgba(15,23,42,.08), 0 10px 26px -12px rgba(15,23,42,.2);
+	--shadow-lg:0 2px 6px rgba(15,23,42,.08), 0 24px 46px -18px rgba(15,23,42,.32);
 	--ease:cubic-bezier(.2,.7,.2,1);
 	--header-h:64px;
 	position:relative;
@@ -26,7 +26,7 @@
 html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) + 80px);scroll-behavior:smooth}
 
 :where(.itp) *, :where(.itp) ::before, :where(.itp) ::after{box-sizing:border-box}
-:where(.itp) :where(h1, h2, h3, p, ul, ol, dl, dd, address, fieldset){margin:0;padding:0}
+:where(.itp) :where(h1, h2, h3, h4, p, ul, ol, dl, dd, address, fieldset){margin:0;padding:0}
 :where(.itp) :where(ul, ol){list-style:none}
 :where(.itp) :where(h1, h2, h3){color:inherit;font-family:inherit;line-height:1.2;letter-spacing:-.01em}
 :where(.itp) img{display:block;max-width:100%;height:auto}
@@ -59,9 +59,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-shine:hover::after{animation-duration:1.6s}
 
 /* Header */
-.itp .itp-header{position:sticky;top:var(--wp-admin--admin-bar--height, 0px);z-index:50;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid var(--border);transition:box-shadow .25s, transform .35s var(--ease)}
+.itp .itp-header{position:sticky;top:var(--wp-admin--admin-bar--height, 0px);z-index:50;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid var(--border);box-shadow:0 4px 18px -10px rgba(15,23,42,.28);transition:box-shadow .25s, transform .35s var(--ease)}
 .itp .itp-header.is-hidden:not(:focus-within){transform:translateY(-100%)}
-.itp .itp-header.is-scrolled{box-shadow:0 8px 24px -14px rgba(15,23,42,.35)}
+.itp .itp-header.is-scrolled{box-shadow:0 8px 24px -10px rgba(15,23,42,.38)}
 .itp .itp-header-in{display:flex;align-items:center;gap:16px;min-height:var(--header-h)}
 .itp .itp-brand{display:inline-flex;align-items:center;gap:10px;margin-right:auto;font-weight:700;text-decoration:none;min-height:44px}
 .itp .itp-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg, #2563eb, var(--brand) 60%, var(--brand-2));color:#fde68a;font-weight:800;font-size:.9rem;letter-spacing:.02em;transition:transform .4s var(--ease), box-shadow .4s}
@@ -76,7 +76,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-nav a:hover::after{transform:scaleX(.6)}
 .itp .itp-nav a[aria-current]::after{transform:scaleX(1)}
 .itp .itp-progress{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:linear-gradient(90deg, #fbbf24, #f59e0b, #d97706);transform:scaleX(0);transform-origin:left}
-@media (prefers-color-scheme:dark){.itp .itp-header{background:rgba(11,17,32,.78)} }
+@media (prefers-color-scheme:dark){.itp .itp-header{background:rgba(11,17,32,.86);box-shadow:none} }
 
 /* Hero */
 .itp .itp-hero{--focus:#fbbf24;position:relative;overflow:hidden;padding:88px 0 120px;color:#fff;background:linear-gradient(160deg, #0b1533, #172554 55%, #1e1b4b)}
@@ -93,7 +93,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 @supports (background-clip:text) or (-webkit-background-clip:text){.itp .itp-h1-accent{background:linear-gradient(90deg, #fbbf24, #fde68a 25%, #f59e0b 50%, #fde68a 75%, #fbbf24) 0 0 / 200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:itp-flow 6s linear infinite} }
 .itp .itp-hero-lead{max-width:560px;color:#cbd5e1;font-size:1.1rem}
 .itp .itp-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.itp .itp-stats{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;margin-top:40px;max-width:560px}
+.itp .itp-stats{display:grid;grid-template-columns:repeat(2, 1fr);gap:12px;margin-top:40px;max-width:560px}
+.itp .itp-stat:first-child{grid-column:1 / -1;border-color:rgba(251,191,36,.45);background:linear-gradient(90deg, rgba(251,191,36,.18), rgba(251,191,36,.04))}
+.itp .itp-stat:first-child dd{color:#fbbf24}
 .itp .itp-stat{display:flex;flex-direction:column-reverse;padding:14px 16px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.06)}
 .itp .itp-stat dt{color:#cbd5e1;font-size:.85rem;line-height:1.35}
 .itp .itp-stat dd{font-size:1.65rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
@@ -190,15 +192,18 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-about-card{position:relative;z-index:1;display:grid;justify-items:center;gap:14px;width:100%;max-width:420px;padding:36px 28px;border:1px solid #e5e7eb;border-radius:24px;background:#fff;color:#0f172a;box-shadow:var(--shadow-lg);text-align:center}
 /* The logo has dark-navy lettering, so its card stays white in dark mode too. */
 .itp .itp-about-card .itp-about-stats{border-top-color:#e5e7eb}
-.itp .itp-about-card .itp-about-stats div + div{border-left-color:#e5e7eb}
+/* Light divider lines inside the white card, also in dark mode (the stats rules use var(--border)). */
+.itp .itp-about-card{--border:#e5e7eb}
 .itp .itp-about-card .itp-about-stats dd{color:#1e3a8a}
 .itp .itp-about-card .itp-about-stats dt{color:#475569}
 .itp .itp-about-card .itp-about-tag{color:#b45309}
 .itp .itp-about-logo{width:234px;max-width:100%;height:auto}
 .itp .itp-about-tag{color:var(--accent-ink);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.itp .itp-about-stats{display:grid;grid-template-columns:repeat(3, 1fr);width:100%;margin-top:8px;border-top:1px solid var(--border)}
+.itp .itp-about-stats{display:grid;grid-template-columns:repeat(2, 1fr);width:100%;margin-top:8px;border-top:1px solid var(--border)}
 .itp .itp-about-stats div{display:flex;flex-direction:column-reverse;padding:14px 4px 0}
-.itp .itp-about-stats div + div{border-left:1px solid var(--border)}
+.itp .itp-about-stats div:first-child{grid-column:1 / -1;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.itp .itp-about-stats div:first-child dd{font-size:1.35rem}
+.itp .itp-about-stats div:nth-child(n+3){border-left:1px solid var(--border)}
 .itp .itp-about-stats dd{color:var(--brand);font-size:1.15rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
 .itp .itp-about-stats dt{color:var(--text-2);font-size:.75rem}
 .itp .itp-about-ring{position:absolute;inset:0;margin:auto;width:min(100%, 480px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from 0deg, rgba(251,191,36,.35), rgba(37,99,235,.25), rgba(49,46,129,.25), rgba(251,191,36,.35));filter:blur(40px);opacity:.8}
@@ -249,13 +254,17 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-campus:hover .itp-campus-mono{transform:scale(1.08)}
 .itp .itp-campus-icon{position:absolute;right:14px;bottom:12px;font-size:1.6rem;opacity:.9}
 .itp .itp-campus-type{position:absolute;left:12px;top:12px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--text);font-size:.75rem;font-weight:700}
+.itp .itp-campus-media.is-logo{display:flex;flex-direction:column;gap:12px;aspect-ratio:auto;padding:20px 16px 16px;background:#fff;border-bottom:1px solid var(--border)}
+.itp .itp-campus-media.is-logo::before{display:none}
+.itp .itp-campus-media.is-logo img{width:auto;max-width:100%;height:96px;object-fit:contain}
+.itp .itp-campus-media.is-logo .itp-campus-type{position:static;background:var(--bg-alt);color:var(--text-2)}
 .itp .itp-campus-body{display:flex;flex:1;flex-direction:column;gap:10px;padding:20px 20px 22px}
-.itp .itp-campus-body h4{font-size:1.08rem;font-weight:700;line-height:1.3}
+.itp .itp-campus-body h4{margin:0;color:var(--text);font-size:1.08rem;font-weight:700;line-height:1.3}
 .itp .itp-campus-place{color:var(--text-2);font-size:.9rem}
 .itp .itp-campus-facts{display:grid;gap:8px;padding:12px 0;border-block:1px solid var(--border)}
-.itp .itp-campus-facts div{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:.88rem}
-.itp .itp-campus-facts dt{color:var(--text-2)}
-.itp .itp-campus-facts dd{font-weight:600}
+.itp .itp-campus-facts div{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:.88rem}
+.itp .itp-campus-facts dt{flex:0 0 96px;color:var(--text-2)}
+.itp .itp-campus-facts dd{flex:1 1 150px;min-width:0;font-weight:600;overflow-wrap:break-word}
 .itp .itp-campus .itp-chips{margin:2px 0 0}
 .itp .itp-campus .itp-btn{align-self:flex-start;margin-top:auto}
 .itp.motion-ready .itp-people .itp-reveal.itp-in, .itp.motion-ready .itp-voices .itp-reveal.itp-in, .itp.motion-ready .itp-campus-grid .itp-reveal.itp-in{animation-delay:calc(var(--i) * 80ms)}
@@ -372,8 +381,8 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-tag-ok{background:rgba(22,163,74,.12);color:var(--ok-ink)}
 .itp .itp-tag-sample{border:1px dashed var(--danger);color:var(--danger)}
 .itp .itp-preview-public{display:inline-block;padding:4px 12px;border-style:solid;border-color:var(--border);background:var(--surface);color:var(--text-2);font-size:.8rem}
-.itp .itp-card .itp-stars{color:#f59e0b;font-size:1.05rem;letter-spacing:2px;line-height:1}
-.itp .itp-stars-off{color:var(--border)}
+.itp .itp-stars{color:#f5a50b;font-size:1.05rem;letter-spacing:2px;line-height:1;text-shadow:0 1px 0 rgba(180,83,9,.25)}
+.itp .itp-stars-off{color:#d6dde8;text-shadow:none}
 .itp .itp-is-sample{border:2px dashed #94a3b8}
 .itp .itp-person, .itp .itp-testimonial, .itp .itp-college{display:flex;flex-direction:column;gap:18px;height:100%;padding:24px}
 .itp .itp-person-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
@@ -435,34 +444,8 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 @media (prefers-color-scheme:dark){
 	.itp .itp-kind{background:rgba(165,180,252,.12);color:#c7d2fe}
 	.itp .itp-strip dd{color:#fbbf24}
+	.itp .itp-stars-off{color:#334155}
 }
-@media (max-width:1000px){
-	.itp .itp-founder{grid-template-columns:1fr;gap:40px}
-	.itp .itp-founder-card{max-width:460px;width:100%;margin-inline:auto}
-	.itp .itp-car-track{grid-auto-columns:calc((100% - 24px) / 2)}
-	.itp .itp-strip{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:760px){
-	.itp .itp-band{padding:64px 0}
-	.itp .itp-grid-2{grid-template-columns:1fr}
-	.itp .itp-milestones{grid-template-columns:repeat(2,1fr);row-gap:32px}
-	.itp .itp-milestones::before{display:none}
-	.itp .itp-subhead{margin-top:48px}
-}
-@media (max-width:560px){
-	.itp .itp-car-track{grid-auto-columns:100%}
-	.itp .itp-founder-card{padding:28px 18px}
-	.itp .itp-avatar-xl{width:128px;height:128px;font-size:2.6rem}
-	.itp .itp-brand-logo{height:38px}
-	.itp .itp-steps{grid-template-columns:1fr}
-	.itp .itp-people{grid-template-columns:repeat(2, 1fr);gap:14px}
-	.itp .itp-campus-grid > li{flex-basis:100%}
-	.itp .itp-about-stats dd{font-size:1rem}
-	.itp .itp-offer-nav{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:-16px -16px 32px;padding:4px 16px;scrollbar-width:none}
-	.itp .itp-offer-nav li{flex:none}
-	.itp .itp-offer-cta{padding:24px 20px}
-}
-
 /* Motion (hidden states only after JS adds .motion-ready) */
 .itp.motion-ready .itp-header{animation:itp-drop .6s var(--ease) backwards}
 .itp.motion-ready .itp-brand, .itp.motion-ready .itp-nav li, .itp.motion-ready .itp-header-in > .itp-btn{animation:itp-rise .6s var(--ease) backwards}
@@ -513,22 +496,42 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-people{grid-template-columns:repeat(3, 1fr)}
 	.itp .itp-campus-grid > li{flex-basis:calc((100% - 24px) / 2)}
 	.itp .itp-voices{grid-template-columns:1fr}
+	.itp .itp-founder{grid-template-columns:1fr;gap:40px}
+	.itp .itp-founder-card{max-width:460px;width:100%;margin-inline:auto}
+	.itp .itp-car-track{grid-auto-columns:calc((100% - 24px) / 2)}
+	.itp .itp-strip{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:760px){
 	.itp .itp-nav, .itp .itp-scroll{display:none}
 	.itp .itp-section{padding:64px 0}
 	.itp .itp-hero{padding:64px 0 88px}
 	.itp .itp-contact{grid-template-columns:1fr}
+	.itp .itp-band{padding:64px 0}
+	.itp .itp-grid-2{grid-template-columns:1fr}
+	.itp .itp-milestones{grid-template-columns:repeat(2,1fr);row-gap:32px}
+	.itp .itp-milestones::before{display:none}
+	.itp .itp-subhead{margin-top:48px}
+	.itp .itp-campus-grid > li{flex-basis:100%;max-width:480px}
 }
 @media (max-width:560px){
 	.itp .itp-container{padding:0 16px}
-	.itp .itp-grid-4, .itp .itp-grid-3, .itp .itp-stats, .itp .itp-fields{grid-template-columns:1fr}
+	.itp .itp-grid-4, .itp .itp-grid-3, .itp .itp-fields{grid-template-columns:1fr}
 	.itp .itp-stat{flex-direction:row-reverse;justify-content:flex-end;align-items:baseline;gap:12px}
 	.itp .itp-actions .itp-btn{flex:1 1 100%}
 	.itp .itp-modal-in{padding:24px 20px}
 	.itp .itp-form-actions{flex-direction:column-reverse}
 	.itp .itp-form-actions .itp-btn{width:100%}
 	.itp .itp-brand > span + span{font-size:.95rem}
+	.itp .itp-car-track{grid-auto-columns:100%}
+	.itp .itp-founder-card{padding:28px 18px}
+	.itp .itp-avatar-xl{width:128px;height:128px;font-size:2.6rem}
+	.itp .itp-brand-logo{height:38px}
+	.itp .itp-steps{grid-template-columns:1fr}
+	.itp .itp-people{grid-template-columns:repeat(2, 1fr);gap:14px}
+	.itp .itp-about-stats dd{font-size:1rem}
+	.itp .itp-offer-nav{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:-16px -16px 32px;padding:4px 16px;scrollbar-width:none}
+	.itp .itp-offer-nav li{flex:none}
+	.itp .itp-offer-cta{padding:24px 20px}
 }
 
 @media (prefers-reduced-motion:reduce){

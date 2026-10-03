@@ -75,10 +75,12 @@ function itp_defaults(): array {
 			'scroll_label'  => __( 'Scroll to highlights', 'industrial-training' ),
 		],
 		'stats'      => [
+			// The first stat gets a full-width tile; the rest sit side by side below it.
+			[ 'value' => '₹17,000 – ₹21,500', 'label' => __( 'monthly stipend', 'industrial-training' ) ],
 			[ 'value' => '10,000+', 'label' => __( 'students trained', 'industrial-training' ) ],
 			[ 'value' => '200+', 'label' => __( 'colleges connected', 'industrial-training' ) ],
-			[ 'value' => '₹17K–21.5K', 'label' => __( 'monthly stipend', 'industrial-training' ) ],
 		],
+		
 		'about'      => [
 			'eyebrow' => __( 'About us', 'industrial-training' ),
 			'title'   => __( 'About Skillrise Technologies', 'industrial-training' ),
@@ -106,7 +108,7 @@ function itp_defaults(): array {
 			'items'       => [
 				$offer( '🛡️', __( 'Student safety comes first', 'industrial-training' ), __( 'The safety and well-being of our students is one of our priorities. We maintain a professional, respectful and supportive environment throughout the internship and training period.', 'industrial-training' ), '', 'safety' ),
 				$offer( '🎓', __( 'Certification', 'industrial-training' ), __( 'Students who successfully complete the internship or training program receive a certificate recognising their participation and practical learning experience.', 'industrial-training' ), '', 'certificate' ),
-				$offer( '💼', __( 'Placement guidance & opportunities', 'industrial-training' ), __( 'Career guidance and placement support to understand career paths, prepare for opportunities and connect with relevant organisations where opportunities are available.', 'industrial-training' ), __( 'Placement assistance does not guarantee employment.', 'industrial-training' ), 'placement' ),
+				$offer( '💼', __( 'Placement guidance & opportunities', 'industrial-training' ), __( 'Career guidance and placement support to understand career paths, prepare for opportunities and connect with relevant organisations where opportunities are available.', 'industrial-training' ), __( 'Placement assistance and guarantee employment.', 'industrial-training' ), 'placement' ),
 				$offer( '🏠', __( 'Accommodation guidance', 'industrial-training' ), __( 'Need a place to stay during your internship or training? We guide you and refer you to suitable accommodation options.', 'industrial-training' ), __( 'Subject to availability and applicable terms.', 'industrial-training' ), 'stay' ),
 				$offer( '👩‍💻', __( 'Opportunities for all students', 'industrial-training' ), __( 'Our programs are open to eligible students regardless of gender, with equal learning and professional-development opportunities for male and female students.', 'industrial-training' ), '', 'everyone' ),
 				$offer( '📋', __( 'No minimum pass-percentage', 'industrial-training' ), __( 'Explore our programs without a restrictive academic pass-percentage requirement.', 'industrial-training' ), __( 'Subject to the eligibility requirements of the particular program.', 'industrial-training' ), 'criteria' ),

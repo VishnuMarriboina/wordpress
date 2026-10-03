@@ -38,8 +38,8 @@ return [
 	 * Put photos in assets/images/students/ (square JPG, about 400×400 px).
 	 *
 	 * Colleges: public facts (checked October 2026 on the colleges' Careers360 / directory listings).
-	 * 'image' takes a campus photo in assets/images/colleges/ — use one the college has given you permission
-	 * to use. Without one, the card shows a designed header with the college's initials. */
+	 * 'logo' shows the college's logo (assets/images/colleges/) on a white header; 'image' takes a campus photo
+	 * instead — use one the college has given you permission to use. With neither, the card shows the college's initials. */
 	'ourStudents'            => [
 		[
 			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
@@ -131,6 +131,7 @@ return [
 			'established' => '1980',
 			'approvals'   => 'AICTE approved · Admissions through AP POLYCET',
 			'courses'     => [ 'Civil', 'Mechanical', 'EEE', 'ECE', 'Computer', 'Mining' ],
+			'logo'        => 'assets/images/colleges/LoyolaPolytechnicCollege.jpg',
 			'image'       => '',
 			'website'     => '',
 		],
@@ -142,6 +143,7 @@ return [
 			'established' => '2006',
 			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur',
 			'courses'     => [ 'B.Tech', 'M.Tech', 'MBA' ],
+			'logo'        => 'assets/images/colleges/KORM.png',
 			'image'       => '',
 			'website'     => '',
 		],
@@ -153,6 +155,7 @@ return [
 			'established' => '2008',
 			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur · NAAC A+ & NBA accredited',
 			'courses'     => [ 'CSE', 'ECE', 'EEE', 'Mechanical', 'Civil' ],
+			'logo'        => 'assets/images/colleges/Vemu.jpg',
 			'image'       => '',
 			'website'     => '',
 		],
@@ -164,6 +167,7 @@ return [
 			'established' => '2009',
 			'approvals'   => 'AICTE approved · Affiliated to JNTU Anantapur',
 			'courses'     => [ 'CSE', 'ECE', 'EEE', 'Civil' ],
+			'logo'        => 'assets/images/colleges/GITW.jpg',
 			'image'       => '',
 			'website'     => '',
 		],
@@ -175,6 +179,7 @@ return [
 			'established' => '1984',
 			'approvals'   => 'AICTE approved · Recognised by SBTET Andhra Pradesh',
 			'courses'     => [ 'Civil', 'Mechanical', 'ECE', 'EEE', 'Computer' ],
+			'logo'        => 'assets/images/colleges/VasaviPolytechnic.jpg',
 			'image'       => '',
 			'website'     => '',
 		],
