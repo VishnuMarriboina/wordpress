@@ -141,7 +141,7 @@ function itp_internship_period( array $st ): string {
 	$to     = '' !== $end ? DateTime::createFromFormat( '!M Y', $end ) : new DateTime( 'first day of this month' );
 	if ( $from && $to && $to >= $from ) {
 		$diff = $from->diff( $to );
-		$n    = $diff->y * 12 + $diff->m + 1;
+		$n    = $diff->y * 12 + $diff->m; // May → November = 6 months.
 		/* translators: %d: number of months */
 		$months = sprintf( _n( '%d month', '%d months', $n, 'industrial-training' ), $n );
 	}

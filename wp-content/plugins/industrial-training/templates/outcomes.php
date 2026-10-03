@@ -46,10 +46,12 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 			<?php endif; ?>
 		</div>
 		<?php if ( $our_students ) : ?>
-			<ul class="itp-students" role="list">
+			<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="itp-students-title">
+			<ul class="itp-car-track" role="list">
 				<?php foreach ( $our_students as $i => $st ) : ?>
 					<?php $photo = itp_real_url( $st['photo'] ?? '' ) ?: itp_local_url( $st['photo'] ?? '' ); ?>
-					<li class="itp-card itp-student itp-reveal" style="--i:<?php echo (int) $i; ?>">
+					<li class="itp-car-slide" role="group" aria-roledescription="<?php esc_attr_e( 'slide', 'industrial-training' ); ?>" aria-label="<?php echo esc_attr( $slide_label( $i, count( $our_students ) ) ); ?>">
+					<article class="itp-card itp-student">
 						<header class="itp-student-top">
 							<?php if ( $photo ) : ?>
 								<img class="itp-student-photo" src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $st['name'] ); ?>" width="48" height="48" loading="lazy" decoding="async">
@@ -67,13 +69,17 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 						<?php if ( '' !== trim( (string) ( $st['comment'] ?? '' ) ) ) : ?>
 							<blockquote class="itp-student-quote"><p><?php echo esc_html( $st['comment'] ); ?></p></blockquote>
 						<?php endif; ?>
+					</article>
 					</li>
 				<?php endforeach; ?>
 			</ul>
+			<?php echo itp_carousel_controls( __( 'student reviews', 'industrial-training' ) ); // phpcs:ignore ?>
+			</div>
 		<?php endif; ?>
 		<?php if ( $our_colleges ) : ?>
-			<h3 class="itp-subhead itp-reveal"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
-			<ul class="itp-campus-grid" role="list">
+			<h3 class="itp-subhead itp-reveal" id="itp-colleges-row-title"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
+			<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="itp-colleges-row-title">
+			<ul class="itp-car-track" role="list">
 				<?php foreach ( $our_colleges as $i => $col ) : ?>
 					<?php
 					$img  = itp_real_url( $col['image'] ?? '' ) ?: itp_local_url( $col['image'] ?? '' );
@@ -81,7 +87,8 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 					$site = itp_real_url( $col['website'] ?? '' );
 					$poly = false !== stripos( (string) ( $col['type'] ?? '' ), 'polytechnic' );
 					?>
-					<li class="itp-card itp-campus itp-reveal" style="--i:<?php echo (int) $i; ?>">
+					<li class="itp-car-slide" role="group" aria-roledescription="<?php esc_attr_e( 'slide', 'industrial-training' ); ?>" aria-label="<?php echo esc_attr( $slide_label( $i, count( $our_colleges ) ) ); ?>">
+					<article class="itp-card itp-campus">
 						<div class="itp-campus-media<?php echo $logo ? ' is-logo' : ( $poly ? ' is-poly' : '' ); ?>">
 							<?php if ( $logo ) : ?>
 								<img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( sprintf( /* translators: %s: college */ __( '%s logo', 'industrial-training' ), $col['name'] ) ); ?>" width="96" height="96" loading="lazy" decoding="async">
@@ -115,9 +122,12 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 								<a class="itp-btn itp-btn-outline itp-btn-sm" href="<?php echo esc_url( $site ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'College website', 'industrial-training' ); ?><span class="itp-sr"> <?php esc_html_e( '(opens in a new tab)', 'industrial-training' ); ?></span> <span aria-hidden="true">↗</span></a>
 							<?php endif; ?>
 						</div>
+					</article>
 					</li>
 				<?php endforeach; ?>
 			</ul>
+			<?php echo itp_carousel_controls( __( 'colleges', 'industrial-training' ) ); // phpcs:ignore ?>
+			</div>
 		<?php endif; ?>
 	</div>
 </section>

@@ -202,16 +202,13 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 					<h2 class="itp-h2 itp-reveal" id="itp-offers-title"><?php echo esc_html( $offers['title'] ); ?></h2>
 					<p class="itp-lead itp-reveal"><?php echo esc_html( $offers['lead'] ); ?></p>
 				</div>
-				<?php if ( ! empty( $offers['stipend'] ) || ! empty( $offers['age'] ) || ! empty( $offers['batch'] ) ) : ?>
+				<?php if ( ! empty( $offers['stipend'] ) || ! empty( $offers['age'] ) ) : ?>
 					<div class="itp-pills itp-reveal">
 						<?php if ( ! empty( $offers['stipend'] ) ) : ?>
 							<p class="itp-stipend"><?php echo esc_html( $offers['stipend'] ); ?></p>
 						<?php endif; ?>
 						<?php if ( ! empty( $offers['age'] ) ) : ?>
 							<p class="itp-stipend itp-age"><?php echo esc_html( $offers['age'] ); ?></p>
-						<?php endif; ?>
-						<?php if ( ! empty( $offers['batch'] ) ) : ?>
-							<p class="itp-stipend itp-batch"><?php echo esc_html( $offers['batch'] ); ?></p>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
@@ -330,29 +327,6 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 						</li>
 					<?php endforeach; ?>
 				</ol>
-				<?php $batches = $s['batches']; ?>
-				<?php if ( ! empty( $batches['items'] ) ) : ?>
-					<div class="itp-batches itp-reveal" aria-labelledby="itp-batches-title">
-						<h3 class="itp-batches-title" id="itp-batches-title"><span aria-hidden="true">📅</span> <?php echo esc_html( $batches['title'] ); ?></h3>
-						<ul class="itp-batch-list" role="list">
-							<?php foreach ( $batches['items'] as $b ) : ?>
-								<li class="itp-batch">
-									<p class="itp-batch-label"><?php echo esc_html( $b['label'] ); ?></p>
-									<p class="itp-batch-range">
-										<span><?php echo esc_html( $b['start'] ); ?></span>
-										<span class="itp-batch-arrow" aria-hidden="true"></span>
-										<span class="itp-sr"><?php esc_html_e( 'to', 'industrial-training' ); ?></span>
-										<span><?php echo esc_html( $b['end'] ); ?></span>
-									</p>
-									<p class="itp-batch-len"><?php echo esc_html( $batches['duration'] ); ?></p>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-						<?php if ( ! empty( $batches['note'] ) ) : ?>
-							<p class="itp-batches-note"><?php echo esc_html( $batches['note'] ); ?></p>
-						<?php endif; ?>
-					</div>
-				<?php endif; ?>
 				<div class="itp-steps-cta itp-reveal"><?php $opener( $s['nav']['register'], 'itp-btn-primary itp-shine', '', ' ' . $arrow ); ?></div>
 			</div>
 		</section>

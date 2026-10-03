@@ -67,8 +67,6 @@ function itp_defaults(): array {
 			'lead'          => __( 'A six-month internship (compulsory) with hands-on work in real plants, labs and project teams. Two batches a year: May to November and November to May. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.', 'industrial-training' ),
 			// Main message: under-18s can join too (from age 14 under NAPS). Leave 'eligible_title' empty to hide.
 			'eligible_title' => __( 'Below 18? You can join too!', 'industrial-training' ),
-			'eligible_text'  => __( 'Students from 14 years of age are eligible through NAPS apprenticeships. No minimum pass percentage.', 'industrial-training' ),
-			'eligible_note'  => __( 'Hazardous trades need 18+. Extra safeguards apply for students below 18.', 'industrial-training' ),
 			'cta_primary'   => __( 'Register now', 'industrial-training' ),
 			'cta_secondary' => __( 'Explore tracks', 'industrial-training' ),
 			'image'         => 0,
@@ -80,17 +78,16 @@ function itp_defaults(): array {
 		],
 		'stats'      => [
 			// The first stat gets a full-width tile; the rest sit side by side below it.
-			[ 'value' => '₹17,000 – ₹21,500', 'label' => __( 'monthly stipend', 'industrial-training' ) ],
-			[ 'value' => '4,000+', 'label' => __( 'students trained', 'industrial-training' ) ],
-			[ 'value' => '50+', 'label' => __( 'colleges connected', 'industrial-training' ) ],
-			[ 'value' => '6+', 'label' => __( 'years of experience', 'industrial-training' ) ],
+			[ 'value' => '₹17,000 – ₹21,500', 'label' => __( 'Monthly stipend during the internship', 'industrial-training' ) ],
+			[ 'value' => '10000+', 'label' => __( 'Students trained so far', 'industrial-training' ) ],
+			[ 'value' => '50+', 'label' => __( 'Partner colleges', 'industrial-training' ) ],
 		],
 		
 		'about'      => [
 			'eyebrow' => __( 'About us', 'industrial-training' ),
 			'title'   => __( 'About Skillrise Technologies', 'industrial-training' ),
 			'text'    => __( 'Skillrise Technologies helps diploma and engineering students turn classroom knowledge into real industry skills. Through internships, industrial training and apprenticeships, students work on real machines and projects, learn from experienced mentors and earn a monthly stipend while they train.', 'industrial-training' ),
-			'text2'   => __( 'Founded by Y Arun Kumar Reddy, we bring 6+ years of experience, have trained 4,000+ students and work with 50+ colleges. Our goal is simple: practical experience, professional skills and the confidence to take the next step in your career.', 'industrial-training' ),
+			'text2'   => __( 'Founded by Y Arun Kumar Reddy, we bring 6+ years of experience, have trained 10000+ students and work with 50+ colleges. Our goal is simple: practical experience, professional skills and the confidence to take the next step in your career.', 'industrial-training' ),
 			'points'  => [
 				[ 'icon' => '🎯', 'title' => __( 'Our mission', 'industrial-training' ), 'text' => __( 'Make every student industry-ready with hands-on training.', 'industrial-training' ) ],
 				[ 'icon' => '🤝', 'title' => __( 'Who we serve', 'industrial-training' ), 'text' => __( 'Diploma and engineering students from any college.', 'industrial-training' ) ],
@@ -123,16 +120,10 @@ function itp_defaults(): array {
 			'stipend'     => __( '💰 Stipend: ₹17,000 – ₹21,500 per month', 'industrial-training' ),
 			// Highlighted banner under the stipend. While its title is set, the NAPS card is left out of the grid.
 			// Pill shown next to the stipend; many students don't know the apprenticeship age rules.
-			'age'         => __( '🎂 Below 18? You can join too — from 14 years', 'industrial-training' ),
-			'batch'       => __( '📅 6 months · May–Nov or Nov–May', 'industrial-training' ),
-			'naps'        => [
-				// Age rules under the Apprentices Act, 1961 / NAPS (checked on msde.gov.in & myscheme.gov.in, Oct 2026).
-				'ages'  => [
-					[ 'value' => __( '14+ years', 'industrial-training' ), 'label' => __( 'Minimum age to join', 'industrial-training' ) ],
-					[ 'value' => __( '18+ years', 'industrial-training' ), 'label' => __( 'For hazardous trades', 'industrial-training' ) ],
-					[ 'value' => __( 'Up to 35', 'industrial-training' ), 'label' => __( 'At registration, for govt. stipend support', 'industrial-training' ) ],
-				],
-				'eligible' => __( '✅ Students below 18 are eligible — join from 14 years of age', 'industrial-training' ),
+			'age'         => __( '🎂 Below 18? You can join too', 'industrial-training' ),
+			
+			
+				'eligible' => __( '✅ Students below 18 are eligible', 'industrial-training' ),
 				'title' => __( 'Apprenticeships through NAPS', 'industrial-training' ),
 				'text'  => __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ),
 				'note'  => __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ),
@@ -148,20 +139,14 @@ function itp_defaults(): array {
 			'items'  => [
 				$track( __( 'Manufacturing & CNC', 'industrial-training' ), __( 'Mechanical · Automobile', 'industrial-training' ), 8, __( 'Run CNC lathes and milling machines, read drawings and inspect parts on a working shop floor.', 'industrial-training' ), __( 'CNC programming, GD&T basics, Quality inspection', 'industrial-training' ), 'cnc' ),
 				$track( __( 'Electrical Systems & PLC', 'industrial-training' ), __( 'Electrical · Electronics', 'industrial-training' ), 8, __( 'Wire control panels, program PLCs and troubleshoot motors and drives with plant engineers.', 'industrial-training' ), __( 'PLC ladder logic, Panel wiring, Industrial safety', 'industrial-training' ), 'plc' ),
-				$track( __( 'Embedded & IoT', 'industrial-training' ), __( 'Electronics · Computer Science', 'industrial-training' ), 6, __( 'Build sensor boards, flash microcontrollers and send live machine data to a cloud dashboard.', 'industrial-training' ), __( 'Arduino & ESP32, Sensor interfacing, MQTT', 'industrial-training' ), 'iot' ),
+				$track( __( 'PCB and electronic Components', 'industrial-training' ), __( 'ELECTRONICS AND COMMUNICATION', 'industrial-training' ), 6, __( 'Build sensor boards, flash microcontrollers and send live machine data to a cloud dashboard.', 'industrial-training' ), __( 'Arduino & ESP32, Sensor interfacing, MQTT', 'industrial-training' ), 'iot' ),
 				$track( __( 'Civil & AutoCAD', 'industrial-training' ), __( 'Civil', 'industrial-training' ), 6, __( 'Draft plans in AutoCAD, estimate quantities and visit active construction sites each week.', 'industrial-training' ), __( 'AutoCAD 2D, Quantity estimation, Site supervision', 'industrial-training' ), 'civil' ),
 				$track( __( 'Software & Web', 'industrial-training' ), __( 'Computer Science · Any branch', 'industrial-training' ), 6, __( 'Ship a real web app in a small team: HTML, CSS, JavaScript, Git and a deployed backend.', 'industrial-training' ), __( 'JavaScript & React, Git workflow, REST APIs', 'industrial-training' ), 'web' ),
 			],
 		],
-		// Internship calendar: fixed six-month batches, joining only in May or November.
+		// Internship length (fixed six-month batches, joining in May or November); shown on every track card.
 		'batches'    => [
-			'title'    => __( 'Internship batches', 'industrial-training' ),
 			'duration' => __( '6 months', 'industrial-training' ),
-			'note'     => __( 'Every internship is 6 months (compulsory). Joining is only in May or November.', 'industrial-training' ),
-			'items'    => [
-				[ 'label' => __( 'May batch', 'industrial-training' ), 'start' => __( 'May', 'industrial-training' ), 'end' => __( 'November', 'industrial-training' ) ],
-				[ 'label' => __( 'November batch', 'industrial-training' ), 'start' => __( 'November', 'industrial-training' ), 'end' => __( 'May', 'industrial-training' ) ],
-			],
 		],
 		'steps'      => [
 			'title' => __( 'How it works', 'industrial-training' ),

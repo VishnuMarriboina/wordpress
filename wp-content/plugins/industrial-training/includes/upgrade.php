@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 10;
+const ITP_SETTINGS_VERSION = 12;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -63,7 +63,7 @@ function itp_upgrade_settings(): void {
 		if ( in_array( '₹17K–21.5K', array_column( (array) ( $saved['stats'] ?? [] ), 'value' ), true ) ) {
 			$saved['stats'] = $new['stats'];
 		}
-		// Company figures confirmed as 4,000+ students, 50+ colleges, 6+ years: replace the earlier 10,000+ / 200+ set.
+		// Company figures confirmed as 10000+ students, 50+ colleges, 6+ years: replace the earlier 10,000+ / 200+ set.
 		$values = array_column( (array) ( $saved['stats'] ?? [] ), 'value' );
 		if ( in_array( '10,000+', $values, true ) || in_array( '200+', $values, true ) ) {
 			$saved['stats'] = $new['stats'];
@@ -74,6 +74,21 @@ function itp_upgrade_settings(): void {
 		if ( 'Every batch is guided by engineers with 10+ years on the job.' === ( $saved['highlights']['items'][1]['text'] ?? '' ) ) {
 			$saved['highlights']['items'][1]['text'] = $new['highlights']['items'][1]['text'];
 		}
+		// Stats: drop the "years of experience" tile (years are shown in the founder section) and use clearer labels.
+		if ( is_array( $saved['stats'] ?? null ) ) {
+			$saved['stats'] = array_values( array_filter( $saved['stats'], static fn( $st ) => ! str_contains( strtolower( (string) ( $st['label'] ?? '' ) ), 'years' ) ) );
+			$labels = [
+				'monthly stipend'    => 'Monthly stipend during the internship',
+				'students trained'   => 'Students trained so far',
+				'colleges connected' => 'Partner colleges',
+			];
+			foreach ( $saved['stats'] as &$st ) {
+				$st['label'] = $labels[ strtolower( trim( (string) ( $st['label'] ?? '' ) ) ) ] ?? $st['label'];
+			}
+			unset( $st );
+		}
+		// The separate "6 months · May–Nov or Nov–May" banner was removed.
+		unset( $saved['offers']['batch'] );
 		// Six-month batches (May–Nov, Nov–May): update the step texts that still hold the old wording.
 		foreach ( [ 1 => 'Our team calls within 2 working days to confirm your track and batch.', 2 => 'Work on real machines and projects with industry mentors, and earn a stipend of ₹17,000 – ₹21,500 per month.' ] as $i => $old_text ) {
 			if ( $old_text === ( $saved['steps']['items'][ $i ]['text'] ?? null ) ) {

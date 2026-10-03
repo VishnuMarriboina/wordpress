@@ -46,9 +46,9 @@ return [
 			'name'        => 'Kavya',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/kavya.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
-			'track'       => 'Embedded & IoT',
-			'start'       => 'Jan 2025', // Internship started
-			'end'         => 'Jun 2025', // Internship completed ('' = still in progress)
+			'track'       => 'PCB and electronic Components',
+			'start'       => 'May 2025', // Internship started (batches start in May or November)
+			'end'         => 'Nov 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'I had only seen sensors in textbooks. Here I built a working IoT project with my team and finally understood how the hardware and code fit together.',
 			'rating'      => 5,
 		],
@@ -58,8 +58,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/rajyalakshmi.jpg' (with permission).
 			'college'     => 'Gouthami Institute of Technology and Management for Women',
 			'track'       => 'Electrical Systems & PLC',
-			'start'       => 'Feb 2025', // Internship started
-			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
+			'start'       => 'Nov 2024', // Internship started (batches start in May or November)
+			'end'         => 'May 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'Wiring a real control panel and writing PLC logic gave me confidence I never got in the classroom. The mentors were patient with every question.',
 			'rating'      => 5,
 		],
@@ -69,8 +69,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/yaswanth.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Manufacturing & CNC',
-			'start'       => 'Jul 2024', // Internship started
-			'end'         => 'Dec 2024', // Internship completed ('' = still in progress)
+			'start'       => 'May 2024', // Internship started (batches start in May or November)
+			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
 			'comment'     => 'Running CNC machines on the shop floor was the best part. The stipend also helped me support myself during the training.',
 			'rating'      => 5,
 		],
@@ -80,8 +80,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/mahir.jpg' (with permission).
 			'college'     => 'KORM College of Engineering',
 			'track'       => 'Software & Web',
-			'start'       => 'Jan 2025', // Internship started
-			'end'         => 'Jun 2025', // Internship completed ('' = still in progress)
+			'start'       => 'Nov 2025', // Internship started (batches start in May or November)
+			'end'         => 'May 2026', // Internship completed ('' = still in progress)
 			'comment'     => 'We built a complete web app from start to finish. The code reviews from mentors taught me how real software teams work.',
 			'rating'      => 4,
 		],
@@ -91,8 +91,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/naveen.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
 			'track'       => 'Electrical Systems & PLC',
-			'start'       => 'Jun 2024', // Internship started
-			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
+			'start'       => 'May 2025', // Internship started (batches start in May or November)
+			'end'         => 'Nov 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'Troubleshooting motors and drives with experienced engineers was a great learning experience. I now explain my project confidently in interviews.',
 			'rating'      => 5,
 		],
@@ -102,8 +102,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/narasimha.jpg' (with permission).
 			'college'     => 'Vemu Institute of Technology',
 			'track'       => 'Civil & AutoCAD',
-			'start'       => 'Mar 2025', // Internship started
-			'end'         => 'Aug 2025', // Internship completed ('' = still in progress)
+			'start'       => 'Nov 2024', // Internship started (batches start in May or November)
+			'end'         => 'May 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'Site visits and AutoCAD drawings made civil engineering feel real. I learned to read plans the way site engineers do.',
 			'rating'      => 4,
 		],
@@ -113,8 +113,8 @@ return [
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/lohitha.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Software & Web',
-			'start'       => 'Feb 2025', // Internship started
-			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
+			'start'       => 'Nov 2025', // Internship started (batches start in May or November)
+			'end'         => 'May 2026', // Internship completed ('' = still in progress)
 			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these six months than in a whole semester.',
 			'rating'      => 5,
 		],
@@ -123,9 +123,9 @@ return [
 			'name'        => 'Harshitha',
 			'photo'       => '', // Real photo later, e.g. 'assets/images/students/harshitha.jpg' (with permission).
 			'college'     => 'KORM College of Engineering',
-			'track'       => 'Embedded & IoT',
-			'start'       => 'Aug 2024', // Internship started
-			'end'         => 'Jan 2025', // Internship completed ('' = still in progress)
+			'track'       => 'PCB and electronic Components',
+			'start'       => 'May 2024', // Internship started (batches start in May or November)
+			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
 			'comment'     => 'From the counselling call to the certificate, everything was clear. The hands-on projects and placement guidance were really helpful.',
 			'rating'      => 5,
 		],
@@ -198,11 +198,11 @@ return [
 		'name'              => 'Y Arun Kumar Reddy',
 		'designation'       => 'Founder & CEO',
 		'experience'        => '6+ Years',
-		'studentsTrained'   => '4,000+',
+		'studentsTrained'   => '10000+',
 		'collegesConnected' => '50+',
 		'photo'             => 'assets/images/founder-arun-kumar-reddy.jpg', // Stored in the plugin, no external link.
 		'photoAlt'          => 'Y Arun Kumar Reddy, Founder & CEO',
-		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 6+ years of experience in student training, technology education, and career development. Through his work, he has helped 4,000+ students and collaborated with 50+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
+		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 6+ years of experience in student training, technology education, and career development. Through his work, he has helped 10000+ students and collaborated with 50+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
 		'tagline'           => 'Helping students learn, grow and prepare for industry careers.',
 		'vision'            => 'To help every student gain practical, hands-on skills and the confidence to grow toward real industry opportunities.',
 		'social'            => $no_social, // e.g. 'linkedin' => 'https://www.linkedin.com/in/…'
@@ -211,7 +211,7 @@ return [
 	/* ---------------- Founder journey / impact (company-provided figures only) ---------------- */
 	'impactData'             => [
 		[ 'value' => '6+', 'label' => 'Years of Experience' ],
-		[ 'value' => '4,000+', 'label' => 'Students Trained' ],
+		[ 'value' => '10000+', 'label' => 'Students Trained' ],
 		[ 'value' => '50+', 'label' => 'Colleges Connected' ],
 		[ 'value' => 'Multiple', 'label' => 'Industry & Academic Collaborations' ],
 	],
@@ -268,7 +268,7 @@ return [
 			'college'        => 'Test Engineering College C',
 			'course'         => 'Diploma – Electronics',
 			'trainingYear'   => '2024',
-			'program'        => 'Embedded & IoT',
+			'program'        => 'PCB and electronic Components',
 			'skills'         => [ 'Arduino & ESP32', 'Sensor interfacing', 'MQTT' ],
 			'opportunity'    => 'IoT project internship',
 			'currentRole'    => 'Junior Embedded Engineer',
@@ -376,7 +376,7 @@ return [
 			'logoAlt'           => 'Test Engineering College C logo',
 			'location'          => 'Warangal, Telangana',
 			'collaborationYear' => '2024',
-			'program'           => 'Embedded & IoT, Software & Web',
+			'program'           => 'PCB and electronic Components, Software & Web',
 			'studentsTrained'   => '',
 			'testimonial'       => 'A well-structured, hands-on program. The team shared regular progress updates and every student finished with a graded project.',
 			'testimonialBy'     => 'Training & Placement Officer, Test Engineering College C',
@@ -468,7 +468,7 @@ return [
 	/* ---------------- Partner-network figures (company-provided only) ---------------- */
 	'orgImpactData'          => [
 		[ 'value' => '50+', 'label' => 'Colleges Connected' ],
-		[ 'value' => '4,000+', 'label' => 'Students Reached' ],
+		[ 'value' => '10000+', 'label' => 'Students Reached' ],
 		[ 'value' => 'Multiple', 'label' => 'Academic Collaborations' ],
 		[ 'value' => 'Industry', 'label' => 'Connections' ],
 	],

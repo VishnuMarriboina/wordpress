@@ -386,7 +386,6 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'offers', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'offers', 'stipend' ], __( 'Stipend banner', 'industrial-training' ), 'text', __( 'Leave empty to hide.', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'age' ], __( 'Age banner', 'industrial-training' ), 'text', __( 'Shown next to the stipend. Leave empty to hide.', 'industrial-training' ) );
-				itp_field( $s, [ 'offers', 'batch' ], __( 'Batch banner', 'industrial-training' ), 'text', __( 'Shown next to the stipend. Leave empty to hide.', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'naps', 'eligible' ], __( 'NAPS banner — under-18 line', 'industrial-training' ), 'text', __( 'Green highlight inside the NAPS banner. Leave empty to hide.', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'naps', 'title' ], __( 'NAPS banner — title', 'industrial-training' ), 'text', __( 'Leave empty to hide the banner and show NAPS as a normal card instead.', 'industrial-training' ) );
 				foreach ( array_keys( itp_defaults()['offers']['naps']['ages'] ) as $i ) {
@@ -445,17 +444,8 @@ function itp_settings_page(): void {
 			</details>
 
 			<?php
-			$section( __( 'Internship batches', 'industrial-training' ), function () use ( $s ) {
-				itp_field( $s, [ 'batches', 'title' ], __( 'Title', 'industrial-training' ) );
-				itp_field( $s, [ 'batches', 'duration' ], __( 'Duration', 'industrial-training' ), 'text', __( 'Also shown on every track card.', 'industrial-training' ) );
-				itp_field( $s, [ 'batches', 'note' ], __( 'Note', 'industrial-training' ), 'textarea' );
-				foreach ( array_keys( itp_defaults()['batches']['items'] ) as $i ) {
-					/* translators: %d: batch number */
-					$n = sprintf( __( 'Batch %d', 'industrial-training' ), $i + 1 );
-					itp_field( $s, [ 'batches', 'items', $i, 'label' ], $n . ' — ' . __( 'name', 'industrial-training' ) );
-					itp_field( $s, [ 'batches', 'items', $i, 'start' ], $n . ' — ' . __( 'starts', 'industrial-training' ) );
-					itp_field( $s, [ 'batches', 'items', $i, 'end' ], $n . ' — ' . __( 'ends', 'industrial-training' ) );
-				}
+			$section( __( 'Internship duration', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'batches', 'duration' ], __( 'Duration', 'industrial-training' ), 'text', __( 'Shown on every track card, e.g. "6 months".', 'industrial-training' ) );
 			} );
 
 			$section( __( 'How it works', 'industrial-training' ), function () use ( $s ) {
