@@ -31,103 +31,85 @@ $no_social = [ 'linkedin' => '', 'instagram' => '', 'facebook' => '', 'twitter' 
 return [
 
 	/* ---------------- Our students & their colleges (real, company-provided) ----------------
-	 * Students: the entries below are DEMO content (invented comments and internship dates, labelled "Sample"
-	 * on the page). Replace each with a real student's confirmed details and delete its 'placeholder' line.
-	 * Fill each field only with real details the student has confirmed. A card shows whatever is
-	 * filled in: photo (else initials), college, track, internship period (start → end), star rating and comment.
-	 * Put photos in assets/images/students/ (square JPG, about 400×400 px).
+	 * Students: real students from Skillrise's records (names and colleges confirmed by the company, Oct 2026).
+	 * Fill the other fields only with details the student has confirmed — never invented comments or ratings. A card shows whatever is
+	 * filled in: college, track, internship period (start → end), star rating and comment. No student photos.
 	 *
 	 * Colleges: public facts (checked October 2026 on the colleges' Careers360 / directory listings).
 	 * 'logo' shows the college's logo (assets/images/colleges/) on a white header; 'image' takes a campus photo
 	 * instead — use one the college has given you permission to use. With neither, the card shows the college's initials. */
 	'ourStudents'            => [
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Kavya',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/kavya.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
-			'track'       => 'PCB and electronic Components',
-			'start'       => 'May 2025', // Internship started (batches start in May or November)
-			'end'         => 'Nov 2025', // Internship completed ('' = still in progress)
-			'comment'     => 'I had only seen sensors in textbooks. Here I built a working IoT project with my team and finally understood how the hardware and code fit together.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Rajyalakshmi',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/rajyalakshmi.jpg' (with permission).
 			'college'     => 'Gouthami Institute of Technology and Management for Women',
-			'track'       => 'Electrical Systems & PLC',
-			'start'       => 'Nov 2024', // Internship started (batches start in May or November)
-			'end'         => 'May 2025', // Internship completed ('' = still in progress)
-			'comment'     => 'Wiring a real control panel and writing PLC logic gave me confidence I never got in the classroom. The mentors were patient with every question.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Yaswanth',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/yaswanth.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
-			'track'       => 'Manufacturing & CNC',
-			'start'       => 'May 2024', // Internship started (batches start in May or November)
-			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
-			'comment'     => 'Running CNC machines on the shop floor was the best part. The stipend also helped me support myself during the training.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Mahir',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/mahir.jpg' (with permission).
 			'college'     => 'KORM College of Engineering',
-			'track'       => 'Software & Web',
-			'start'       => 'Nov 2025', // Internship started (batches start in May or November)
-			'end'         => 'May 2026', // Internship completed ('' = still in progress)
-			'comment'     => 'We built a complete web app from start to finish. The code reviews from mentors taught me how real software teams work.',
-			'rating'      => 4,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Naveen',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/naveen.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
-			'track'       => 'Electrical Systems & PLC',
-			'start'       => 'May 2025', // Internship started (batches start in May or November)
-			'end'         => 'Nov 2025', // Internship completed ('' = still in progress)
-			'comment'     => 'Troubleshooting motors and drives with experienced engineers was a great learning experience. I now explain my project confidently in interviews.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Narasimha',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/narasimha.jpg' (with permission).
 			'college'     => 'Vemu Institute of Technology',
-			'track'       => 'Civil & AutoCAD',
-			'start'       => 'Nov 2024', // Internship started (batches start in May or November)
-			'end'         => 'May 2025', // Internship completed ('' = still in progress)
-			'comment'     => 'Site visits and AutoCAD drawings made civil engineering feel real. I learned to read plans the way site engineers do.',
-			'rating'      => 4,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Lohitha',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/lohitha.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
-			'track'       => 'Software & Web',
-			'start'       => 'Nov 2025', // Internship started (batches start in May or November)
-			'end'         => 'May 2026', // Internship completed ('' = still in progress)
-			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these six months than in a whole semester.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Harshitha',
-			'photo'       => '', // Real photo later, e.g. 'assets/images/students/harshitha.jpg' (with permission).
 			'college'     => 'KORM College of Engineering',
-			'track'       => 'PCB and electronic Components',
-			'start'       => 'May 2024', // Internship started (batches start in May or November)
-			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
-			'comment'     => 'From the counselling call to the certificate, everything was clear. The hands-on projects and placement guidance were really helpful.',
-			'rating'      => 5,
+			'track'       => '', // e.g. 'Manufacturing & CNC' — from the student's record
+			'start'       => '', // e.g. 'May 2025' or 'Nov 2025' (batches start in May or November)
+			'end'         => '', // e.g. 'Nov 2025' / 'May 2026' ('' = not shown)
+			'comment'     => '', // The student's OWN words, with their permission.
+			'rating'      =>  0,  // 1–5 stars given by the student, or 0 to hide.
 		],
 	],
 	'ourColleges'            => [

@@ -30,7 +30,8 @@ $quote  = static function ( string $text ) {
 	echo '<blockquote class="itp-quote"><p>' . esc_html( $text ) . '</p></blockquote>';
 };
 $slide_label = static fn( int $i, int $n ) => sprintf( /* translators: 1: slide number, 2: total */ __( '%1$d of %2$d', 'industrial-training' ), $i + 1, $n );
-$our_students = array_values( array_filter( (array) ( $c['ourStudents'] ?? [] ), static fn( $x ) => ! empty( $x['name'] ) ) );
+// Demo students (placeholder => true) are invented: only logged-in editors see them (labelled). Visitors see real students only.
+$our_students = array_values( array_filter( (array) ( $c['ourStudents'] ?? [] ), static fn( $x ) => ! empty( $x['name'] ) && ( empty( $x['placeholder'] ) || itp_is_editor() ) ) );
 $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ), static fn( $x ) => ! empty( $x['name'] ) ) );
 ?>
 
@@ -39,23 +40,24 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 	<div class="itp-container">
 		<div class="itp-head">
 			<p class="itp-eyebrow itp-reveal"><?php esc_html_e( 'Our students', 'industrial-training' ); ?></p>
-			<h2 class="itp-h2 itp-reveal" id="itp-students-title"><?php esc_html_e( 'Students Who Trained With Us', 'industrial-training' ); ?></h2>
-			<p class="itp-lead itp-reveal"><?php esc_html_e( 'Students from different colleges who gained hands-on industry experience with Skillrise Technologies.', 'industrial-training' ); ?></p>
+			<?php if ( $our_students ) : ?>
+				<h2 class="itp-h2 itp-reveal" id="itp-students-title"><?php esc_html_e( 'Students Who Trained With Us', 'industrial-training' ); ?></h2>
+				<p class="itp-lead itp-reveal"><?php esc_html_e( 'Students from different colleges who gained hands-on industry experience with Skillrise Technologies.', 'industrial-training' ); ?></p>
+			<?php else : ?>
+				<h2 class="itp-h2 itp-reveal" id="itp-students-title"><?php esc_html_e( 'Colleges Our Students Come From', 'industrial-training' ); ?></h2>
+				<p class="itp-lead itp-reveal"><?php esc_html_e( 'Students from these colleges gain hands-on industry experience with Skillrise Technologies.', 'industrial-training' ); ?></p>
+			<?php endif; ?>
 			<?php if ( array_filter( $our_students, 'itp_is_placeholder' ) ) : ?>
-				<p class="itp-preview-note itp-preview-public" role="note"><?php esc_html_e( 'Sample content shown for demonstration.', 'industrial-training' ); ?></p>
+				<p class="itp-preview-note" role="note"><?php esc_html_e( 'Editor preview: cards labelled “Sample” are demo content and are hidden from visitors. Add real students in content/data.php and remove their placeholder line to publish them.', 'industrial-training' ); ?></p>
 			<?php endif; ?>
 		</div>
 		<?php if ( $our_students ) : ?>
 			<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="itp-students-title">
 			<ul class="itp-car-track" role="list">
 				<?php foreach ( $our_students as $i => $st ) : ?>
-					<?php $photo = itp_real_url( $st['photo'] ?? '' ) ?: itp_local_url( $st['photo'] ?? '' ); ?>
 					<li class="itp-car-slide" role="group" aria-roledescription="<?php esc_attr_e( 'slide', 'industrial-training' ); ?>" aria-label="<?php echo esc_attr( $slide_label( $i, count( $our_students ) ) ); ?>">
 					<article class="itp-card itp-student">
 						<header class="itp-student-top">
-							<?php if ( $photo ) : ?>
-								<img class="itp-student-photo" src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $st['name'] ); ?>" width="48" height="48" loading="lazy" decoding="async">
-							<?php endif; ?>
 							<div class="itp-student-id">
 								<h4 class="itp-student-name"><?php echo esc_html( $st['name'] ); ?> <?php echo itp_badge( $st, '' ); // phpcs:ignore ?></h4>
 								<p class="itp-student-track"><?php echo esc_html( $st['track'] ?? '' ?: __( 'Industrial Training', 'industrial-training' ) ); ?></p>
@@ -77,8 +79,10 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 			</div>
 		<?php endif; ?>
 		<?php if ( $our_colleges ) : ?>
-			<h3 class="itp-subhead itp-reveal" id="itp-colleges-row-title"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
-			<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="itp-colleges-row-title">
+			<?php if ( $our_students ) : ?>
+				<h3 class="itp-subhead itp-reveal" id="itp-colleges-row-title"><?php esc_html_e( 'Colleges our students come from', 'industrial-training' ); ?></h3>
+			<?php endif; ?>
+			<div class="itp-car itp-reveal" data-itp-carousel role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'industrial-training' ); ?>" aria-labelledby="<?php echo $our_students ? 'itp-colleges-row-title' : 'itp-students-title'; ?>">
 			<ul class="itp-car-track" role="list">
 				<?php foreach ( $our_colleges as $i => $col ) : ?>
 					<?php

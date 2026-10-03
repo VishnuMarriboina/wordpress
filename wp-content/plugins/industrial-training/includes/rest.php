@@ -84,7 +84,7 @@ function itp_send_emails( int $id, array $d ): void {
 		__( 'College', 'industrial-training' )       => $d['college'],
 		__( 'Branch', 'industrial-training' )        => $d['branch'],
 		__( 'Year', 'industrial-training' )          => $d['year'],
-		__( 'Track', 'industrial-training' )         => $d['track'],
+		__( 'Track', 'industrial-training' )         => '' !== $d['track'] ? $d['track'] : '—',
 	];
 	$body = '';
 	foreach ( $lines as $label => $value ) {
@@ -109,7 +109,7 @@ function itp_send_emails( int $id, array $d ): void {
 
 	if ( ! empty( $s['form']['confirm_student'] ) && is_email( $d['email'] ) ) {
 		/* translators: 1: first name, 2: track, 3: phone, 4: site name */
-		$msg = sprintf( __( "Hi %1\$s,\n\nThank you for registering for the %2\$s track. Our counsellor will call you on %3\$s within 2 working days to confirm your batch.\n\n— %4\$s", 'industrial-training' ), strtok( $d['fullName'], ' ' ), $d['track'], $d['phone'], $site );
+		$msg = sprintf( __( "Hi %1\$s,\n\nThank you for registering for %2\$s. Our counsellor will call you on %3\$s within 2 working days to confirm your batch.\n\n— %4\$s", 'industrial-training' ), strtok( $d['fullName'], ' ' ), '' !== $d['track'] ? sprintf( /* translators: %s: track */ __( 'the %s track', 'industrial-training' ), $d['track'] ) : __( 'the internship program', 'industrial-training' ), $d['phone'], $site );
 		/* translators: %s: site name */
 		// Replies from students go to the public contact address.
 		$reply = is_email( $s['contact']['email'] ) ? [ 'Reply-To: ' . $s['brand_name'] . ' <' . $s['contact']['email'] . '>' ] : [];

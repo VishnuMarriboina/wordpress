@@ -180,8 +180,23 @@
 	const view = $('.itp-form-view', dlg);
 	const done = $('.itp-success', dlg);
 	const FIELDS = ['fullName', 'email', 'phone', 'college', 'branch', 'year', 'track'];
-	const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	const PHONE = /^\+?[0-9 ()-]{7,20}$/;
+	// Same rules as the server (includes/helpers.php).
+	const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
+	const phoneDigits = (raw) => {
+		const d = raw.replace(/[\s().-]/g, '').replace(/^(?:\+91|0091|91(?=\d{10}$)|0(?=\d{10}$))/, '');
+		return /^\d{10}$/.test(d) ? d : '';
+	};
+	const phoneError = (raw) => {
+		const d = phoneDigits(raw);
+		if (! d) return T.phone;
+		if (! /^[6-9]/.test(d)) return T.phoneStart;
+		if (/(\d)\1{7}/.test(d)) return T.phoneRepeat;
+		return '';
+	};
+	const emailError = (v) => {
+		if (! v) return T.emailEmpty;
+		return EMAIL.test(v) && ! v.includes('..') ? '' : T.email;
+	};
 	let opener = null;
 	let controller = null;
 	let submitted = false;
@@ -197,10 +212,14 @@
 	const validate = (d) => {
 		const e = {};
 		if (! d.fullName) e.fullName = T.fullName;
-		if (! EMAIL.test(d.email)) e.email = T.email;
-		if (! PHONE.test(d.phone)) e.phone = T.phone;
+		const em = emailError(d.email);
+		if (em) e.email = em;
+		const ph = phoneError(d.phone);
+		if (ph) e.phone = ph;
 		if (! d.college) e.college = T.college;
-		['branch', 'year', 'track'].forEach((k) => allowed(k, d[k]) || (e[k] = T[k]));
+		allowed('branch', d.branch) || (e.branch = T.branch);
+		// Year of study and training track are optional.
+		['year', 'track'].forEach((k) => d[k] === '' || allowed(k, d[k]) || (e[k] = T[k]));
 		return e;
 	};
 	const showErrors = (errors, shake) => {
@@ -325,7 +344,7 @@
 
 	const success = (d) => {
 		busy(false);
-		const fill = (s) => s.replace(/\{name\}/g, d.fullName.split(/\s+/)[0]).replace(/\{track\}/g, d.track).replace(/\{phone\}/g, d.phone);
+		const fill = (s) => s.replace(/\{name\}/g, d.fullName.split(/\s+/)[0]).replace(/\{track\}/g, d.track || T.anyTrack).replace(/\{phone\}/g, d.phone);
 		const title = $('.itp-success-title', dlg);
 		title.textContent = fill(dlg.dataset.successTitle);
 		$('.itp-success-text', dlg).textContent = fill(dlg.dataset.successText);

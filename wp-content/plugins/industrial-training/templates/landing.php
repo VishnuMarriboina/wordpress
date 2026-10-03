@@ -45,8 +45,8 @@ $input = static fn( string $name, string $type, array $attr ) => sprintf(
 	esc_attr( $name ),
 	implode( '', array_map( static fn( $k, $v ) => ' ' . $k . '="' . esc_attr( $v ) . '"', array_keys( $attr ), $attr ) )
 );
-$select = static function ( string $name, string $placeholder, array $options ) {
-	$html = sprintf( '<select id="itp-%1$s" name="%1$s" required aria-describedby="itp-err-%1$s"><option value="">%2$s</option>', esc_attr( $name ), esc_html( $placeholder ) );
+$select = static function ( string $name, string $placeholder, array $options, bool $required = true ) {
+	$html = sprintf( '<select id="itp-%1$s" name="%1$s"%3$s aria-describedby="itp-err-%1$s"><option value="">%2$s</option>', esc_attr( $name ), esc_html( $placeholder ), $required ? ' required' : '' );
 	foreach ( $options as $value => $label ) {
 		$html .= sprintf( '<option value="%s">%s</option>', esc_attr( $value ), esc_html( $label ) );
 	}
@@ -390,12 +390,12 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 						<?php
 						$field( 'fullName', __( 'Full name', 'industrial-training' ), $input( 'fullName', 'text', [ 'maxlength' => 100, 'autocomplete' => 'name' ] ), true );
 						$field( 'email', __( 'Email', 'industrial-training' ), $input( 'email', 'email', [ 'maxlength' => 254, 'autocomplete' => 'email', 'inputmode' => 'email', 'spellcheck' => 'false' ] ) );
-						$field( 'phone', __( 'Phone', 'industrial-training' ), $input( 'phone', 'tel', [ 'maxlength' => 20, 'autocomplete' => 'tel', 'inputmode' => 'tel', 'placeholder' => '+91 98765 43210' ] ) );
+						$field( 'phone', __( 'Phone', 'industrial-training' ), $input( 'phone', 'tel', [ 'maxlength' => 16, 'autocomplete' => 'tel-national', 'inputmode' => 'numeric', 'placeholder' => __( '10-digit mobile number', 'industrial-training' ) ] ) );
 						$field( 'college', __( 'College / Polytechnic', 'industrial-training' ), $input( 'college', 'text', [ 'maxlength' => 150, 'autocomplete' => 'organization' ] ), true );
 						$field( 'branch', __( 'Branch', 'industrial-training' ), $select( 'branch', __( 'Select your branch', 'industrial-training' ), itp_branches() ) );
-						$field( 'year', __( 'Year of study', 'industrial-training' ), $select( 'year', __( 'Select your year', 'industrial-training' ), itp_years() ) );
+						$field( 'year', __( 'Year of study (optional)', 'industrial-training' ), $select( 'year', __( 'Select your year', 'industrial-training' ), itp_years(), false ) );
 						$names = itp_track_names();
-						$field( 'track', __( 'Training track', 'industrial-training' ), $select( 'track', __( 'Select a track', 'industrial-training' ), array_combine( $names, $names ) ), true );
+						$field( 'track', __( 'Training track (optional)', 'industrial-training' ), $select( 'track', __( 'Select a track', 'industrial-training' ), array_combine( $names, $names ), false ), true );
 						?>
 						<div class="itp-hp" aria-hidden="true">
 							<label for="itp-website"><?php esc_html_e( 'Leave this field empty', 'industrial-training' ); ?></label>

@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 12;
+const ITP_SETTINGS_VERSION = 13;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -24,10 +24,11 @@ function itp_upgrade_settings(): void {
 			[ [ 'brand_name' ], [ 'Industrial Training' ] ],
 			[ [ 'contact', 'email' ], [ 'training@example.com', '' ] ],
 			[ [ 'contact', 'address' ], [ 'Training Centre, Industrial Estate, Hyderabad, Telangana', '' ] ],
-			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '+91 93929 20858', '' ] ],
+			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '+91 86393 54430', '' ] ],
 			[ [ 'form', 'notify_email' ], [ '', 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com' ] ],
 			[ [ 'footer', 'copyright' ], [ '© {year} Industrial Training Program. All rights reserved.' ] ],
 			[ [ 'seo', 'title' ], [ 'Industrial Training Program for Diploma Students' ] ],
+			[ [ 'form', 'note' ], [ 'All fields are required.' ] ], // Year and track became optional.
 			[ [ 'hero', 'badge' ], [ 'Admissions open · Next batch starts soon' ] ],
 			[ [ 'hero', 'lead' ], [ 'Six to eight weeks of hands-on work in real plants, labs and project teams. Learn the tools industry uses, build a portfolio, and leave with a certificate and placement support.' ] ],
 			[ [ 'offers', 'age' ], [ '🎂 Age: 14+ years (18+ for hazardous trades)' ] ],

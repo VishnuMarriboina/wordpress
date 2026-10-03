@@ -465,7 +465,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'contact', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'contact', 'phone' ], __( 'Phone', 'industrial-training' ), 'tel' );
-				itp_field( $s, [ 'contact', 'whatsapp' ], __( 'WhatsApp number', 'industrial-training' ), 'tel', __( 'With country code, e.g. +91 93929 20858. Shown in Contact and as a floating chat button. Leave empty to hide both.', 'industrial-training' ) );
+				itp_field( $s, [ 'contact', 'whatsapp' ], __( 'WhatsApp number', 'industrial-training' ), 'tel', __( 'With country code, e.g. +91 86393 54430. Shown in Contact and as a floating chat button. Leave empty to hide both.', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'email' ], __( 'Email', 'industrial-training' ), 'email' );
 				itp_field( $s, [ 'contact', 'address' ], __( 'Address', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'contact', 'hours' ], __( 'Hours', 'industrial-training' ) );

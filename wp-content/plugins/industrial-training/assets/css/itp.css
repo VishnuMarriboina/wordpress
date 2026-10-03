@@ -103,9 +103,11 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-stats{display:grid;grid-template-columns:repeat(2, 1fr);gap:12px;margin-top:40px;max-width:560px}
 .itp .itp-stat:first-child{grid-column:1 / -1;border-color:rgba(251,191,36,.45);background:linear-gradient(90deg, rgba(251,191,36,.18), rgba(251,191,36,.04))}
 .itp .itp-stat:first-child dd{color:#fbbf24}
+/* Wrapped stat labels split evenly ("Students trained / so far"), not leaving one word alone. */
+.itp .itp-stat dt, .itp .itp-about-stats dt{text-wrap:balance}
 /* Stipend tile: amount and label centred. */
 .itp .itp-stats .itp-stat:first-child{align-items:center;text-align:center}
-.itp .itp-stat{display:flex;flex-direction:column-reverse;padding:14px 16px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.06)}
+.itp .itp-stat{display:flex;flex-direction:column-reverse;justify-content:flex-end;padding:14px 16px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.06)}
 .itp .itp-stat dt{color:#cbd5e1;font-size:.85rem;line-height:1.35}
 .itp .itp-stat dd{font-size:1.65rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
 
@@ -211,7 +213,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-about-logo{width:234px;max-width:100%;height:auto}
 .itp .itp-about-tag{color:var(--accent-ink);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .itp .itp-about-stats{display:grid;grid-template-columns:repeat(2, 1fr);width:100%;margin-top:8px;border-top:1px solid var(--border)}
-.itp .itp-about-stats div{display:flex;flex-direction:column-reverse;padding:14px 4px 0}
+.itp .itp-about-stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;padding:14px 4px 0}
 .itp .itp-about-stats div:first-child{grid-column:1 / -1;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .itp .itp-about-stats div:first-child dd{font-size:1.35rem}
 .itp .itp-about-stats div:nth-child(n+3){border-left:1px solid var(--border)}
@@ -271,7 +273,6 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-students{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;align-items:start}
 .itp .itp-student{display:flex;flex-direction:column;gap:10px;padding:18px}
 .itp .itp-student-top{display:flex;align-items:center;gap:12px}
-.itp .itp-student-photo{flex:none;width:48px;height:48px;border-radius:50%;object-fit:cover}
 .itp .itp-student-id{flex:1;min-width:0}
 .itp .itp-student-name{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:1.05rem;font-weight:700;line-height:1.3}
 .itp .itp-student-track{color:var(--text-2);font-size:.85rem}
@@ -561,8 +562,9 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 @media (max-width:560px){
 	.itp .itp-container{padding:0 16px}
 	.itp .itp-grid-4, .itp .itp-grid-3, .itp .itp-fields{grid-template-columns:1fr}
-	.itp .itp-stat{flex-direction:row-reverse;justify-content:flex-end;align-items:baseline;gap:12px}
-	.itp .itp-stats .itp-stat:first-child{flex-direction:column-reverse;align-items:center;gap:0}
+	/* Phones: same stacked tiles as desktop (number above its label), just a little tighter. */
+	.itp .itp-stat{padding:12px 14px}
+	.itp .itp-stat dd{font-size:1.45rem}
 	.itp .itp-actions .itp-btn{flex:1 1 100%}
 	.itp .itp-modal-in{padding:24px 20px}
 	.itp .itp-form-actions{flex-direction:column-reverse}

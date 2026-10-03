@@ -71,8 +71,41 @@ function itp_skills( string $skills ): array {
 }
 
 /** Field rules — the same regexes run in assets/js/itp.js. */
-const ITP_EMAIL_RE = '/^[^\s@]+@[^\s@]+\.[^\s@]+$/';
-const ITP_PHONE_RE = '/^\+?[0-9 ()-]{7,20}$/';
+// name@domain.tld — letters/digits/._%+- before @, a real domain after it, and a 2+ letter ending (.com, .in …).
+const ITP_EMAIL_RE = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/';
+
+/** Indian mobile number as 10 digits: drops spaces/dashes and a leading +91, 91 or 0. '' if it can't be read. */
+function itp_phone_digits( string $raw ): string {
+	$d = preg_replace( '/[\s().-]/', '', $raw );
+	$d = preg_replace( '/^(?:\+91|0091|91(?=\d{10}$)|0(?=\d{10}$))/', '', $d );
+	return preg_match( '/^\d{10}$/', $d ) ? $d : '';
+}
+
+/** Error message for a phone number, or '' when it is a valid mobile number. */
+function itp_phone_error( string $raw ): string {
+	$d = itp_phone_digits( $raw );
+	if ( '' === $d ) {
+		return __( 'Please enter a 10-digit mobile number.', 'industrial-training' );
+	}
+	if ( ! preg_match( '/^[6-9]/', $d ) ) {
+		return __( 'Mobile number must start with 6, 7, 8 or 9.', 'industrial-training' );
+	}
+	if ( preg_match( '/(\d)\1{7}/', $d ) ) {
+		return __( 'Please enter a real mobile number (the same digit can’t repeat 8 times).', 'industrial-training' );
+	}
+	return '';
+}
+
+/** Error message for an email address, or '' when it looks valid. */
+function itp_email_error( string $email ): string {
+	if ( '' === $email ) {
+		return __( 'Please enter your email address.', 'industrial-training' );
+	}
+	if ( ! preg_match( ITP_EMAIL_RE, $email ) || str_contains( $email, '..' ) || ! is_email( $email ) ) {
+		return __( 'Please enter a valid email address, e.g. name@gmail.com.', 'industrial-training' );
+	}
+	return '';
+}
 
 /**
  * Sanitizes and validates a submission.
@@ -95,11 +128,13 @@ function itp_validate( array $input ): array {
 	if ( '' === $clean['fullName'] ) {
 		$errors['fullName'] = __( 'Please enter your full name.', 'industrial-training' );
 	}
-	if ( ! preg_match( ITP_EMAIL_RE, $clean['email'] ) ) {
-		$errors['email'] = __( 'Please enter a valid email address.', 'industrial-training' );
+	if ( '' !== ( $msg = itp_email_error( $clean['email'] ) ) ) {
+		$errors['email'] = $msg;
 	}
-	if ( ! preg_match( ITP_PHONE_RE, $clean['phone'] ) ) {
-		$errors['phone'] = __( 'Please enter a valid phone number.', 'industrial-training' );
+	if ( '' !== ( $msg = itp_phone_error( $clean['phone'] ) ) ) {
+		$errors['phone'] = $msg;
+	} else {
+		$clean['phone'] = itp_phone_digits( $clean['phone'] ); // Stored as 10 digits.
 	}
 	if ( '' === $clean['college'] ) {
 		$errors['college'] = __( 'Please enter your college or polytechnic.', 'industrial-training' );
@@ -107,10 +142,11 @@ function itp_validate( array $input ): array {
 	if ( ! array_key_exists( $clean['branch'], itp_branches() ) ) {
 		$errors['branch'] = __( 'Please choose your branch.', 'industrial-training' );
 	}
-	if ( ! array_key_exists( $clean['year'], itp_years() ) ) {
+	// Year of study and training track are optional; when given they must be one of the listed options.
+	if ( '' !== $clean['year'] && ! array_key_exists( $clean['year'], itp_years() ) ) {
 		$errors['year'] = __( 'Please choose your year of study.', 'industrial-training' );
 	}
-	if ( ! in_array( $clean['track'], itp_track_names(), true ) ) {
+	if ( '' !== $clean['track'] && ! in_array( $clean['track'], itp_track_names(), true ) ) {
 		$errors['track'] = __( 'Please choose a training track.', 'industrial-training' );
 	}
 
