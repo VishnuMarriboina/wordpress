@@ -15,9 +15,15 @@
 	const bar = $('.itp-progress');
 	const toTop = $('.itp-top');
 	let ticking = false;
+	let lastY = scrollY;
 	const onScroll = () => {
 		ticking = false;
 		const y = scrollY;
+		// Hide the header while scrolling down, bring it back as soon as the visitor scrolls up.
+		if (Math.abs(y - lastY) > 6) {
+			header.classList.toggle('is-hidden', y > lastY && y > 400 && ! root.querySelector('dialog[open]'));
+			lastY = y;
+		}
 		const max = document.documentElement.scrollHeight - innerHeight;
 		bar.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0 })`;
 		header.classList.toggle('is-scrolled', y > 8);

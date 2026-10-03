@@ -143,13 +143,14 @@ add_action( 'admin_post_itp_import_photos', function () {
 	$ids      = [];
 	$failed   = 0;
 
-	foreach ( itp_default_photos() as $key => [ $pid, $alt ] ) {
-		$tmp = download_url( 'https://images.unsplash.com/photo-' . $pid . '?auto=format&fm=jpg&q=80&w=1600', 60 );
-		if ( is_wp_error( $tmp ) ) {
+	foreach ( itp_default_photos() as $key => [ , $alt ] ) {
+		// Copies the bundled photo; sideloading moves the file, so it must be a temp copy.
+		$tmp = wp_tempnam( 'itp-' . $key );
+		if ( ! $tmp || ! copy( ITP_DIR . 'assets/images/photos/' . $key . '-1200.webp', $tmp ) ) {
 			++$failed;
 			continue;
 		}
-		$id = media_handle_sideload( [ 'name' => 'itp-' . $key . '.jpg', 'tmp_name' => $tmp ], 0, $alt );
+		$id = media_handle_sideload( [ 'name' => 'itp-' . $key . '.webp', 'tmp_name' => $tmp ], 0, $alt );
 		if ( is_wp_error( $id ) ) {
 			wp_delete_file( $tmp );
 			++$failed;
@@ -292,7 +293,7 @@ function itp_settings_page(): void {
 				<input type="hidden" name="action" value="itp_import_photos">
 				<?php wp_nonce_field( 'itp_import_photos' ); ?>
 				<button class="button"><?php esc_html_e( 'Import placeholder photos into Media Library', 'industrial-training' ); ?></button>
-				<span class="description"><?php esc_html_e( 'Downloads the 8 default Unsplash photos (with alt text) and assigns them to empty image slots.', 'industrial-training' ); ?></span>
+				<span class="description"><?php esc_html_e( 'Copies the 8 default photos bundled with the plugin (with alt text) into the Media Library and assigns them to empty image slots. Optional: the page already shows them without this.', 'industrial-training' ); ?></span>
 			</form>
 		</div>
 
@@ -317,6 +318,7 @@ function itp_settings_page(): void {
 
 			<?php
 			$section( __( 'Header', 'industrial-training' ), function () use ( $s ) {
+				itp_field( $s, [ 'brand_logo' ], __( 'Logo', 'industrial-training' ), 'text', __( 'A file in the plugin (e.g. <code>assets/images/skillrise-logo.png</code>) or an image URL. Leave empty to show the brand mark and name as text.', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_mark' ], __( 'Brand mark text', 'industrial-training' ) );
 				itp_field( $s, [ 'brand_name' ], __( 'Brand name', 'industrial-training' ) );
 				itp_field( $s, [ 'nav', 'highlights' ], __( 'Link: highlights', 'industrial-training' ) );
@@ -396,6 +398,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'contact', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'contact', 'phone' ], __( 'Phone', 'industrial-training' ), 'tel' );
+				itp_field( $s, [ 'contact', 'whatsapp' ], __( 'WhatsApp number', 'industrial-training' ), 'tel', __( 'With country code, e.g. +91 93929 20858. Shown in Contact and as a floating chat button. Leave empty to hide both.', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'email' ], __( 'Email', 'industrial-training' ), 'email' );
 				itp_field( $s, [ 'contact', 'address' ], __( 'Address', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'contact', 'hours' ], __( 'Hours', 'industrial-training' ) );

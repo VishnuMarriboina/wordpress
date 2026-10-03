@@ -18,6 +18,15 @@ add_filter( 'pre_get_document_title', function ( $title ) {
 	return $title;
 }, 20 );
 
+// Skillrise favicon on the landing page, unless a Site Icon is set under Appearance → Customize.
+add_action( 'wp_head', function () {
+	if ( has_site_icon() || ! itp_is_landing() ) {
+		return;
+	}
+	printf( "<link rel=\"icon\" type=\"image/png\" sizes=\"64x64\" href=\"%s\">\n", esc_url( ITP_URL . 'assets/images/skillrise-icon-64.png' ) );
+	printf( "<link rel=\"apple-touch-icon\" href=\"%s\">\n", esc_url( ITP_URL . 'assets/images/skillrise-icon-180.png' ) );
+}, 5 );
+
 add_action( 'wp_head', function () {
 	$seo = itp_settings()['seo'];
 	if ( empty( $seo['enabled'] ) || ! itp_is_landing() ) {
@@ -36,15 +45,16 @@ add_action( 'wp_head', function () {
 
 	$s       = itp_settings();
 	$contact = $s['contact'];
-	$org     = [
+	$org     = array_filter( [
 		'@type'     => 'EducationalOrganization',
 		'@id'       => home_url( '/#itp-organization' ),
-		'name'      => $s['seo']['title'],
+		'name'      => $s['brand_name'],
 		'url'       => get_permalink( get_queried_object_id() ),
+		'logo'      => itp_real_url( $s['brand_logo'] ) ?: itp_local_url( $s['brand_logo'] ),
 		'telephone' => $contact['phone'],
 		'email'     => $contact['email'],
 		'address'   => [ '@type' => 'PostalAddress', 'streetAddress' => $contact['address'], 'addressCountry' => 'IN' ],
-	];
+	] );
 	$founder = itp_content()['founderData'] ?? [];
 	if ( ! empty( $founder['name'] ) ) {
 		$org['founder'] = array_filter( [

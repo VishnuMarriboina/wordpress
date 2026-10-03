@@ -42,8 +42,11 @@ industrial-training/
 1. **Upload and activate.** Copy the `industrial-training` folder to `wp-content/plugins/`, or zip it and use
    Plugins → Add New → Upload. Then activate **Industrial Training**. (In this repo's Docker setup it's already
    mounted, and `./setup.sh` activates it.)
-2. **Create the page.** Pages → Add New, title "Industrial Training". Pick one of these:
-   - **Recommended:** Page Attributes → Template → **Industrial Training (full screen)**. Leave the content empty.
+2. **The page is created for you.** Activating the plugin creates the "Industrial Training" page with the
+   **Industrial Training (full screen)** template and makes it the homepage (unless a static homepage is already set).
+   No theme setup is needed: the full-screen template ignores the theme's header, footer and styles.
+   To put the landing page on another page instead, pick one of these:
+   - Page Attributes → Template → **Industrial Training (full screen)**. Leave the content empty.
    - Or add the **Industrial Training Page** block (it is full width by default).
    - Or paste `[industrial_training]` into the content, an Elementor Shortcode widget or a Divi Code module.
      If your builder stores content somewhere the plugin can't detect, the CSS loads in the footer instead.
@@ -51,7 +54,7 @@ industrial-training/
 3. **Fill the settings.** Go to Settings → Industrial Training. Every text, stat, card, track, contact detail and
    email option is there. Use **+ Add track**, ↑ / ↓ and Remove to manage tracks. Track names also fill the form's
    "Training track" list.
-4. **Set the images.** Click **Import placeholder photos into Media Library** to download the 8 default Unsplash photos,
+4. **Set the images.** The 8 default photos (Unsplash License) ship inside the plugin in `assets/images/photos/`, so the page shows them with no external requests. Click **Import placeholder photos into Media Library** to copy them into the Media Library,
    with alt text, into empty image slots. Or use **Choose image** on any slot. Alt text always comes from
    the Media Library, so fill it in there.
 5. **Test the form.** Submit a registration, then check **Registrations** in the admin menu. Use the track filter,
@@ -100,7 +103,7 @@ All of it comes from one data file with the arrays `founderData`, `impactData`, 
    `'verified' => true` and is not a placeholder. Set it only after you have confirmed the details and have permission
    to publish them.
 4. **Social links.** Paste full `https://` URLs. Empty values and `#` are never rendered. Every link opens in a new tab
-   with `rel="noopener noreferrer"` and an accessible label such as "Ram on LinkedIn (opens in a new tab)". The same
+   with `rel="noopener noreferrer"` and an accessible label such as "Y Arun Kumar Reddy on LinkedIn (opens in a new tab)". The same
    component (`itp_social_links()`) is used for the founder, students, colleges, leadership, partners and the company.
 5. **Photos and logos.** Use a Media Library attachment ID (recommended) or an image URL, and always fill the `…Alt` text.
    Empty values show an initials avatar. Stock photos are deliberately not used for people.

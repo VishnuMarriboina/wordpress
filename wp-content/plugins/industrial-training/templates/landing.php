@@ -10,6 +10,10 @@ defined( 'ABSPATH' ) || exit;
 
 $hero     = $s['hero'];
 $contact  = $s['contact'];
+// wa.me needs the number as digits with country code; a bare 10-digit number is taken as Indian.
+$wa_digits = preg_replace( '/\D/', '', $contact['whatsapp'] ?? '' );
+$wa_digits = 10 === strlen( $wa_digits ) ? '91' . $wa_digits : $wa_digits;
+$wa_url    = $wa_digits ? 'https://wa.me/' . $wa_digits . '?text=' . rawurlencode( __( 'Hi, I would like to know more about the Industrial Training program.', 'industrial-training' ) ) : '';
 $form     = $s['form'];
 $tracks   = $s['tracks']['items'];
 $main_tag = $atts['main'] ? 'main' : 'div';
@@ -55,8 +59,13 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 	<header class="itp-header">
 		<div class="itp-container itp-header-in">
 			<a class="itp-brand" href="#itp-top">
-				<span class="itp-mark" aria-hidden="true"><?php echo esc_html( $s['brand_mark'] ); ?></span>
-				<span><?php echo esc_html( $s['brand_name'] ); ?></span>
+				<?php $logo = itp_real_url( $s['brand_logo'] ) ?: itp_local_url( $s['brand_logo'] ); ?>
+				<?php if ( $logo ) : ?>
+					<img class="itp-logo" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $s['brand_name'] ); ?>" width="117" height="52" decoding="async">
+				<?php else : ?>
+					<span class="itp-mark" aria-hidden="true"><?php echo esc_html( $s['brand_mark'] ); ?></span>
+					<span><?php echo esc_html( $s['brand_name'] ); ?></span>
+				<?php endif; ?>
 			</a>
 			<nav class="itp-nav" aria-label="<?php esc_attr_e( 'Page sections', 'industrial-training' ); ?>">
 				<ul role="list">
@@ -194,6 +203,9 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 					<address class="itp-address">
 						<ul role="list">
 							<li><span class="itp-ci-icon" aria-hidden="true">📞</span><span><span class="itp-ci-label"><?php esc_html_e( 'Phone', 'industrial-training' ); ?></span><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $contact['phone'] ) ); ?>"><?php echo esc_html( $contact['phone'] ); ?></a></span></li>
+							<?php if ( $wa_url ) : ?>
+							<li><span class="itp-ci-icon" aria-hidden="true">💬</span><span><span class="itp-ci-label"><?php esc_html_e( 'WhatsApp', 'industrial-training' ); ?></span><a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $contact['whatsapp'] ); ?></a></span></li>
+							<?php endif; ?>
 							<li><span class="itp-ci-icon" aria-hidden="true">✉️</span><span><span class="itp-ci-label"><?php esc_html_e( 'Email', 'industrial-training' ); ?></span><a href="mailto:<?php echo esc_attr( antispambot( $contact['email'] ) ); ?>"><?php echo esc_html( antispambot( $contact['email'] ) ); ?></a></span></li>
 							<li><span class="itp-ci-icon" aria-hidden="true">📍</span><span><span class="itp-ci-label"><?php esc_html_e( 'Address', 'industrial-training' ); ?></span><?php echo esc_html( $contact['address'] ); ?></span></li>
 							<li><span class="itp-ci-icon" aria-hidden="true">🕘</span><span><span class="itp-ci-label"><?php esc_html_e( 'Hours', 'industrial-training' ); ?></span><?php echo esc_html( $contact['hours'] ); ?></span></li>
@@ -268,4 +280,10 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 			</div>
 		</div>
 	</dialog>
+
+	<?php if ( $wa_url ) : ?>
+	<a class="itp-wa-float" href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Chat with us on WhatsApp', 'industrial-training' ); ?>">
+		<svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.95 12.95 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.74c-2 0-3.95-.54-5.66-1.55l-.4-.24-3.97 1.04 1.06-3.86-.26-.4A10.7 10.7 0 0 1 5.3 16c0-5.92 4.82-10.74 10.75-10.74 5.92 0 10.73 4.82 10.73 10.74 0 5.93-4.81 10.74-10.73 10.74Zm5.89-8.04c-.32-.16-1.91-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.21.32-.83 1.05-1.02 1.27-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.5.14-.66.15-.14.32-.38.48-.56.16-.19.21-.32.32-.54.1-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.52-.54-.72-.55h-.62c-.21 0-.56.08-.85.4-.3.32-1.12 1.1-1.12 2.68s1.15 3.1 1.31 3.32c.16.21 2.26 3.45 5.47 4.84.77.33 1.36.53 1.83.68.77.24 1.47.21 2.02.13.62-.09 1.91-.78 2.18-1.53.27-.75.27-1.4.19-1.53-.08-.14-.3-.22-.62-.38Z"/></svg>
+	</a>
+	<?php endif; ?>
 </div>

@@ -5,8 +5,9 @@
  * HOW TO EDIT
  * - Copy this file to wp-content/industrial-training/content.php and edit that copy.
  *   It is loaded instead of this one and survives plugin updates.
- * - Images ('photo' / 'logo'): a Media Library attachment ID (recommended, e.g. 123), a full image URL,
- *   or '' to show an initials avatar. Always fill the matching '...Alt' text.
+ * - Images ('photo' / 'logo'): a Media Library attachment ID (e.g. 123), a file bundled in the plugin
+ *   (e.g. 'assets/images/founder-arun-kumar-reddy.jpg' — best for photos you own, no external link),
+ *   a full image URL, or '' to show an initials avatar. Always fill the matching '...Alt' text.
  * - Social links: paste the full https:// URL. Leave '' (or '#') to hide that icon. Nothing is shown
  *   for an empty link.
  *
@@ -31,14 +32,14 @@ return [
 
 	/* ---------------- Founder & CEO (company-provided information) ---------------- */
 	'founderData'            => [
-		'name'              => 'Ram',
+		'name'              => 'Y Arun Kumar Reddy',
 		'designation'       => 'Founder & CEO',
 		'experience'        => '10+ Years',
 		'studentsTrained'   => '10,000+',
 		'collegesConnected' => '200+',
-		'photo'             => '', // Attachment ID or URL. '' shows an initials avatar.
-		'photoAlt'          => 'Ram, Founder & CEO',
-		'bio'               => 'Ram, Founder & CEO, brings 10+ years of experience in student training, technology education, and career development. Through his work, he has helped 10,000+ students and collaborated with 200+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
+		'photo'             => 'assets/images/founder-arun-kumar-reddy.jpg', // Stored in the plugin, no external link.
+		'photoAlt'          => 'Y Arun Kumar Reddy, Founder & CEO',
+		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 10+ years of experience in student training, technology education, and career development. Through his work, he has helped 10,000+ students and collaborated with 200+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
 		'tagline'           => 'Helping students learn, grow and prepare for industry careers.',
 		'vision'            => 'To help every student gain practical, hands-on skills and the confidence to grow toward real industry opportunities.',
 		'social'            => $no_social, // e.g. 'linkedin' => 'https://www.linkedin.com/in/…'

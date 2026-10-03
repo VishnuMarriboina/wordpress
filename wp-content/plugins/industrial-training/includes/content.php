@@ -56,6 +56,15 @@ function itp_real_url( $url ): string {
 	return preg_match( '#^https?://[^\s/]+\.[^\s]+#i', $url ) ? $url : '';
 }
 
+/** URL of an image bundled with the plugin ('assets/images/x.jpg'), or '' if the file isn't there. */
+function itp_local_url( $path ): string {
+	$path = is_string( $path ) ? ltrim( trim( $path ), '/' ) : '';
+	if ( '' === $path || str_contains( $path, '..' ) || ! preg_match( '/\.(jpe?g|png|webp|avif|gif|svg)$/i', $path ) || ! is_file( ITP_DIR . $path ) ) {
+		return '';
+	}
+	return ITP_URL . $path . '?v=' . filemtime( ITP_DIR . $path );
+}
+
 function itp_social_networks(): array {
 	// Stroke icons, 24×24, currentColor.
 	return [
@@ -73,7 +82,7 @@ function itp_social_networks(): array {
  * Reusable social-links list. Renders only networks with a real URL; returns '' when there are none.
  *
  * @param array  $social [ network => url ].
- * @param string $owner  Whose profiles these are, for accessible labels ("Ram on LinkedIn").
+ * @param string $owner  Whose profiles these are, for accessible labels ("Y Arun Kumar Reddy on LinkedIn").
  */
 function itp_social_links( $social, string $owner, string $class = '' ): string {
 	$items = '';
@@ -96,9 +105,10 @@ function itp_social_links( $social, string $owner, string $class = '' ): string 
 }
 
 /**
- * Photo or logo: attachment ID, URL, or an initials avatar when empty.
+ * Photo or logo: attachment ID, URL, a file inside the plugin (e.g. 'assets/images/x.jpg'),
+ * or an initials avatar when empty.
  *
- * @param mixed  $src  Attachment ID, URL or ''.
+ * @param mixed  $src  Attachment ID, URL, plugin-relative path or ''.
  * @param string $alt  Alt text.
  * @param string $name Used for the initials fallback.
  * @param int    $size Rendered size in px (square).
@@ -107,7 +117,7 @@ function itp_avatar( $src, string $alt, string $name, int $size, string $class =
 	if ( is_numeric( $src ) && (int) $src > 0 && wp_attachment_is_image( (int) $src ) ) {
 		return wp_get_attachment_image( (int) $src, [ $size * 2, $size * 2 ], false, [ 'class' => $class, 'alt' => $alt, 'sizes' => $size . 'px', 'loading' => 'lazy', 'decoding' => 'async' ] );
 	}
-	$url = itp_real_url( $src );
+	$url = itp_real_url( $src ) ?: itp_local_url( $src );
 	if ( '' !== $url ) {
 		return sprintf( '<img class="%1$s" src="%2$s" alt="%3$s" width="%4$d" height="%4$d" loading="lazy" decoding="async">', esc_attr( $class ), esc_url( $url ), esc_attr( $alt ), $size );
 	}

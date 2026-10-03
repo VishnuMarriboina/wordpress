@@ -128,9 +128,10 @@ function itp_image( int $id, string $photo, array $ratio, string $sizes, array $
 	if ( ! isset( $photos[ $photo ] ) ) {
 		return '';
 	}
-	[ $pid, $alt ] = $photos[ $photo ];
-	$url    = static fn( $w ) => sprintf( 'https://images.unsplash.com/photo-%s?auto=format&fit=crop&q=70&w=%d&h=%d', $pid, $w, (int) round( $w * $ratio[1] / $ratio[0] ) );
-	$srcset = implode( ', ', array_map( static fn( $w ) => $url( $w ) . ' ' . $w . 'w', [ 480, 800, 1200, 1600 ] ) );
+	// Default photos ship with the plugin (assets/images/photos/<key>-<width>.webp), already cropped to the slot's ratio.
+	$alt    = $photos[ $photo ][1];
+	$url    = static fn( $w ) => ITP_URL . 'assets/images/photos/' . $photo . '-' . $w . '.webp?v=' . ITP_VERSION;
+	$srcset = implode( ', ', array_map( static fn( $w ) => $url( $w ) . ' ' . $w . 'w', [ 480, 800, 1200 ] ) );
 
 	$attr = [
 		'src'    => $url( 800 ),
@@ -155,7 +156,7 @@ function itp_hero_image_url(): string {
 	if ( $id && ( $src = wp_get_attachment_image_url( $id, 'large' ) ) ) {
 		return $src;
 	}
-	return 'https://images.unsplash.com/photo-' . itp_default_photos()['hero'][0] . '?auto=format&fit=crop&q=70&w=1200&h=630';
+	return ITP_URL . 'assets/images/photos/hero-og.jpg';
 }
 
 /** Whether the current request renders the landing page (shortcode, block or plugin template). */

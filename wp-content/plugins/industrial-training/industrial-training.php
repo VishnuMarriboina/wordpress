@@ -39,6 +39,29 @@ register_activation_hook( __FILE__, function () {
 	if ( false === get_option( ITP_OPTION ) ) {
 		add_option( ITP_OPTION, itp_defaults() );
 	}
+
+	// Create the landing page (full screen, no theme header/footer) so nothing has to be set up by hand.
+	$page = get_page_by_path( 'industrial-training' );
+	if ( ! $page ) {
+		$id = wp_insert_post( [
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+			'post_title'  => __( 'Industrial Training', 'industrial-training' ),
+			'post_name'   => 'industrial-training',
+		] );
+		$page = $id && ! is_wp_error( $id ) ? get_post( $id ) : null;
+	}
+	if ( $page ) {
+		if ( ! get_page_template_slug( $page ) ) {
+			update_post_meta( $page->ID, '_wp_page_template', ITP_TEMPLATE );
+		}
+		// Make it the homepage, unless the site already has a static homepage.
+		if ( 'page' !== get_option( 'show_on_front' ) || ! get_option( 'page_on_front' ) ) {
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $page->ID );
+		}
+	}
+
 	itp_register_post_type();
 	flush_rewrite_rules();
 } );

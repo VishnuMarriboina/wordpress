@@ -7,7 +7,8 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Placeholder photos (free Unsplash License), used until a Media Library image is chosen.
- * key => [ Unsplash photo id, alt text ].
+ * key => [ Unsplash photo id (source, for reference), alt text ].
+ * The files are bundled in assets/images/photos/ as <key>-480/800/1200.webp; nothing loads from Unsplash.
  */
 function itp_default_photos(): array {
 	return [
@@ -28,8 +29,9 @@ function itp_defaults(): array {
 	};
 
 	return [
-		'brand_mark' => 'IT',
-		'brand_name' => __( 'Industrial Training', 'industrial-training' ),
+		'brand_logo' => 'assets/images/skillrise-logo.png', // File in the plugin or a URL; '' shows the mark + name instead.
+		'brand_mark' => 'SR',
+		'brand_name' => __( 'Skillrise Technologies', 'industrial-training' ),
 		'nav'        => [
 			'highlights' => __( 'Why us', 'industrial-training' ),
 			'reviews'    => __( 'Reviews', 'industrial-training' ),
@@ -91,6 +93,7 @@ function itp_defaults(): array {
 			'title'      => __( 'Questions? Talk to us', 'industrial-training' ),
 			'lead'       => __( 'Our counsellors help you choose the right track and batch.', 'industrial-training' ),
 			'phone'      => '+91 98765 43210',
+			'whatsapp'   => '+91 93929 20858',
 			'email'      => 'training@example.com',
 			'address'    => __( 'Training Centre, Industrial Estate, Hyderabad, Telangana', 'industrial-training' ),
 			'hours'      => __( 'Mon – Sat, 9:30 AM – 6:00 PM', 'industrial-training' ),
@@ -100,7 +103,7 @@ function itp_defaults(): array {
 			'image'      => 0,
 		],
 		'footer'     => [
-			'copyright' => __( '© {year} Industrial Training Program. All rights reserved.', 'industrial-training' ),
+			'copyright' => __( '© {year} Skillrise Technologies. All rights reserved.', 'industrial-training' ),
 			'credits'   => __( 'Photos: <a href="https://unsplash.com/">Unsplash</a> contributors, used under the <a href="https://unsplash.com/license">Unsplash License</a>.', 'industrial-training' ),
 		],
 		'form'       => [
@@ -118,7 +121,7 @@ function itp_defaults(): array {
 		],
 		'seo'        => [
 			'enabled'     => 1,
-			'title'       => __( 'Industrial Training Program for Diploma Students', 'industrial-training' ),
+			'title'       => __( 'Industrial Training for Diploma Students | Skillrise Technologies', 'industrial-training' ),
 			'description' => __( 'Hands-on industrial training for diploma students in Mechanical, Electrical, Electronics, Civil and Computer Science. Real shop-floor projects, mentors, certificate and placement support.', 'industrial-training' ),
 		],
 	];
