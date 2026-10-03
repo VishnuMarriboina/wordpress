@@ -193,13 +193,33 @@ $select = static function ( string $name, string $placeholder, array $options ) 
 				<?php if ( ! empty( $offers['stipend'] ) ) : ?>
 					<p class="itp-stipend itp-reveal"><?php echo esc_html( $offers['stipend'] ); ?></p>
 				<?php endif; ?>
+				<?php
+				$naps = $offers['naps'] ?? [];
+				if ( ! empty( $naps['title'] ) ) {
+					// Shown as the banner below, so it isn't repeated as a card.
+					$offers['items'] = array_values( array_filter( $offers['items'], static fn( $o ) => 'naps' !== ( $o['photo'] ?? '' ) ) );
+				}
+				?>
+				<?php if ( ! empty( $naps['title'] ) ) : ?>
+					<div class="itp-naps itp-reveal">
+						<span class="itp-naps-icon" aria-hidden="true">👨‍🎓</span>
+						<div class="itp-naps-body">
+							<p class="itp-naps-kicker"><?php esc_html_e( 'Government apprenticeship scheme', 'industrial-training' ); ?></p>
+							<h3><?php echo esc_html( $naps['title'] ); ?></h3>
+							<p><?php echo esc_html( $naps['text'] ); ?></p>
+							<?php if ( ! empty( $naps['note'] ) ) : ?>
+								<p class="itp-naps-note"><?php echo esc_html( $naps['note'] ); ?></p>
+							<?php endif; ?>
+						</div>
+					</div>
+				<?php endif; ?>
 				<?php // At-a-glance chips: jump straight to the card. ?>
 				<ul class="itp-offer-nav itp-reveal" role="list">
 					<?php foreach ( $offers['items'] as $i => $item ) : ?>
 						<li><a href="#itp-offer-<?php echo (int) $i; ?>"><span aria-hidden="true"><?php echo esc_html( $item['icon'] ); ?></span> <?php echo esc_html( $item['title'] ); ?></a></li>
 					<?php endforeach; ?>
 				</ul>
-				<ul class="itp-grid itp-grid-4 itp-offers" role="list">
+				<ul class="itp-offers" role="list">
 					<?php foreach ( $offers['items'] as $i => $item ) : ?>
 						<li class="itp-card itp-offer itp-reveal" id="itp-offer-<?php echo (int) $i; ?>">
 							<div class="itp-offer-media">

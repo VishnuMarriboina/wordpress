@@ -116,6 +116,12 @@ function itp_defaults(): array {
 				$offer( '👨‍🎓', __( 'Apprenticeships through NAPS', 'industrial-training' ), __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ), __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ), 'naps' ),
 			],
 			'stipend'     => __( '💰 Stipend: ₹17,000 – ₹21,500 per month', 'industrial-training' ),
+			// Highlighted banner under the stipend. While its title is set, the NAPS card is left out of the grid.
+			'naps'        => [
+				'title' => __( 'Apprenticeships through NAPS', 'industrial-training' ),
+				'text'  => __( 'Where applicable, we support apprenticeship opportunities through the National Apprenticeship Promotion Scheme (NAPS).', 'industrial-training' ),
+				'note'  => __( 'Subject to NAPS rules, age requirements, documentation and other government requirements. Additional requirements and safeguards may apply for students below 18.', 'industrial-training' ),
+			],
 			'cta_title'   => __( '🚀 Learn. Experience. Grow.', 'industrial-training' ),
 			'cta_text'    => __( 'Gain practical experience, build industry-relevant skills and take your next career step with greater confidence.', 'industrial-training' ),
 			'cta_button'  => __( 'Apply for an internship', 'industrial-training' ),

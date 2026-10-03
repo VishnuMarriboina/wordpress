@@ -61,6 +61,7 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 						<?php echo itp_avatar( $st['photo'] ?? '', (string) $st['name'], (string) $st['name'], 80, 'itp-avatar itp-person-avatar' ); // phpcs:ignore ?>
 						<p class="itp-person-name"><?php echo esc_html( $st['name'] ); ?> <?php echo itp_badge( $st, '' ); // phpcs:ignore ?></p>
 						<p class="itp-person-meta"><?php echo esc_html( implode( ' · ', array_filter( [ $st['track'] ?? '', $st['year'] ?? '' ] ) ) ?: __( 'Industrial Training', 'industrial-training' ) ); ?></p>
+						<?php echo itp_internship_period( $st ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 						<?php if ( ! empty( $st['college'] ) ) : ?>
 							<p class="itp-person-college"><span aria-hidden="true">🏫</span> <?php echo esc_html( $st['college'] ); ?></p>
 						<?php endif; ?>

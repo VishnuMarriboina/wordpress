@@ -126,6 +126,39 @@ function itp_avatar( $src, string $alt, string $name, int $size, string $class =
 	return sprintf( '<span class="%1$s itp-initials" aria-hidden="true">%2$s</span>', esc_attr( $class ), esc_html( $initials ?: '?' ) );
 }
 
+/**
+ * Internship period for a student card: "Jan 2025 → Jun 2025", a Completed / In progress badge with the
+ * duration, and a small bar. Dates are "Mon YYYY"; an empty 'end' means the internship is still running.
+ */
+function itp_internship_period( array $st ): string {
+	$start = trim( (string) ( $st['start'] ?? '' ) );
+	$end   = trim( (string) ( $st['end'] ?? '' ) );
+	if ( '' === $start ) {
+		return '';
+	}
+	$months = '';
+	$from   = DateTime::createFromFormat( '!M Y', $start );
+	$to     = '' !== $end ? DateTime::createFromFormat( '!M Y', $end ) : new DateTime( 'first day of this month' );
+	if ( $from && $to && $to >= $from ) {
+		$diff = $from->diff( $to );
+		$n    = $diff->y * 12 + $diff->m + 1;
+		/* translators: %d: number of months */
+		$months = sprintf( _n( '%d month', '%d months', $n, 'industrial-training' ), $n );
+	}
+	$done  = '' !== $end;
+	$label = $done ? __( 'Completed', 'industrial-training' ) : __( 'In progress', 'industrial-training' );
+	return sprintf(
+		'<div class="itp-period%1$s"><p class="itp-period-dates"><span aria-hidden="true">🗓️</span> <span class="itp-sr">%2$s </span>%3$s <span aria-hidden="true">→</span><span class="itp-sr"> %4$s </span> %5$s</p><span class="itp-period-bar" aria-hidden="true"><span></span></span><p class="itp-period-badge">%6$s%7$s</p></div>',
+		$done ? ' is-done' : '',
+		esc_html__( 'Internship from', 'industrial-training' ),
+		esc_html( $start ),
+		esc_html__( 'to', 'industrial-training' ),
+		esc_html( $done ? $end : __( 'present', 'industrial-training' ) ),
+		$done ? '<span aria-hidden="true">✓</span> ' . esc_html( $label ) : esc_html( $label ),
+		$months ? ' · ' . esc_html( $months ) : ''
+	);
+}
+
 /** Monogram for an organisation: first letters of up to 3 words, skipping "of", "and", "for", "the". */
 function itp_initials( string $name ): string {
 	$words = preg_split( '/\s+/', trim( preg_replace( '/[^\p{L}\p{N}\s]/u', '', $name ) ) );

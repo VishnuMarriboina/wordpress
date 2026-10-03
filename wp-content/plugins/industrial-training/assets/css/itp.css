@@ -221,6 +221,31 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 .itp .itp-stipend{width:fit-content;margin:-20px auto 32px;padding:12px 24px;border-radius:999px;background:linear-gradient(90deg, #fef3c7, #fde68a);color:var(--accent-text);font-size:1.1rem;font-weight:800;box-shadow:0 10px 24px -12px rgba(217,119,6,.6);text-align:center}
 .itp.motion-ready .itp-stipend.itp-in{animation:itp-pop .6s var(--ease) backwards}
 
+/* NAPS banner: same gold treatment as the stipend, as a wide card */
+.itp .itp-naps{position:relative;display:flex;align-items:flex-start;gap:20px;max-width:860px;margin:0 auto 36px;padding:22px 26px;overflow:hidden;border:2px solid #fbbf24;border-radius:20px;background:linear-gradient(120deg, #fffbeb, #fef3c7 55%, #fde68a);color:#1a1203;box-shadow:0 14px 30px -16px rgba(217,119,6,.7)}
+.itp .itp-naps::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg, transparent 35%, rgba(255,255,255,.6) 50%, transparent 65%);transform:translateX(-120%);animation:itp-shine 6s ease-in-out infinite;pointer-events:none}
+.itp .itp-naps-icon{display:grid;flex:none;place-items:center;width:60px;height:60px;border-radius:16px;background:linear-gradient(180deg, #fbbf24, #f59e0b);font-size:1.9rem;box-shadow:0 8px 18px -8px rgba(217,119,6,.8)}
+.itp .itp-naps-kicker{color:#b45309;font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.itp .itp-naps h3{margin:2px 0 6px;font-size:1.35rem;font-weight:800;color:#1a1203}
+.itp .itp-naps p{color:#3f2d0a}
+.itp .itp-naps .itp-naps-note{margin-top:10px;padding:8px 12px;border-left:3px solid #d97706;border-radius:0 8px 8px 0;background:rgba(255,255,255,.55);font-size:.85rem;font-style:italic}
+.itp.motion-ready .itp-naps.itp-in{animation:itp-pop .6s var(--ease) backwards .1s}
+.itp.motion-ready .itp-naps-icon{animation:itp-bob 4s ease-in-out infinite}
+
+/* Offer cards: 4 per row, last row centred */
+.itp .itp-offers{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.itp .itp-offers > li{flex:0 1 calc((100% - 72px) / 4)}
+
+/* Internship period on student cards */
+.itp .itp-period{display:grid;gap:6px;width:100%;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--bg-alt);text-align:left}
+.itp .itp-period-dates{font-size:.85rem;font-weight:700;color:var(--text)}
+.itp .itp-period-bar{position:relative;display:block;height:6px;overflow:hidden;border-radius:6px;background:var(--border)}
+.itp .itp-period-bar > span{position:absolute;inset:0;width:60%;border-radius:6px;background:linear-gradient(90deg, #fbbf24, #f59e0b)}
+.itp .itp-period.is-done .itp-period-bar > span{width:100%;background:linear-gradient(90deg, #22c55e, #16a34a)}
+.itp .itp-period-badge{color:var(--text-2);font-size:.78rem;font-weight:600}
+.itp .itp-period.is-done .itp-period-badge{color:var(--ok-ink)}
+.itp.motion-ready .itp-person.itp-in .itp-period-bar > span{animation:itp-draw 1.2s var(--ease) backwards;animation-delay:calc(var(--i) * 80ms + 300ms);transform-origin:left}
+
 /* Our students */
 .itp .itp-people{display:grid;grid-template-columns:repeat(4, 1fr);gap:20px}
 .itp .itp-person{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 16px;border:1px solid var(--border);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);text-align:center;transition:transform .3s var(--ease), box-shadow .3s, border-color .3s}
@@ -495,6 +520,7 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-about{grid-template-columns:1fr;gap:40px}
 	.itp .itp-people{grid-template-columns:repeat(3, 1fr)}
 	.itp .itp-campus-grid > li{flex-basis:calc((100% - 24px) / 2)}
+	.itp .itp-offers > li{flex-basis:calc((100% - 24px) / 2)}
 	.itp .itp-voices{grid-template-columns:1fr}
 	.itp .itp-founder{grid-template-columns:1fr;gap:40px}
 	.itp .itp-founder-card{max-width:460px;width:100%;margin-inline:auto}
@@ -512,6 +538,8 @@ html:has(.itp){scroll-padding-top:calc(var(--wp-admin--admin-bar--height, 0px) +
 	.itp .itp-milestones::before{display:none}
 	.itp .itp-subhead{margin-top:48px}
 	.itp .itp-campus-grid > li{flex-basis:100%;max-width:480px}
+	.itp .itp-offers > li{flex-basis:100%}
+	.itp .itp-naps{flex-direction:column;gap:12px;padding:20px}
 }
 @media (max-width:560px){
 	.itp .itp-container{padding:0 16px}

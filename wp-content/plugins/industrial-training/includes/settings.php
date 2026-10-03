@@ -70,6 +70,7 @@ function itp_sanitize_value( string $key, $value ) {
 		case 'skills':
 		case 'address':
 		case 'text2':
+		case 'note':
 		case 'cta_text':
 			return sanitize_textarea_field( $value );
 		case 'photo':
@@ -380,6 +381,9 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'offers', 'title' ], __( 'Section title', 'industrial-training' ) );
 				itp_field( $s, [ 'offers', 'lead' ], __( 'Lead text', 'industrial-training' ), 'textarea' );
 				itp_field( $s, [ 'offers', 'stipend' ], __( 'Stipend banner', 'industrial-training' ), 'text', __( 'Leave empty to hide.', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'naps', 'title' ], __( 'NAPS banner — title', 'industrial-training' ), 'text', __( 'Leave empty to hide the banner and show NAPS as a normal card instead.', 'industrial-training' ) );
+				itp_field( $s, [ 'offers', 'naps', 'text' ], __( 'NAPS banner — text', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'offers', 'naps', 'note' ], __( 'NAPS banner — conditions', 'industrial-training' ), 'textarea' );
 				foreach ( array_keys( itp_defaults()['offers']['items'] ) as $i ) {
 					/* translators: %d: card number */
 					$n = sprintf( __( 'Card %d', 'industrial-training' ), $i + 1 );

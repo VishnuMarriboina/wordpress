@@ -31,10 +31,10 @@ $no_social = [ 'linkedin' => '', 'instagram' => '', 'facebook' => '', 'twitter' 
 return [
 
 	/* ---------------- Our students & their colleges (real, company-provided) ----------------
-	 * Students: the entries below are DEMO content (invented comments, Unsplash stock photos, labelled "Sample"
+	 * Students: the entries below are DEMO content (invented comments and internship dates, labelled "Sample"
 	 * on the page). Replace each with a real student's confirmed details and delete its 'placeholder' line.
 	 * Fill each field only with real details the student has confirmed. A card shows whatever is
-	 * filled in: photo (else initials), college, track, year, star rating and comment.
+	 * filled in: photo (else initials), college, track, internship period (start → end), star rating and comment.
 	 * Put photos in assets/images/students/ (square JPG, about 400×400 px).
 	 *
 	 * Colleges: public facts (checked October 2026 on the colleges' Careers360 / directory listings).
@@ -42,82 +42,90 @@ return [
 	 * instead — use one the college has given you permission to use. With neither, the card shows the college's initials. */
 	'ourStudents'            => [
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Kavya',
-			'photo'       => 'assets/images/students/kavya.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/kavya.jpg' (with permission).
 			'college'     => 'Gouthami Institute of Technology and Management for Women',
 			'track'       => 'Embedded & IoT',
-			'year'        => '2025',
+			'start'       => 'Jan 2025', // Internship started
+			'end'         => 'Jun 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'I had only seen sensors in textbooks. Here I built a working IoT project with my team and finally understood how the hardware and code fit together.',
 			'rating'      => 5,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Rajyalakshmi',
-			'photo'       => 'assets/images/students/rajyalakshmi.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/rajyalakshmi.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Electrical Systems & PLC',
-			'year'        => '2025',
+			'start'       => 'Feb 2025', // Internship started
+			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'Wiring a real control panel and writing PLC logic gave me confidence I never got in the classroom. The mentors were patient with every question.',
 			'rating'      => 5,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Yaswanth',
-			'photo'       => 'assets/images/students/yaswanth.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/yaswanth.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
 			'track'       => 'Manufacturing & CNC',
-			'year'        => '2024',
+			'start'       => 'Jul 2024', // Internship started
+			'end'         => 'Dec 2024', // Internship completed ('' = still in progress)
 			'comment'     => 'Running CNC machines on the shop floor was the best part. The stipend also helped me support myself during the training.',
 			'rating'      => 5,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Mahir',
-			'photo'       => 'assets/images/students/mahir.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/mahir.jpg' (with permission).
 			'college'     => 'KORM College of Engineering',
 			'track'       => 'Software & Web',
-			'year'        => '2025',
+			'start'       => 'Jan 2025', // Internship started
+			'end'         => 'Jun 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'We built a complete web app from start to finish. The code reviews from mentors taught me how real software teams work.',
 			'rating'      => 4,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Naveen',
-			'photo'       => 'assets/images/students/naveen.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/naveen.jpg' (with permission).
 			'college'     => 'Vemu Institute of Technology',
 			'track'       => 'Electrical Systems & PLC',
-			'year'        => '2024',
+			'start'       => 'Jun 2024', // Internship started
+			'end'         => 'Nov 2024', // Internship completed ('' = still in progress)
 			'comment'     => 'Troubleshooting motors and drives with experienced engineers was a great learning experience. I now explain my project confidently in interviews.',
 			'rating'      => 5,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Narasimha',
-			'photo'       => 'assets/images/students/narasimha.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/narasimha.jpg' (with permission).
 			'college'     => 'Loyola Polytechnic College',
 			'track'       => 'Civil & AutoCAD',
-			'year'        => '2025',
+			'start'       => 'Mar 2025', // Internship started
+			'end'         => 'Aug 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'Site visits and AutoCAD drawings made civil engineering feel real. I learned to read plans the way site engineers do.',
 			'rating'      => 4,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Lohitha',
-			'photo'       => 'assets/images/students/lohitha.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/lohitha.jpg' (with permission).
 			'college'     => 'Gouthami Institute of Technology and Management for Women',
 			'track'       => 'Software & Web',
-			'year'        => '2025',
+			'start'       => 'Feb 2025', // Internship started
+			'end'         => 'Jul 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'The training was well organised and the environment felt safe and supportive. I learned more in these weeks than in a whole semester.',
 			'rating'      => 5,
 		],
 		[
-			'placeholder' => true, // DEMO entry: invented comment + stock photo, labelled "Sample". Replace with the real student's details and remove this line.
+			'placeholder' => true, // DEMO entry: invented comment and dates, labelled "Sample". Replace with the real student's details and remove this line.
 			'name'        => 'Harshitha',
-			'photo'       => 'assets/images/students/harshitha.webp',
+			'photo'       => '', // Real photo later, e.g. 'assets/images/students/harshitha.jpg' (with permission).
 			'college'     => 'Vasavi Polytechnic',
 			'track'       => 'Embedded & IoT',
-			'year'        => '2024',
+			'start'       => 'Aug 2024', // Internship started
+			'end'         => 'Jan 2025', // Internship completed ('' = still in progress)
 			'comment'     => 'From the counselling call to the certificate, everything was clear. The hands-on projects and placement guidance were really helpful.',
 			'rating'      => 5,
 		],
