@@ -1,54 +1,41 @@
-# WordPress Training Project
+# Skillrise Technologies — Industrial Training website
 
-Local WordPress development environment using Docker.
+Live site: https://skillrisetechnologies.com (Hostinger WordPress).
 
-| Service    | URL                         |
-|------------|-----------------------------|
-| WordPress  | http://localhost:8080       |
-| WP Admin   | http://localhost:8080/wp-admin |
-| Training page | http://localhost:8080/industrial-training/ |
-| phpMyAdmin | http://localhost:8081       |
+The whole site is one WordPress plugin: `wp-content/plugins/industrial-training`.
+Hostinger runs WordPress itself; only this plugin is uploaded.
 
-## Requirements
-
-- Docker Desktop (on Windows: enable **Settings → Resources → WSL Integration** for your distro)
-
-## First-time setup
-
-```bash
-cp .env.example .env   # already done; edit values if you want
-./setup.sh
-```
-
-This starts the containers, installs WordPress, activates `training-theme` and
-`training-core`, and sets pretty permalinks. Default login: `admin` / `admin123`
-(change in `.env` before running).
-
-## Everyday commands
-
-```bash
-docker compose up -d                          # start
-docker compose down                           # stop
-docker compose down -v                        # stop AND delete database + core files
-docker compose logs -f wordpress              # logs
-docker compose run --rm wpcli wp plugin list  # WP-CLI
-docker compose exec wordpress tail -f /var/www/html/wp-content/debug.log
-```
-
-## Structure
+## Folder
 
 ```
 .
-├── docker-compose.yml       # WordPress, MariaDB, phpMyAdmin, WP-CLI
-├── .env / .env.example      # ports, DB credentials, admin user
-├── config/php.ini           # upload size, memory limits
-├── setup.sh                 # one-time install script
-└── wp-content/
-    ├── themes/training-theme/   # your custom theme (live-mounted)
-    └── plugins/
-        ├── training-core/          # starter plugin (live-mounted)
-        └── industrial-training/    # Industrial Training landing page plugin — see its README.md
+├── README.md                              # this file
+├── dist/industrial-training.zip           # ready-to-upload plugin (not in git)
+└── wp-content/plugins/industrial-training # the plugin source — see its README.md
 ```
 
-WordPress core lives in a Docker volume; only your theme and plugin are in this
-folder, so edits show up instantly. Install other plugins/themes from WP Admin.
+## Deploy / update on Hostinger
+
+1. Make the zip: right-click `wp-content/plugins/industrial-training` → **Send to → Compressed (zipped) folder**.
+   The zip must contain the `industrial-training` folder at its top level. Upload it as-is — don't zip it twice
+   (a file named `.zip.zip` won't install).
+2. WP Admin → **Plugins → Add New → Upload Plugin** → choose the zip → **Install Now** →
+   **Replace current with uploaded** (first time: **Activate**).
+3. hPanel → your website → **Performance / CDN → Flush cache**, then reload the site with **Ctrl + F5**
+   (or open it in an incognito window).
+
+Settings, registrations and content you typed in WP Admin are kept when you replace the plugin.
+
+## Where things are
+
+| What | Where |
+|---|---|
+| Page text, stipend, contact, emails | WP Admin → **Settings → Industrial Training** |
+| Registrations (search, CSV export) | WP Admin → **Registrations** |
+| Founder, students, colleges | `wp-content/plugins/industrial-training/content/data.php` |
+| Styles / animations | `wp-content/plugins/industrial-training/assets/css/itp.css`, `assets/js/itp.js` |
+
+## Emails
+
+Registration alerts use WordPress `wp_mail()`. On Hostinger install **WP Mail SMTP** with
+`smtp.hostinger.com`, port 465 (SSL), and the `info@skillrisetechnologies.com` mailbox.

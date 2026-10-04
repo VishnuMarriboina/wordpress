@@ -1,13 +1,7 @@
-.env
-*.log
+# OS files
 .DS_Store
 Thumbs.db
-node_modules/
-vendor/
+*.log
 
-# Vercel
-.vercel/
-wordpress/
-composer.lock
-.wp-build/
+# Built upload zip (make it from wp-content/plugins/industrial-training)
 dist/

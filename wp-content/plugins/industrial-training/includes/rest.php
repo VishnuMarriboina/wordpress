@@ -83,9 +83,8 @@ function itp_send_emails( int $id, array $d ): void {
 		__( 'Phone', 'industrial-training' )         => $d['phone'],
 		__( 'College', 'industrial-training' )       => $d['college'],
 		__( 'Branch', 'industrial-training' )        => $d['branch'],
-		__( 'Year', 'industrial-training' )          => '' !== $d['year'] ? $d['year'] : '—',
-		__( 'Track', 'industrial-training' )         => '' !== $d['track'] ? $d['track'] : '—',
 	];
+	$lines = array_filter( $lines, static fn( $v ) => '' !== (string) $v );
 	$body = '';
 	foreach ( $lines as $label => $value ) {
 		$body .= $label . ': ' . $value . "\n";
@@ -102,18 +101,29 @@ function itp_send_emails( int $id, array $d ): void {
 		$error = $e->get_error_message();
 	};
 	add_action( 'wp_mail_failed', $on_fail );
+	// Hostinger rejects mail whose envelope sender (Return-Path) isn't the logged-in mailbox
+	// ("Sender address rejected: not owned by user"), so match it to the From address for our emails.
+	add_action( 'phpmailer_init', 'itp_match_envelope_sender', 999 );
 	/* translators: 1: site name, 2: student name */
 	$sent = wp_mail( $to, sprintf( __( '[%1$s] New training registration: %2$s', 'industrial-training' ), $site, $d['fullName'] ), $body, array_merge( $from, [ 'Reply-To: ' . $d['fullName'] . ' <' . $d['email'] . '>' ] ) );
 	remove_action( 'wp_mail_failed', $on_fail );
 	update_post_meta( $id, '_itp_mail', $sent ? 'sent' : 'failed: ' . ( $error ?: __( 'unknown error', 'industrial-training' ) ) );
 
 	if ( ! empty( $s['form']['confirm_student'] ) && is_email( $d['email'] ) ) {
-		/* translators: 1: first name, 2: track, 3: phone, 4: site name */
-		$msg = sprintf( __( "Hi %1\$s,\n\nThank you for registering for %2\$s. Our counsellor will call you on %3\$s within 2 working days to confirm your batch.\n\n— %4\$s", 'industrial-training' ), strtok( $d['fullName'], ' ' ), '' !== $d['track'] ? sprintf( /* translators: %s: track */ __( 'the %s track', 'industrial-training' ), $d['track'] ) : __( 'the internship program', 'industrial-training' ), $d['phone'], $site );
+		/* translators: 1: first name, 2: "the internship program", 3: phone, 4: site name */
+		$msg = sprintf( __( "Hi %1\$s,\n\nThank you for registering for %2\$s. Our counsellor will call you on %3\$s within 2 working days to confirm your batch.\n\n— %4\$s", 'industrial-training' ), strtok( $d['fullName'], ' ' ), __( 'the internship program', 'industrial-training' ), $d['phone'], $site );
 		/* translators: %s: site name */
 		// Replies from students go to the public contact address.
 		$reply = is_email( $s['contact']['email'] ) ? [ 'Reply-To: ' . $s['brand_name'] . ' <' . $s['contact']['email'] . '>' ] : [];
 		wp_mail( $d['email'], sprintf( __( 'Your Industrial Training registration — %s', 'industrial-training' ), $site ), $msg, array_merge( $from, $reply ) );
+	}
+	remove_action( 'phpmailer_init', 'itp_match_envelope_sender', 999 );
+}
+
+/** Envelope sender = From address (runs last, after SMTP plugins have set From). */
+function itp_match_envelope_sender( $phpmailer ): void {
+	if ( ! empty( $phpmailer->From ) && is_email( $phpmailer->From ) ) {
+		$phpmailer->Sender = $phpmailer->From;
 	}
 }
 

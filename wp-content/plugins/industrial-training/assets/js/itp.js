@@ -268,7 +268,6 @@
 		if (dlg.open) return;
 		opener = btn;
 		reset();
-		form.elements.track.value = btn.dataset.track || ''; // hidden; set by "Register for this track"
 		dlg.showModal();
 		form.elements.fullName.focus();
 	};
@@ -342,7 +341,7 @@
 
 	const success = (d) => {
 		busy(false);
-		const fill = (s) => s.replace(/\{name\}/g, d.fullName.split(/\s+/)[0]).replace(/\{track\}/g, d.track || T.anyTrack).replace(/\{phone\}/g, d.phone);
+		const fill = (s) => s.replace(/\{name\}/g, d.fullName.split(/\s+/)[0]).replace(/\{track\}/g, T.anyTrack).replace(/\{phone\}/g, d.phone);
 		const title = $('.itp-success-title', dlg);
 		title.textContent = fill(dlg.dataset.successTitle);
 		$('.itp-success-text', dlg).textContent = fill(dlg.dataset.successText);

@@ -57,8 +57,6 @@ function itp_enqueue(): void {
 			'anyTrack'   => __( 'the internship program', 'industrial-training' ),
 			'college'    => __( 'Please enter your college or polytechnic.', 'industrial-training' ),
 			'branch'     => __( 'Please choose your branch.', 'industrial-training' ),
-			'year'       => __( 'Please choose your year of study.', 'industrial-training' ),
-			'track'      => __( 'Please choose a training track.', 'industrial-training' ),
 		],
 	] );
 }

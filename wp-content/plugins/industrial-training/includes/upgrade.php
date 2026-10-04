@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 14;
+const ITP_SETTINGS_VERSION = 17;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -24,7 +24,9 @@ function itp_upgrade_settings(): void {
 			[ [ 'brand_name' ], [ 'Industrial Training' ] ],
 			[ [ 'contact', 'email' ], [ 'training@example.com', '' ] ],
 			[ [ 'contact', 'address' ], [ 'Training Centre, Industrial Estate, Hyderabad, Telangana', '' ] ],
-			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '+91 86393 54430', '' ] ],
+			// Phone and WhatsApp are both +91 86393 54430; 93929 20858 was the earlier WhatsApp number.
+			[ [ 'contact', 'phone' ], [ '+91 98765 43210', '+91 93929 20858', '' ] ],
+			[ [ 'contact', 'whatsapp' ], [ '+91 93929 20858' ] ],
 			[ [ 'form', 'notify_email' ], [ '', 'info@skillrisetechnologies.com, arunreddy@skillrisetechnologies.com' ] ],
 			[ [ 'footer', 'copyright' ], [ '© {year} Industrial Training Program. All rights reserved.' ] ],
 			[ [ 'seo', 'title' ], [ 'Industrial Training Program for Diploma Students' ] ],
@@ -94,6 +96,27 @@ function itp_upgrade_settings(): void {
 		foreach ( [ 1 => 'Our team calls within 2 working days to confirm your track and batch.', 2 => 'Work on real machines and projects with industry mentors, and earn a stipend of ₹17,000 – ₹21,500 per month.' ] as $i => $old_text ) {
 			if ( $old_text === ( $saved['steps']['items'][ $i ]['text'] ?? null ) ) {
 				$saved['steps']['items'][ $i ]['text'] = $new['steps']['items'][ $i ]['text'];
+			}
+		}
+		// Placement card note: "does not guarantee employment" became "and guarantee employment".
+		foreach ( (array) ( $saved['offers']['items'] ?? [] ) as $i => $item ) {
+			if ( 'Placement assistance does not guarantee employment.' === ( $item['note'] ?? '' ) ) {
+				$saved['offers']['items'][ $i ]['note'] = 'Placement assistance and guarantee employment.';
+			}
+		}
+		// Electronics track renamed: "Embedded & IoT" → "PCB and electronic Components" for ECE students, with PCB summary and skills.
+		foreach ( (array) ( $saved['tracks']['items'] ?? [] ) as $i => $item ) {
+			if ( 'Embedded & IoT' === ( $item['name'] ?? '' ) ) {
+				$saved['tracks']['items'][ $i ]['name'] = 'PCB and electronic Components';
+			}
+			if ( 'Electronics · Computer Science' === ( $item['branch'] ?? '' ) ) {
+				$saved['tracks']['items'][ $i ]['branch'] = 'ELECTRONICS AND COMMUNICATION';
+			}
+			if ( 'Build sensor boards, flash microcontrollers and send live machine data to a cloud dashboard.' === ( $item['summary'] ?? '' ) ) {
+				$saved['tracks']['items'][ $i ]['summary'] = $new['tracks']['items'][2]['summary'];
+			}
+			if ( 'Arduino & ESP32, Sensor interfacing, MQTT' === ( $item['skills'] ?? '' ) ) {
+				$saved['tracks']['items'][ $i ]['skills'] = $new['tracks']['items'][2]['skills'];
 			}
 		}
 		// Invented sample students, colleges and partners must not be public on a live site.

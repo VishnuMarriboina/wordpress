@@ -23,7 +23,7 @@ $opener = static function ( string $label, string $class, string $track = '', st
 	printf(
 		'<button type="button" class="itp-btn %1$s" data-itp-open aria-haspopup="dialog" aria-controls="itp-register"%2$s>%3$s%4$s</button>',
 		esc_attr( $class ),
-		$track ? ' data-track="' . esc_attr( $track ) . '"' : '',
+		'', // Track buttons open the same form; no track is recorded.
 		esc_html( $label ),
 		$extra // Pre-escaped markup.
 	);
@@ -394,8 +394,6 @@ $select = static function ( string $name, string $placeholder, array $options, b
 						$field( 'college', __( 'College / Polytechnic', 'industrial-training' ), $input( 'college', 'text', [ 'maxlength' => 150, 'autocomplete' => 'organization' ] ), true );
 						$field( 'branch', __( 'Branch', 'industrial-training' ), $select( 'branch', __( 'Select your branch', 'industrial-training' ), itp_branches() ), true );
 						?>
-						<?php // Not shown: records which track card's "Register for this track" button opened the form (empty otherwise). ?>
-						<input type="hidden" id="itp-track" name="track" value="">
 						<div class="itp-hp" aria-hidden="true">
 							<label for="itp-website"><?php esc_html_e( 'Leave this field empty', 'industrial-training' ); ?></label>
 							<input type="text" id="itp-website" name="website" tabindex="-1" autocomplete="off">

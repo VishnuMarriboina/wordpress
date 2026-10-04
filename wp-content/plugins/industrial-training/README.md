@@ -40,8 +40,7 @@ industrial-training/
 ## Installation
 
 1. **Upload and activate.** Copy the `industrial-training` folder to `wp-content/plugins/`, or zip it and use
-   Plugins → Add New → Upload. Then activate **Industrial Training**. (In this repo's Docker setup it's already
-   mounted, and `./setup.sh` activates it.)
+   Plugins → Add New → Upload. Then activate **Industrial Training**.
 2. **The page is created for you.** Activating the plugin creates the "Industrial Training" page with the
    **Industrial Training (full screen)** template and makes it the homepage (unless a static homepage is already set).
    No theme setup is needed: the full-screen template ignores the theme's header, footer and styles.

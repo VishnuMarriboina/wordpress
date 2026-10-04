@@ -6,7 +6,8 @@
 defined( 'ABSPATH' ) || exit;
 
 const ITP_CPT    = 'itp_registration';
-const ITP_FIELDS = [ 'email', 'phone', 'college', 'branch', 'year', 'track' ];
+// Year of study and training track are no longer collected (older entries keep theirs in the database).
+const ITP_FIELDS = [ 'email', 'phone', 'college', 'branch' ];
 
 add_action( 'init', 'itp_register_post_type' );
 
@@ -70,8 +71,6 @@ add_filter( 'manage_' . ITP_CPT . '_posts_columns', function () {
 		'itp_phone'   => __( 'Phone', 'industrial-training' ),
 		'itp_college' => __( 'College', 'industrial-training' ),
 		'itp_branch'  => __( 'Branch', 'industrial-training' ),
-		'itp_year'    => __( 'Year', 'industrial-training' ),
-		'itp_track'   => __( 'Track', 'industrial-training' ),
 		'itp_mail'    => __( 'Email alert', 'industrial-training' ),
 		'date'        => __( 'Date', 'industrial-training' ),
 	];
@@ -110,20 +109,6 @@ add_filter( 'bulk_actions-edit-' . ITP_CPT, function ( $actions ) {
 	return $actions;
 } );
 
-/** Track filter + Export button above the table. */
-add_action( 'restrict_manage_posts', function ( $post_type, $which ) {
-	if ( ITP_CPT !== $post_type || 'top' !== $which ) {
-		return;
-	}
-	$current = isset( $_GET['itp_track'] ) ? sanitize_text_field( wp_unslash( $_GET['itp_track'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-	echo '<label class="screen-reader-text" for="itp-filter-track">' . esc_html__( 'Filter by track', 'industrial-training' ) . '</label>';
-	echo '<select name="itp_track" id="itp-filter-track"><option value="">' . esc_html__( 'All tracks', 'industrial-training' ) . '</option>';
-	foreach ( itp_track_names() as $name ) {
-		printf( '<option value="%1$s"%2$s>%3$s</option>', esc_attr( $name ), selected( $current, $name, false ), esc_html( $name ) );
-	}
-	echo '</select>';
-}, 10, 2 );
-
 add_action( 'manage_posts_extra_tablenav', function ( $which ) {
 	global $typenow;
 	if ( ITP_CPT !== $typenow || 'top' !== $which || ! current_user_can( 'manage_options' ) ) {
@@ -131,20 +116,9 @@ add_action( 'manage_posts_extra_tablenav', function ( $which ) {
 	}
 	$url = wp_nonce_url( add_query_arg( [
 		'action'    => 'itp_export',
-		'itp_track' => isset( $_GET['itp_track'] ) ? sanitize_text_field( wp_unslash( $_GET['itp_track'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification
 		's'         => isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification
 	], admin_url( 'admin-post.php' ) ), 'itp_export' );
 	printf( '<div class="alignleft actions"><a class="button" href="%s">%s</a></div>', esc_url( $url ), esc_html__( 'Export CSV', 'industrial-training' ) );
-} );
-
-add_action( 'pre_get_posts', function ( WP_Query $q ) {
-	if ( ! $q->is_main_query() || ITP_CPT !== $q->get( 'post_type' ) ) {
-		return;
-	}
-	$track = isset( $_GET['itp_track'] ) ? sanitize_text_field( wp_unslash( $_GET['itp_track'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-	if ( '' !== $track ) {
-		$q->set( 'meta_query', [ [ 'key' => '_itp_track', 'value' => $track ] ] );
-	}
 } );
 
 /* ---------- Read-only detail screen ---------- */
@@ -156,8 +130,6 @@ add_action( 'add_meta_boxes_' . ITP_CPT, function () {
 			'phone'   => __( 'Phone', 'industrial-training' ),
 			'college' => __( 'College / Polytechnic', 'industrial-training' ),
 			'branch'  => __( 'Branch', 'industrial-training' ),
-			'year'    => __( 'Year of study', 'industrial-training' ),
-			'track'   => __( 'Training track', 'industrial-training' ),
 			'created' => __( 'Submitted (UTC)', 'industrial-training' ),
 		];
 		echo '<table class="widefat striped"><tbody>';
@@ -184,10 +156,6 @@ add_action( 'admin_post_itp_export', function () {
 		'order'          => 'DESC',
 		'no_found_rows'  => true,
 	];
-	$track = isset( $_GET['itp_track'] ) ? sanitize_text_field( wp_unslash( $_GET['itp_track'] ) ) : '';
-	if ( '' !== $track ) {
-		$args['meta_query'] = [ [ 'key' => '_itp_track', 'value' => $track ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery
-	}
 	$search = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
 	if ( '' !== $search ) {
 		$args['s'] = $search;
@@ -202,7 +170,7 @@ add_action( 'admin_post_itp_export', function () {
 
 	$out = fopen( 'php://output', 'w' );
 	fwrite( $out, "\xEF\xBB\xBF" ); // UTF-8 BOM so Excel shows ₹/accents correctly.
-	fputcsv( $out, [ 'ID', 'Name', 'Email', 'Phone', 'College', 'Branch', 'Year', 'Track', 'Date (UTC)' ] );
+	fputcsv( $out, [ 'ID', 'Name', 'Email', 'Phone', 'College', 'Branch', 'Date (UTC)' ] );
 	foreach ( get_posts( $args ) as $post ) {
 		$row = [ $post->ID, $post->post_title ];
 		foreach ( ITP_FIELDS as $f ) {

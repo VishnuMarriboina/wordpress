@@ -81,6 +81,15 @@ function itp_phone_digits( string $raw ): string {
 	return preg_match( '/^\d{10}$/', $d ) ? $d : '';
 }
 
+/**
+ * How a valid number is saved: typed with +91 → "+91" + 10 digits (13 characters), e.g. +919876543210;
+ * typed any other way (9876543210, 09876543210, 98765 43210) → the 10 digits only.
+ */
+function itp_phone_store( string $raw ): string {
+	$digits = itp_phone_digits( $raw );
+	return str_starts_with( preg_replace( '/[\s().-]/', '', $raw ), '+91' ) ? '+91' . $digits : $digits;
+}
+
 /** Error message for a phone number, or '' when it is a valid mobile number. */
 function itp_phone_error( string $raw ): string {
 	$d = itp_phone_digits( $raw );
@@ -120,8 +129,6 @@ function itp_validate( array $input ): array {
 		'phone'    => mb_substr( $get( 'phone' ), 0, 20 ),
 		'college'  => mb_substr( $get( 'college' ), 0, 150 ),
 		'branch'   => $get( 'branch' ),
-		'year'     => $get( 'year' ),
-		'track'    => $get( 'track' ),
 	];
 	$errors = [];
 
@@ -134,20 +141,13 @@ function itp_validate( array $input ): array {
 	if ( '' !== ( $msg = itp_phone_error( $clean['phone'] ) ) ) {
 		$errors['phone'] = $msg;
 	} else {
-		$clean['phone'] = itp_phone_digits( $clean['phone'] ); // Stored as 10 digits.
+		$clean['phone'] = itp_phone_store( $clean['phone'] );
 	}
 	if ( '' === $clean['college'] ) {
 		$errors['college'] = __( 'Please enter your college or polytechnic.', 'industrial-training' );
 	}
 	if ( ! array_key_exists( $clean['branch'], itp_branches() ) ) {
 		$errors['branch'] = __( 'Please choose your branch.', 'industrial-training' );
-	}
-	// Year of study and training track are optional; when given they must be one of the listed options.
-	if ( '' !== $clean['year'] && ! array_key_exists( $clean['year'], itp_years() ) ) {
-		$errors['year'] = __( 'Please choose your year of study.', 'industrial-training' );
-	}
-	if ( '' !== $clean['track'] && ! in_array( $clean['track'], itp_track_names(), true ) ) {
-		$errors['track'] = __( 'Please choose a training track.', 'industrial-training' );
 	}
 
 	return [ $clean, $errors ];
