@@ -187,7 +187,11 @@ return [
 		'bio'               => 'Y Arun Kumar Reddy, Founder & CEO, brings 6+ years of experience in student training, technology education, and career development. Through his work, he has helped 10000+ students and collaborated with 50+ colleges to provide practical training, technical guidance, and career-focused learning opportunities.',
 		'tagline'           => 'Helping students learn, grow and prepare for industry careers.',
 		'vision'            => 'To help every student gain practical, hands-on skills and the confidence to grow toward real industry opportunities.',
-		'social'            => $no_social, // e.g. 'linkedin' => 'https://www.linkedin.com/in/…'
+		'social'            => array_merge( $no_social, [
+			'linkedin'  => 'https://www.linkedin.com/in/arun-kumar-reddy-y-169509441',
+			'instagram' => 'https://www.instagram.com/y_arun_kumar_reddy',
+			'facebook'  => 'https://www.facebook.com/share/1DyrvfUmoz/',
+		] ),
 	],
 
 	/* ---------------- Founder journey / impact (company-provided figures only) ---------------- */
@@ -456,7 +460,11 @@ return [
 	],
 
 	/* ---------------- Company social accounts ("Join our community"; hidden until a URL is added) ---------------- */
-	'companySocial'          => $no_social,
+	'companySocial'          => array_merge( $no_social, [
+		'linkedin'  => 'https://www.linkedin.com/in/skillrise-technologies-4b18b7440',
+		'instagram' => 'https://www.instagram.com/skillrisetechnologies',
+		'facebook'  => 'https://www.facebook.com/profile.php?id=61595049273998',
+	] ),
 
 	/* ---------------- Final call to action ---------------- */
 	'ctaData'                => [

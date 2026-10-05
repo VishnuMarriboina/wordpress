@@ -54,6 +54,8 @@ add_action( 'wp_head', function () {
 		'telephone' => $contact['phone'],
 		'email'     => $contact['email'],
 		'address'   => [ '@type' => 'PostalAddress', 'streetAddress' => $contact['address'], 'addressCountry' => 'IN' ],
+		'hasMap'    => itp_real_url( $contact['map_url'] ?? '' ),
+		'sameAs'    => array_values( array_filter( array_map( 'itp_real_url', (array) ( itp_content()['companySocial'] ?? [] ) ) ) ),
 	] );
 	$founder = itp_content()['founderData'] ?? [];
 	if ( ! empty( $founder['name'] ) ) {

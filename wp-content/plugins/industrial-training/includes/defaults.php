@@ -169,6 +169,8 @@ function itp_defaults(): array {
 			'whatsapp'   => '+91 86393 54430',
 			'email'      => 'info@skillrisetechnologies.com',
 			'address'    => __( '18/3, Ramanagar Main Rd, Dobbaspet, Chandanahosahalli, Karnataka 562111', 'industrial-training' ),
+			'map_url'    => 'https://maps.app.goo.gl/hTi3AdTvqRPJjun19',
+			'map_query'  => '669R+5RQ Skillrise Technologies, Dobbaspet, Karnataka 562111',
 			'hours'      => __( 'Mon – Sat, 9:30 AM – 6:00 PM', 'industrial-training' ),
 			'cta_title'  => __( 'Seats are limited each batch', 'industrial-training' ),
 			'cta_text'   => __( "Register today and we'll call you within 2 working days.", 'industrial-training' ),

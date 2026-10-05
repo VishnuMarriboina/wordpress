@@ -75,7 +75,8 @@ function itp_rest_register( WP_REST_Request $request ): WP_REST_Response {
 function itp_send_emails( int $id, array $d ): void {
 	$s    = itp_settings();
 	$site = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
-	$to   = itp_email_list( $s['form']['notify_email'] ) ?: get_option( 'admin_email' );
+	// Fall back to the company contact address, not the WordPress admin email (often someone's personal inbox).
+	$to   = itp_email_list( $s['form']['notify_email'] ) ?: itp_email_list( $s['contact']['email'] ?? '' ) ?: get_option( 'admin_email' );
 
 	$lines = [
 		__( 'Name', 'industrial-training' )          => $d['fullName'],

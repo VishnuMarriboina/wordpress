@@ -1,6 +1,6 @@
 <?php
 /**
- * Student stories, testimonials, colleges, leadership, partners, community and final CTA.
+ * Student stories, testimonials, colleges, leadership, partners and final CTA.
  * Sections without any entry visible to the current viewer are skipped.
  *
  * @var array    $s      Settings.
@@ -14,7 +14,6 @@ $students = itp_items( 'studentsData' );
 $colleges = itp_items( 'collegeTestimonials' );
 $leaders  = itp_items( 'leadershipTestimonials' );
 $partners = itp_items( 'partnerOrganizations' );
-$community = itp_social_links( $c['companySocial'] ?? [], $s['brand_name'], 'itp-social-lg' );
 $cta      = $c['ctaData'] ?? [];
 
 // Alternate backgrounds across whichever sections render (the section before is "How it works", plain).
@@ -331,16 +330,6 @@ $our_colleges = array_values( array_filter( (array) ( $c['ourColleges'] ?? [] ),
 				</li>
 			<?php endforeach; ?>
 		</ul>
-	</div>
-</section>
-<?php endif; ?>
-
-<?php if ( $community ) : ?>
-<section class="itp-section<?php echo esc_attr( $bg() ); ?>" aria-labelledby="itp-community-title">
-	<div class="itp-container itp-head itp-community">
-		<h2 class="itp-h2 itp-reveal" id="itp-community-title"><?php esc_html_e( 'Join Our Community', 'industrial-training' ); ?></h2>
-		<p class="itp-lead itp-reveal"><?php esc_html_e( 'Follow us for batch announcements, student projects and training updates.', 'industrial-training' ); ?></p>
-		<div class="itp-reveal"><?php echo $community; // phpcs:ignore ?></div>
 	</div>
 </section>
 <?php endif; ?>

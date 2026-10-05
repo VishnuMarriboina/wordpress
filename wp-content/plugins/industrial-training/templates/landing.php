@@ -10,6 +10,8 @@ defined( 'ABSPATH' ) || exit;
 
 $hero     = $s['hero'];
 $contact  = $s['contact'];
+$map_url   = itp_real_url( $contact['map_url'] ?? '' );
+$map_query = trim( (string) ( $contact['map_query'] ?? '' ) );
 // wa.me needs the number as digits with country code; a bare 10-digit number is taken as Indian.
 $wa_digits = preg_replace( '/\D/', '', $contact['whatsapp'] ?? '' );
 $wa_digits = 10 === strlen( $wa_digits ) ? '91' . $wa_digits : $wa_digits;
@@ -347,7 +349,11 @@ $select = static function ( string $name, string $placeholder, array $options, b
 							<li><span class="itp-ci-icon" aria-hidden="true">💬</span><span><span class="itp-ci-label"><?php esc_html_e( 'WhatsApp', 'industrial-training' ); ?></span><a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $contact['whatsapp'] ); ?></a></span></li>
 							<?php endif; ?>
 							<li><span class="itp-ci-icon" aria-hidden="true">✉️</span><span><span class="itp-ci-label"><?php esc_html_e( 'Email', 'industrial-training' ); ?></span><a href="mailto:<?php echo esc_attr( antispambot( $contact['email'] ) ); ?>"><?php echo esc_html( antispambot( $contact['email'] ) ); ?></a></span></li>
-							<li><span class="itp-ci-icon" aria-hidden="true">📍</span><span><span class="itp-ci-label"><?php esc_html_e( 'Address', 'industrial-training' ); ?></span><?php echo esc_html( $contact['address'] ); ?></span></li>
+							<li><span class="itp-ci-icon" aria-hidden="true">📍</span><span><span class="itp-ci-label"><?php esc_html_e( 'Address', 'industrial-training' ); ?></span><?php echo esc_html( $contact['address'] ); ?>
+								<?php if ( $map_url && ! $map_query ) : ?>
+									<br><a href="<?php echo esc_url( $map_url ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Get directions', 'industrial-training' ); ?> <span aria-hidden="true">↗</span></a>
+								<?php endif; ?>
+							</span></li>
 							<li><span class="itp-ci-icon" aria-hidden="true">🕘</span><span><span class="itp-ci-label"><?php esc_html_e( 'Hours', 'industrial-training' ); ?></span><?php echo esc_html( $contact['hours'] ); ?></span></li>
 						</ul>
 					</address>
@@ -360,12 +366,33 @@ $select = static function ( string $name, string $placeholder, array $options, b
 						<?php $opener( $contact['cta_button'], 'itp-btn-primary itp-btn-block itp-shine', '', ' ' . $arrow ); ?>
 					</div>
 				</div>
+				<?php if ( $map_query ) : ?>
+					<figure class="itp-map itp-reveal">
+						<?php /* translators: %s: brand name */ ?>
+						<iframe src="<?php echo esc_url( 'https://www.google.com/maps?output=embed&q=' . rawurlencode( $map_query ) ); ?>" title="<?php echo esc_attr( sprintf( __( 'Map showing the location of %s', 'industrial-training' ), $s['brand_name'] ) ); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+						<figcaption class="itp-map-bar">
+							<span class="itp-ci-icon" aria-hidden="true">📍</span>
+							<span class="itp-map-text"><strong><?php echo esc_html( $s['brand_name'] ); ?></strong><?php echo esc_html( $contact['address'] ); ?></span>
+							<?php if ( $map_url ) : ?>
+								<a class="itp-btn itp-btn-outline itp-btn-sm" href="<?php echo esc_url( $map_url ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Get directions', 'industrial-training' ); ?> <span aria-hidden="true">↗</span></a>
+							<?php endif; ?>
+						</figcaption>
+					</figure>
+				<?php endif; ?>
 			</div>
 		</section>
 	</<?php echo esc_html( $main_tag ); ?>>
 
 	<footer class="itp-footer">
 		<div class="itp-container">
+			<?php $community = itp_social_links( itp_content()['companySocial'] ?? [], $s['brand_name'], 'itp-social-lg' ); ?>
+			<?php if ( $community ) : ?>
+				<div class="itp-community">
+					<h2 class="itp-community-title"><?php esc_html_e( 'Join Our Community', 'industrial-training' ); ?></h2>
+					<p><?php esc_html_e( 'Follow us for batch announcements, student projects and training updates.', 'industrial-training' ); ?></p>
+					<?php echo $community; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in itp_social_links(). ?>
+				</div>
+			<?php endif; ?>
 			<p><?php echo esc_html( itp_fill( $s['footer']['copyright'], [ 'year' => wp_date( 'Y' ) ] ) ); ?></p>
 			<?php if ( $s['footer']['credits'] ) : ?>
 				<p class="itp-credits"><?php echo wp_kses( $s['footer']['credits'], [ 'a' => [ 'href' => true, 'rel' => true, 'target' => true ] ] ); ?></p>

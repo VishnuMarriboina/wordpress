@@ -60,6 +60,8 @@ function itp_sanitize_value( string $key, $value ) {
 			return min( 500, max( 1, absint( $value ) ) );
 		case 'email':
 			return sanitize_email( $value );
+		case 'map_url':
+			return itp_real_url( esc_url_raw( $value ) );
 		case 'notify_email':
 			return implode( ', ', itp_email_list( $value ) );
 		case 'credits':
@@ -468,6 +470,8 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'contact', 'whatsapp' ], __( 'WhatsApp number', 'industrial-training' ), 'tel', __( 'With country code, e.g. +91 86393 54430. Shown in Contact and as a floating chat button. Leave empty to hide both.', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'email' ], __( 'Email', 'industrial-training' ), 'email' );
 				itp_field( $s, [ 'contact', 'address' ], __( 'Address', 'industrial-training' ), 'textarea' );
+				itp_field( $s, [ 'contact', 'map_url' ], __( 'Google Maps link', 'industrial-training' ), 'url', __( 'In Google Maps: Share → Copy link. Used for the "Get directions" button. Leave empty to hide it.', 'industrial-training' ) );
+				itp_field( $s, [ 'contact', 'map_query' ], __( 'Map pin', 'industrial-training' ), 'text', __( 'What the embedded map searches for: the business name with its plus code (e.g. <code>669R+5RQ Skillrise Technologies</code>) or the address. Leave empty to hide the map.', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'hours' ], __( 'Hours', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'cta_title' ], __( 'Card title', 'industrial-training' ) );
 				itp_field( $s, [ 'contact', 'cta_text' ], __( 'Card text', 'industrial-training' ), 'textarea' );
@@ -485,8 +489,7 @@ function itp_settings_page(): void {
 				itp_field( $s, [ 'form', 'note' ], __( 'Form note', 'industrial-training' ) );
 				itp_field( $s, [ 'form', 'success_title' ], __( 'Success heading', 'industrial-training' ), 'text', __( '<code>{name}</code> = first name.', 'industrial-training' ) );
 				itp_field( $s, [ 'form', 'success_text' ], __( 'Success text', 'industrial-training' ), 'textarea', __( 'Placeholders: <code>{name}</code> <code>{track}</code> <code>{phone}</code>', 'industrial-training' ) );
-				/* translators: %s: admin email */
-				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification emails', 'industrial-training' ), 'text', esc_html( sprintf( __( 'One or more addresses, separated by commas. Leave empty to use %s.', 'industrial-training' ), get_option( 'admin_email' ) ) ) );
+				itp_field( $s, [ 'form', 'notify_email' ], __( 'Notification emails', 'industrial-training' ), 'text', esc_html__( 'One or more addresses, separated by commas. Leave empty to use the contact email.', 'industrial-training' ) );
 				itp_field( $s, [ 'form', 'confirm_student' ], __( 'Send confirmation email to the student', 'industrial-training' ), 'checkbox' );
 				itp_field( $s, [ 'form', 'rate_limit' ], __( 'Registrations per network (per 10 minutes)', 'industrial-training' ), 'number', __( 'Anti-spam limit for one internet connection. Students on the same college Wi-Fi share it, so raise this (e.g. 200) before a college registration drive and lower it afterwards. 1–500.', 'industrial-training' ) );
 			} );
