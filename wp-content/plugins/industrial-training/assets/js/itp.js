@@ -319,10 +319,16 @@
 		}, 15000);
 
 		try {
+			// Fresh nonce: the one in a cached page may have expired ("Cookie check failed").
+			const { nonce } = await fetch(D.nonceUrl + (D.nonceUrl.includes('?') ? '&' : '?') + 't=' + Date.now(), {
+				credentials: 'same-origin',
+				cache: 'no-store',
+				signal: ctrl.signal,
+			}).then((r) => r.json());
 			const res = await fetch(D.endpoint, {
 				method: 'POST',
 				credentials: 'same-origin',
-				headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': D.nonce },
+				headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
 				body: JSON.stringify(d),
 				signal: ctrl.signal,
 			});

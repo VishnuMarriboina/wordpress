@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ITP_SETTINGS_VERSION = 17;
+const ITP_SETTINGS_VERSION = 18;
 
 add_action( 'plugins_loaded', 'itp_upgrade_settings' );
 
@@ -122,6 +122,11 @@ function itp_upgrade_settings(): void {
 		// Invented sample students, colleges and partners must not be public on a live site.
 		$saved['samples']['show'] = 0;
 		update_option( ITP_OPTION, $saved );
+	}
+	// The site was left on WordPress's default UTC, so registration times showed 5½ hours behind India.
+	if ( in_array( wp_timezone_string(), [ 'UTC', '+00:00' ], true ) ) {
+		update_option( 'timezone_string', 'Asia/Kolkata' );
+		update_option( 'gmt_offset', '' );
 	}
 	update_option( 'itp_settings_version', ITP_SETTINGS_VERSION );
 }

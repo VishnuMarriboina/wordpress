@@ -15,6 +15,17 @@ add_action( 'rest_api_init', function () {
 		// response keeps the { error } shape the front end expects.
 		'permission_callback' => '__return_true',
 	] );
+	// The page HTML is cached by Hostinger, so the nonce printed into it goes stale after 12–24 h and
+	// WordPress then rejects the form with "Cookie check failed". The form fetches a fresh one here first.
+	register_rest_route( 'industrial-training/v1', '/nonce', [
+		'methods'             => WP_REST_Server::READABLE,
+		'callback'            => static function () {
+			$res = new WP_REST_Response( [ 'nonce' => wp_create_nonce( 'wp_rest' ) ] );
+			$res->set_headers( wp_get_nocache_headers() );
+			return $res;
+		},
+		'permission_callback' => '__return_true',
+	] );
 } );
 
 function itp_rest_error( string $message, int $status, array $extra = [] ): WP_REST_Response {

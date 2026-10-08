@@ -38,7 +38,7 @@ function itp_enqueue(): void {
 	wp_enqueue_script( 'itp' );
 	wp_localize_script( 'itp', 'itpData', [
 		'endpoint' => esc_url_raw( rest_url( 'industrial-training/v1/register' ) ),
-		'nonce'    => wp_create_nonce( 'wp_rest' ),
+		'nonceUrl' => esc_url_raw( rest_url( 'industrial-training/v1/nonce' ) ),
 		'i18n'     => [
 			/* translators: %d: carousel page number */
 			'slide'      => __( 'Go to page %d', 'industrial-training' ),

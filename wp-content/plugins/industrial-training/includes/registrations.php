@@ -57,6 +57,15 @@ function itp_save_registration( array $d ): int {
 	return is_wp_error( $id ) ? 0 : (int) $id;
 }
 
+/**
+ * When the student registered, as a Unix timestamp. Read from the UTC column: post_date holds whatever the
+ * site timezone was at the time (UTC on older entries), so it would show 5½ hours early in India.
+ */
+function itp_registered_at( WP_Post $post ): int {
+	$gmt = '0000-00-00 00:00:00' !== $post->post_date_gmt ? $post->post_date_gmt : (string) get_post_meta( $post->ID, '_itp_created', true );
+	return (int) strtotime( $gmt . ' UTC' );
+}
+
 if ( ! is_admin() ) {
 	return;
 }
@@ -72,13 +81,22 @@ add_filter( 'manage_' . ITP_CPT . '_posts_columns', function () {
 		'itp_college' => __( 'College', 'industrial-training' ),
 		'itp_branch'  => __( 'Branch', 'industrial-training' ),
 		'itp_mail'    => __( 'Email alert', 'industrial-training' ),
-		'date'        => __( 'Date', 'industrial-training' ),
+		// Own column instead of WordPress's "date", which shows "Last Modified" for private posts.
+		'itp_date'    => __( 'Registered', 'industrial-training' ),
 	];
+} );
+
+add_filter( 'manage_edit-' . ITP_CPT . '_sortable_columns', function ( $columns ) {
+	return [ 'title' => 'title', 'itp_date' => [ 'date', true ] ];
 } );
 
 add_action( 'manage_' . ITP_CPT . '_posts_custom_column', function ( $column, $post_id ) {
 	$value = (string) get_post_meta( $post_id, '_' . $column, true );
-	if ( 'itp_email' === $column ) {
+	if ( 'itp_date' === $column ) {
+		$time = itp_registered_at( get_post( $post_id ) );
+		/* translators: 1: date, 2: time */
+		printf( esc_html__( '%1$s at %2$s', 'industrial-training' ), esc_html( wp_date( get_option( 'date_format' ), $time ) ), esc_html( wp_date( get_option( 'time_format' ), $time ) ) );
+	} elseif ( 'itp_email' === $column ) {
 		printf( '<a href="mailto:%1$s">%2$s</a>', esc_attr( $value ), esc_html( $value ) );
 	} elseif ( 'itp_mail' === $column ) {
 		// "sent" = accepted by the mail server; delivery to the inbox still depends on SMTP / spam filters.
@@ -170,13 +188,13 @@ add_action( 'admin_post_itp_export', function () {
 
 	$out = fopen( 'php://output', 'w' );
 	fwrite( $out, "\xEF\xBB\xBF" ); // UTF-8 BOM so Excel shows ₹/accents correctly.
-	fputcsv( $out, [ 'ID', 'Name', 'Email', 'Phone', 'College', 'Branch', 'Date (UTC)' ] );
+	fputcsv( $out, [ 'ID', 'Name', 'Email', 'Phone', 'College', 'Branch', 'Registered (' . wp_timezone_string() . ')' ] );
 	foreach ( get_posts( $args ) as $post ) {
 		$row = [ $post->ID, $post->post_title ];
 		foreach ( ITP_FIELDS as $f ) {
 			$row[] = get_post_meta( $post->ID, '_itp_' . $f, true );
 		}
-		$row[] = get_post_meta( $post->ID, '_itp_created', true );
+		$row[] = wp_date( 'Y-m-d H:i', itp_registered_at( $post ) );
 		fputcsv( $out, array_map( $cell, $row ) );
 	}
 	fclose( $out );
