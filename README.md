@@ -35,6 +35,14 @@ Settings, registrations and content you typed in WP Admin are kept when you repl
 | Founder, students, colleges | `wp-content/plugins/industrial-training/content/data.php` |
 | Styles / animations | `wp-content/plugins/industrial-training/assets/css/itp.css`, `assets/js/itp.js` |
 
+## Redesigned site at /new and dashboard at /admin
+
+`wp-content/plugins/skillrise-new` serves the redesigned website (3D hero, animations) at `/new` and a registrations
+dashboard at `/admin`. It is a separate plugin that reads content from `industrial-training` and uses its existing
+registration API; the classic site is unchanged. Like `industrial-training`, it is plain WordPress code with no build
+step: edit its PHP/CSS/JS files directly, then zip the `skillrise-new` folder and upload it like the plugin above.
+Details, deployment and rollback: `wp-content/plugins/skillrise-new/README.md`.
+
 ## Emails
 
 Registration alerts use WordPress `wp_mail()`. On Hostinger install **WP Mail SMTP** with

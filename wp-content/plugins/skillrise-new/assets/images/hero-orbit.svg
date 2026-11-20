@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640">
+  <!-- Skillrise /new hero illustration: faceted tech core, orbit rings and floating training objects.
+       Original artwork for this site. Shown before the WebGL scene loads and when 3D is unavailable. -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#6d5dfc" stop-opacity=".55"/>
+      <stop offset=".55" stop-color="#2f6bff" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#070b1a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="faceA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c8cff"/><stop offset="1" stop-color="#3b2fa8"/></linearGradient>
+    <linearGradient id="faceB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f9dff"/><stop offset="1" stop-color="#1c3e9e"/></linearGradient>
+    <linearGradient id="faceC" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#4c1d95"/></linearGradient>
+    <linearGradient id="faceD" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0f1a4a"/><stop offset="1" stop-color="#2a3fa8"/></linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" stop-opacity="0"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6" stop-opacity=".1"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347"/><stop offset="1" stop-color="#f97316"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset="1" stop-color="#ffffff" stop-opacity=".04"/></linearGradient>
+  </defs>
+  <circle cx="320" cy="320" r="300" fill="url(#glow)"/>
+  <!-- particles -->
+  <g fill="#9fb4ff" opacity=".7">
+    <circle cx="96" cy="140" r="2"/><circle cx="540" cy="110" r="1.6"/><circle cx="580" cy="300" r="2.2"/><circle cx="70" cy="380" r="1.6"/>
+    <circle cx="150" cy="560" r="2"/><circle cx="470" cy="560" r="1.8"/><circle cx="250" cy="70" r="1.4"/><circle cx="410" cy="40" r="1.8"/>
+    <circle cx="610" cy="450" r="1.4"/><circle cx="30" cy="250" r="1.4"/><circle cx="330" cy="610" r="1.6"/><circle cx="520" cy="200" r="1.2"/>
+  </g>
+  <!-- back ring -->
+  <ellipse cx="320" cy="320" rx="250" ry="78" fill="none" stroke="url(#ring)" stroke-width="2" transform="rotate(-18 320 320)" opacity=".55"/>
+  <!-- faceted core (icosahedron-like) -->
+  <g transform="translate(320 318)">
+    <polygon points="0,-150 -130,-75 0,-40" fill="url(#faceA)"/>
+    <polygon points="0,-150 130,-75 0,-40" fill="url(#faceC)"/>
+    <polygon points="-130,-75 -130,75 -70,30" fill="url(#faceD)"/>
+    <polygon points="-130,-75 0,-40 -70,30" fill="url(#faceB)"/>
+    <polygon points="130,-75 130,75 70,30" fill="url(#faceA)" opacity=".9"/>
+    <polygon points="130,-75 0,-40 70,30" fill="url(#faceD)"/>
+    <polygon points="0,-40 -70,30 70,30" fill="url(#faceC)"/>
+    <polygon points="-70,30 70,30 0,150" fill="url(#faceB)"/>
+    <polygon points="-130,75 -70,30 0,150" fill="url(#faceA)" opacity=".85"/>
+    <polygon points="130,75 70,30 0,150" fill="url(#faceD)"/>
+    <g fill="none" stroke="#9cc8ff" stroke-opacity=".75" stroke-width="1.4" stroke-linejoin="round">
+      <polygon points="0,-150 130,-75 130,75 0,150 -130,75 -130,-75"/>
+      <path d="M0-150 0-40M-130-75 0-40 130-75M-130-75-70 30M130-75 70 30M0-40-70 30 70 30 0-40M-130 75-70 30 0 150 70 30 130 75"/>
+    </g>
+    <circle r="22" fill="#e0f2ff" opacity=".9"/>
+    <circle r="44" fill="#7dd3fc" opacity=".18"/>
+  </g>
+  <!-- front ring -->
+  <path d="M78 382 A250 78 -18 0 0 562 258" fill="none" stroke="url(#ring)" stroke-width="3" transform="rotate(0)"/>
+  <circle cx="548" cy="268" r="7" fill="#22d3ee"/>
+  <circle cx="102" cy="372" r="5" fill="#a78bfa"/>
+  <!-- floating objects -->
+  <!-- gear (mechanical) -->
+  <g transform="translate(118 150) rotate(-12)">
+    <rect x="-40" y="-40" width="80" height="80" rx="20" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".25"/>
+    <g fill="none" stroke="#8fb3ff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(-24 -24) scale(2)">
+      <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/><circle cx="12" cy="12" r="6.5"/>
+    </g>
+  </g>
+  <!-- chip (electronics) -->
+  <g transform="translate(528 438) rotate(10)">
+    <rect x="-40" y="-40" width="80" height="80" rx="20" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".25"/>
+    <g fill="none" stroke="#c4b5fd" stroke-width="3.2" stroke-linecap="round" transform="translate(-24 -24) scale(2)">
+      <rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>
+    </g>
+  </g>
+  <!-- graduation cap -->
+  <g transform="translate(500 120) rotate(8)">
+    <rect x="-36" y="-36" width="72" height="72" rx="18" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".25"/>
+    <g fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(-21.6 -21.6) scale(1.8)">
+      <path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5M22 10v6"/>
+    </g>
+  </g>
+  <!-- code (software) -->
+  <g transform="translate(126 500) rotate(-8)">
+    <rect x="-36" y="-36" width="72" height="72" rx="18" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".25"/>
+    <g fill="none" stroke="#67e8f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(-21.6 -21.6) scale(1.8)"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></g>
+  </g>
+  <!-- bolt (electrical) -->
+  <g transform="translate(590 340)">
+    <rect x="-26" y="-26" width="52" height="52" rx="14" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".25"/>
+    <path d="M3-16-9 2h8l-2 14 12-18H1z" fill="#fde68a"/>
+  </g>
+</svg>
